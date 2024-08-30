@@ -1,13 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PONCE - Second Screen</title>
+    <title>PONCE - Segunda Pantalla</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>Welcome to the Second Screen!</h1>
+        <!-- Contenedor GIF -->
+        <div id="gif-container">
+            <img id="selected-gif" src="" alt="GIF seleccionado">
+        </div>
+
+        <!-- TextBox y Botón Enviar -->
+        <div class="input-group">
+            <input type="text" id="main-textbox" placeholder="Escribe aquí..." readonly>
+            <button id="send-button">Enviar</button>
+            <button id="clear-main-textbox" class="clear-button">Limpiar</button>
+        </div>
+
+        <!-- Contenedor de Categorías -->
+        <div id="category-container">
+            <button class="category-button" data-category="saludo">Saludo</button>
+            <button class="category-button" data-category="transporte">Transporte</button>
+            <button class="category-button" data-category="amor">Amor</button>
+            <button class="category-button" data-category="deporte">Deporte</button>
+        </div>
+
+        <!-- Contenedor de Pictogramas -->
+        <div id="pictogram-container"></div>
+
+        <!-- TextBox Grande y Botón Micrófono -->
+        <div class="input-group">
+            <textarea id="large-textbox" placeholder="Texto de varias líneas..." rows="3" readonly></textarea>
+            <button id="mic-button">&#127897;</button>
+            <button id="clear-large-textbox" class="clear-button">Limpiar</button>
+        </div>
     </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
