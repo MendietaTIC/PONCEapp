@@ -180,7 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Ejemplo básico de cómo cargar pictogramas por categoría
         pictogramContainer.innerHTML = ''; // Limpiar contenedor
         const pictograms = {
-            saludo: ['saludo1.png', 'saludo2.png'],
+            saludo: ['https://cdn.glitch.global/97ec7b66-dd11-453f-b188-1dbf791dff37/hola.png?v=1725058285712', 'saludo2.png'],
             transporte: ['transporte1.png', 'transporte2.png'],
             amor: ['amor1.png', 'amor2.png'],
             deporte: ['deporte1.png', 'deporte2.png']
