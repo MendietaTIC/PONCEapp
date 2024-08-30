@@ -6,7 +6,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #e0f7fa; /* Color de fondo suave */
+    background-color: #e0f7fa; /* Fondo suave */
 }
 
 .container {
@@ -29,7 +29,7 @@ body {
 
 #selected-gif {
     max-width: 100%;
-    border: 2px solid #00796b; /* Color verde de la bandera de sordos */
+    border: 2px solid #00796b; /* Verde de la bandera de sordos */
     border-radius: 10px;
     background-color: #f1f8e9; /* Fondo suave */
 }
@@ -44,7 +44,7 @@ body {
 input[type="text"], textarea {
     flex: 1;
     padding: 12px;
-    border: 2px solid #004d40; /* Color verde oscuro */
+    border: 2px solid #004d40; /* Verde oscuro */
     border-radius: 8px;
     margin-right: 10px;
     font-size: 16px;
