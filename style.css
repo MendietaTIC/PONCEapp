@@ -1,135 +1,97 @@
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
     margin: 0;
     padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #e0f7fa; /* Fondo suave */
 }
 
 .container {
     width: 90%;
     max-width: 800px;
-    background-color: #ffffff;
+    margin: 20px auto;
     padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 #gif-container {
-    width: 100%;
     text-align: center;
-    margin-bottom: 20px;
 }
 
 #selected-gif {
     max-width: 100%;
-    border: 2px solid #00796b; /* Verde de la bandera de sordos */
-    border-radius: 10px;
-    background-color: #f1f8e9; /* Fondo suave */
+    height: auto;
 }
 
 .input-group {
-    width: 100%;
     display: flex;
     align-items: center;
     margin-bottom: 20px;
 }
 
-input[type="text"], textarea {
+.input-group input,
+.input-group textarea {
     flex: 1;
-    padding: 12px;
-    border: 2px solid #004d40; /* Verde oscuro */
-    border-radius: 8px;
-    margin-right: 10px;
-    font-size: 16px;
-    background-color: #f9fbe7; /* Fondo suave para los campos */
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
 }
 
-textarea {
-    resize: vertical; /* Permite cambiar el tamaño verticalmente */
-}
-
-button {
-    padding: 12px 20px;
-    font-size: 16px;
+.input-group button {
+    margin-left: 10px;
+    padding: 10px;
     border: none;
-    border-radius: 8px;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #fff;
     cursor: pointer;
-    margin-left: 5px;
-    transition: background-color 0.3s;
 }
 
-button:hover {
-    background-color: #004d40; /* Verde oscuro para hover */
-}
-
-button:focus {
-    outline: none;
-}
-
-button#send-button {
-    background-color: #00796b; /* Verde de la bandera de sordos */
-    color: white;
-}
-
-button#clear-main-textbox, button#clear-large-textbox {
-    background-color: #d32f2f; /* Rojo para limpiar */
-    color: white;
-}
-
-button#mic-button {
-    background-color: #ffab00; /* Naranja para el micrófono */
-    color: white;
+.input-group button:hover {
+    background-color: #0056b3;
 }
 
 #category-container {
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
     margin-bottom: 20px;
 }
 
-.category-button {
-    flex: 1;
-    padding: 12px;
-    background-color: #00796b; /* Verde de la bandera de sordos */
-    color: white;
+#category-container button {
+    margin: 5px;
+    padding: 10px;
     border: none;
-    border-radius: 8px;
+    border-radius: 4px;
+    background-color: #28a745;
+    color: #fff;
     cursor: pointer;
-    transition: background-color 0.3s;
 }
 
-.category-button:hover {
-    background-color: #004d40; /* Verde oscuro para hover */
+#category-container button:hover {
+    background-color: #218838;
 }
 
 #pictogram-container {
-    width: 100%;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    gap: 10px;
     margin-bottom: 20px;
-}
-
-#pictogram-container button {
+    border: 1px solid #ddd;
     padding: 10px;
-    margin: 5px;
-    background-color: #80cbc4; /* Verde claro para pictogramas */
-    color: #004d40; /* Verde oscuro para texto */
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+    border-radius: 4px;
+    background-color: #f8f9fa;
 }
 
-#pictogram-container button:hover {
-    background-color: #004d40; /* Verde oscuro para hover */
-    color: white;
+#pictogram-container img {
+    max-width: 100px;
+    max-height: 100px;
+    cursor: pointer;
 }
+
+.clear-button {
+    background-color: #dc3545;
+}
+
+.clear-button:hover {
+    background-color: #c82333;
+}
+
