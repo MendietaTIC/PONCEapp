@@ -80,11 +80,10 @@ gifImage.src = ''; // Opcional: puedes cambiar el GIF aquí si lo necesitas
     });
 
     // Manejar los botones de categoría y cargar pictogramas
-    cdocument.addEventListener('DOMContentLoaded', () => {
+   document.addEventListener('DOMContentLoaded', () => {
   const categoryButtons = document.querySelectorAll('#category-container .category-button');
   const pictogramContainer = document.getElementById('pictogram-container');
 
-  // Pictogramas por categoría
   const pictograms = {
     saludo: [
       { src: 'https://i.pinimg.com/236x/d0/5c/49/d05c490462edd8f16e9ca52b9c00976a.jpg', text: 'Saludo 1' },
@@ -104,7 +103,6 @@ gifImage.src = ''; // Opcional: puedes cambiar el GIF aquí si lo necesitas
     ]
   };
 
-  // Evento para cada botón de categoría
   categoryButtons.forEach(button => {
     button.addEventListener('click', () => {
       const category = button.getAttribute('data-category');
@@ -112,7 +110,6 @@ gifImage.src = ''; // Opcional: puedes cambiar el GIF aquí si lo necesitas
     });
   });
 
-  // Función que carga los pictogramas
   function loadPictograms(category) {
     pictogramContainer.innerHTML = ''; // Limpiar contenedor
 
