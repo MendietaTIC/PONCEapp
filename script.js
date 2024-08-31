@@ -1,3 +1,13 @@
+  document.addEventListener('DOMContentLoaded', () => {
+    const progressBar = document.getElementById('progress');
+    progressBar.style.width = '100%';
+
+    // Después de 4 segundos, redirige a la segunda pantalla
+    setTimeout(() => {
+        window.location.href = 'second.html';
+    }, 4000);
+});
+
 document.addEventListener('DOMContentLoaded', () => {
     const micButton = document.getElementById('mic-button');
     const largeTextbox = document.getElementById('large-textbox');
@@ -14,8 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
         alert('Lo siento, tu navegador no soporta la API de reconocimiento de voz.');
         return;
     }
-
-
   
   const gifImage = document.getElementById('selected-gif');
 gifImage.src = ''; // Opcional: puedes cambiar el GIF aquí si lo necesitas

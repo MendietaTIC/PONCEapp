@@ -18,6 +18,54 @@ h1 {
     margin-bottom: 20px;
     color: #0063a9; /* Azul de la bandera de sordos */
 }
+#title {
+    font-size: 48px;
+    font-weight: bold;
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    position: relative;
+}
+#title {
+  display: inline-block;
+  font-size: 48px;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+#title span {
+  opacity: 0;
+  display: inline-block;
+  animation: slideIn 0.5s forwards;
+}
+
+#title span:nth-child(1) { animation-delay: 0.1s; }
+#title span:nth-child(2) { animation-delay: 0.3s; }
+#title span:nth-child(3) { animation-delay: 0.5s; }
+#title span:nth-child(4) { animation-delay: 0.7s; }
+#title span:nth-child(5) { animation-delay: 0.9s; }
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+
+@keyframes slideIn {
+    0% {
+        width: 100%;
+    }
+    100% {
+        width: 0;
+    }
+}
+
 
 .progress-bar {
     width: 80%;
