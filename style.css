@@ -18,6 +18,13 @@ body {
 #gif-container {
     text-align: center;
 }
+#pictogram-container img {
+  margin: 10px;
+  width: 100px;
+  height: 100px;
+  cursor: pointer;
+}
+
 
 #selected-gif {
     max-width: 100%;
