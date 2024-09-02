@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
             { src: 'https://imgur.com/4isJHZV.png', text: 'Perdón' },
             { src: 'https://imgur.com/ykz2BHo.png', text: 'Por favor' },
             { src: 'https://imgur.com/81LKnZO.png', text: 'Puedes ayudarme' },  
-            { src: 'https://imgur.com/iBXkPri.png', text: 'Adios' },
+            { src: 'https://imgur.com/iBXkPri.png', text: '¿Como Estás?' },
             { src: 'https://imgur.com/omz9Li2.png', text: 'Bienvenido' },
             { src: 'https://imgur.com/QzVmDit.png', text: 'Buenas Noches' },
             { src: 'https://imgur.com/iKfxBjl.png', text: 'Buenas Tardes' },
