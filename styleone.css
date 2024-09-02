@@ -49,35 +49,3 @@ h1 {
     opacity: 1;
   }
 }
-
-/* Barra de progreso */
-#progress {
-    width: 100%;
-    height: 20px;
-    background-color: #ddd;
-    border-radius: 45px;
-    overflow: hidden;
-    position: relative;
-}
-
-#progress-bar {
-    height: 100%;
-    width: 0%; /* El ancho comienza en 0% */
-    background-color: #007bff;
-    border-radius: 45px;
-    transition: width 0.4s ease; /* Transición suave */
-}
-
-/* Animación de las letras "PONCE" */
-#letters span {
-    position: relative;
-    display: inline-block;
-    left: 100%; /* Posición inicial fuera de pantalla a la derecha */
-    opacity: 0; /* Oculto inicialmente */
-    transition: left 0.5s ease, opacity 0.5s ease;
-}
-
-#letters span.show {
-    left: 0; /* Mover letra a su posición correcta */
-    opacity: 1; /* Hacerla visible */
-}
