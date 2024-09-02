@@ -84,8 +84,22 @@ document.addEventListener('DOMContentLoaded', () => {
             { src: 'https://i.pinimg.com/236x/1a/2d/19/1a2d19e7cb7952b56562dd94ae93ec97.jpg', textpng: 'Transporte 2' }
         ],
         Amor: [
-            { src: 'https://i.pinimg.com/236x/36/9f/39/369f399c730a036d6e70b48aaee594c0.jpg', text: 'Amor 1' },
-            { src: 'https://i.pinimg.com/236x/36/9f/39/369f399c730a036d6e70b48aaee594c0.jpg', text: 'Amor 2' }
+            { src: 'https://imgur.com/l0nYpkD.png', text: 'Feliz' },
+            { src: 'https://imgur.com/xWw7oYY.png', text: 'Aburrido' },
+            { src: 'https://imgur.com/X8O2Ch4.png', text: 'Agradecido' },
+            { src: 'https://imgur.com/l8yjOuA.png', text: 'Cansado' },
+            { src: 'https://imgur.com/KEqyPuj.png', text: 'Celos' },  
+            { src: 'https://imgur.com/undefined.png', text: 'Confusión' },
+            { src: 'https://imgur.com/Yw9MAAZ.png', text: 'Culposo' },
+            { src: 'https://imgur.com/ySVNu7m.png', text: 'Enfermo' },
+            { src: 'https://imgur.com/eI7uZpz.png', text: 'Enojo' },
+            { src: 'https://imgur.com/3UUhZc5.png', text: 'Envidia' },
+            { src: 'https://imgur.com/Aa010Tm.png', text: 'Estresado' },
+            { src: 'https://imgur.com/R44RLh1.png', text: 'Frustrado' },
+            { src: 'https://imgur.com/LXb8w8b.png', text: 'Miedo
+            { src: 'https://imgur.com/v2RM0ju.png', text: 'Orgulloso
+            { src: 'https://imgur.com/RyeykHd.png', text: 'No' },
+            { src: 'https://imgur.com/ltDOrIj.png', text: 'si' },
         ],
         Deporte: [
             { src: 'https://i.pinimg.com/236x/d0/5c/49/d05c490462edd8f16e9ca52b9c00976a.jpg', text: 'Deporte 1' },
