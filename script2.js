@@ -37,6 +37,25 @@ document.addEventListener('DOMContentLoaded', () => {
     // Cuando se recibe el resultado del reconocimiento
     recognition.onresult = (event) => {
         const transcript = event.results[0][0].transcript;
-        largeTextbox2.value = transcript; // Muestra el texto reconocido en el textbox
+        largeTextbox.value = transcript; // Muestra el texto reconocido en el textbox
     };
+   
+ 
+   
+   // Obtiene las referencias a los elementos
+    const clearMainTextboxButton = document.getElementById('clear-main-textbox');
+    const clearLargeTextboxButton = document.getElementById('clear-large-textbox');
+    const mainTextbox = document.getElementById('main-textbox');
+    const largeTextbox = document.getElementById('large-textbox');
+
+    // Maneja el evento de clic en el botón para limpiar el textbox principal
+    clearMainTextboxButton.addEventListener('click', () => {
+        mainTextbox.value = ''; // Limpia el contenido del textbox principal
+    });
+
+    // Maneja el evento de clic en el botón para limpiar el textbox grande
+    clearLargeTextboxButton.addEventListener('click', () => {
+        largeTextbox.value = ''; // Limpia el contenido del textbox grande
+    });
+  });
 });
