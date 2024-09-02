@@ -92,7 +92,7 @@ body {
     height: 50px; /* Altura de la imagen */
     object-fit: contain; /* Ajusta la imagen manteniendo su proporción */
     margin: 8px;  /* Espacio entre las imágenes */
-    object-fit: cover; /* Asegura que las imágenes se ajusten bien */
+    
     cursor: pointer;
 }
 
