@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
             img.addEventListener('click', () => {
                 console.log(`Pictograma ${item.text} clickeado`);
                 // Aquí puedes agregar más acciones si es necesario
-              selectedGIFs.push(item.gif); // Añadir el GIF correspondiente a la lista de seleccionados
+              
             });
             pictogramContainer.appendChild(img);
         });
@@ -142,12 +142,7 @@ pictogramContainer.addEventListener('click', (event) => {
         mainTextbox.value = mainTextbox.value ? `${mainTextbox.value} ${pictogramText}` : pictogramText;
     }
 });
- // Reproduce los GIFs
-        selectedGIFs.forEach((gif, index) => {
-            setTimeout(() => {
-                document.getElementById('selected-gif').src = gif; // Cambia el GIF en el contenedor
-            }, index * 2000); // Cambia cada GIF después de 2 segundos (ajústalo si es necesario)
-        });
+
 // Convertir el texto en mainTextbox a voz cuando se presiona el botón "Enviar"
 sendButton.addEventListener('click', () => {
     const textToSpeak = mainTextbox.value;
