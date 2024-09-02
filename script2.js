@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const pictograms = {
         Saludo: [
              { src: 'https://drive.google.com/uc?export=view&id=1SNysTbBTFlkVDJPPuDhgi1sxG6xEi4x4', text: 'Saludo 1' },
-            { src: 'https://i.pinimg.com/236x/1a/2d/19/1a2d19e7cb7952b56562dd94ae93ec97.jpg', text: 'Saludo 2' }
+            { src: 'https://drive.google.com/uc?export=view&id=18GFH-ld8VetSZ92RAoVbpVOgM42a_cQi', text: 'Saludo 2' }
         ],
         Transporte: [
             { src: 'https://i.pinimg.com/236x/d0/5c/49/d05c490462edd8f16e9ca52b9c00976a.jpg', text: 'Transporte 1' },
