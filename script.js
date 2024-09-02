@@ -1,4 +1,21 @@
 document.addEventListener('DOMContentLoaded', () => {
+  const progressBar = document.getElementById('progress-bar');
+  let progress = 0;
+
+  const interval = setInterval(() => {
+    progress += 2;
+    progressBar.style.width = `${progress}%`;
+
+    if (progress >= 100) {
+      clearInterval(interval);
+      window.location.href = 'second.html';
+    }
+  }, 100);
+});
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
   const categoryButtons = document.querySelectorAll('#category-container .category-button');
   const pictogramContainer = document.getElementById('pictogram-container');
 
