@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Define los pictogramas para cada categoría
     const pictograms = {
         Saludo: [
-            { src: 'https://imgur.com/0jMhvF1.png', text: 'Hola', gif: 'https://imgur.com/jyTIUd2.gif'},
+            { src: 'https://imgur.com/0jMhvF1.png', text: 'Hola', gif: 'https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExaWdyb3dzd2FpaXQxbnF5MDVhdjgyMGI2cTl1anh0YjFvMGt2dnJ6ciZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/hs67xo8fGYfx5KlBgV/giphy.gif'},
             { src: 'https://imgur.com/uJcgD3m.png', text: 'OK' },
             { src: 'https://imgur.com/4isJHZV.png', text: 'Perdón' },
             { src: 'https://imgur.com/ykz2BHo.png', text: 'Por favor' },
@@ -118,8 +118,31 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Carga los pictogramas según la categoría seleccionada
-  let selectedGIFs = [];
+let selectedGIFs = [];  
 
+function loadPictograms(category) {
+    pictogramContainer.innerHTML = ''; // Limpiar contenedor
+
+    const items = pictograms[category] || [];
+    items.forEach(item => {
+        const img = document.createElement('img');
+        img.src = item.src;
+        img.alt = item.text;
+        img.title = item.text;
+        img.classList.add('pictogram-img');
+        
+        img.addEventListener('click', () => {
+            mainTextbox.value += item.text + ' '; // Actualizar el textbox con el texto del pictograma
+            selectedGIFs.push(item.gif); // Añadir el GIF correspondiente a la lista de seleccionados
+        });
+
+        pictogramContainer.appendChild(img);
+    });
+}
+
+  
+  
+  
   
     function loadPictograms(category) {
         pictogramContainer.innerHTML = ''; // Limpia el contenedor de pictogramas
@@ -146,6 +169,8 @@ pictogramContainer.addEventListener('click', (event) => {
     }
 });
 
+  
+  
 // Convertir el texto en mainTextbox a voz cuando se presiona el botón "Enviar"
 sendButton.addEventListener('click', () => {
     const textToSpeak = mainTextbox.value;
