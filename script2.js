@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Define los pictogramas para cada categoría
     const pictograms = {
         Saludo: [
-            { src: 'https://drive.google.com/file/d/1SNysTbBTFlkVDJPPuDhgi1sxG6xEi4x4/view?usp=sharing', text: 'Saludo 1' },
+             { src: 'https://drive.google.com/uc?export=view&id=1SNysTbBTFlkVDJPPuDhgi1sxG6xEi4x4', text: 'Saludo 1' },
             { src: 'https://i.pinimg.com/236x/1a/2d/19/1a2d19e7cb7952b56562dd94ae93ec97.jpg', text: 'Saludo 2' }
         ],
         Transporte: [
