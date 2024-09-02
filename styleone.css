@@ -1,5 +1,5 @@
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Arial_Black', sans-serif;
     margin: 0;
     padding: 0;
     display: flex;
@@ -48,4 +48,22 @@ h1 {
     transform: translateX(0);
     opacity: 1;
   }
+}
+
+/* barra de progreso
+#progress-container {
+    width: 100%;
+    height: 25px;
+    background-color: lightgray;
+    border-radius: 15px; /* Borde redondeado */
+    overflow: hidden; /* Asegura que los bordes redondeados se apliquen */
+    position: relative; /* Necesario para el posicionamiento del contenido */
+}
+
+#progress-bar {
+    width: 0%; /* Inicialmente, la barra está vacía */
+    height: 100%;
+    background-color: green;
+    border-radius: 15px; /* Borde redondeado */
+    transition: width 0.05s linear; /* Transición suave del ancho */
 }
