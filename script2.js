@@ -62,12 +62,16 @@ document.addEventListener('DOMContentLoaded', () => {
     // Define los pictogramas para cada categoría
     const pictograms = {
         Saludo: [
-            { src: 'https://imgur.com/0jMhvF1.png', text: 'Saludo 1' },
-            { src: 'https://drive.google.com/uc?export=view&id=18GFH-ld8VetSZ92RAoVbpVOgM42a_cQi', text: 'Saludo 2' }
+            { src: 'https://imgur.com/0jMhvF1.png', text: 'Hola' },
+            { src: 'https://imgur.com/uJcgD3m.png', text: 'OK' },
+            { src: 'https://imgur.com/4isJHZV.png', text: 'Perdón' },
+            { src: 'https://imgur.com/ykz2BHo.png', text: 'Por favor' },
+            { src: 'https://imgur.com/81LKnZO.png', text: 'Puedes ayudarme' },  
+            { src: 'https://imgur.com/iBXkPri.png', text: 'Como Estás' },
         ],
         Transporte: [
             { src: 'https://i.pinimg.com/236x/d0/5c/49/d05c490462edd8f16e9ca52b9c00976a.jpg', text: 'Transporte 1' },
-            { src: 'https://i.pinimg.com/236x/1a/2d/19/1a2d19e7cb7952b56562dd94ae93ec97.jpg', text: 'Transporte 2' }
+            { src: 'https://i.pinimg.com/236x/1a/2d/19/1a2d19e7cb7952b56562dd94ae93ec97.jpg', textpng: 'Transporte 2' }
         ],
         Amor: [
             { src: 'https://i.pinimg.com/236x/36/9f/39/369f399c730a036d6e70b48aaee594c0.jpg', text: 'Amor 1' },

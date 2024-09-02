@@ -11,7 +11,7 @@ body {
     max-width: 800px;
     margin: 20px auto;
     padding: 20px;
-    background: #fff;
+    background: #e0f7fa;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
@@ -88,10 +88,10 @@ body {
 
 
 #pictogram-container img {
-    width: 100px;  /* Ancho de la imagen */
-    height: 100px; /* Altura de la imagen */
+    width: 90px;  /* Ancho de la imagen */
+    height: 50px; /* Altura de la imagen */
     object-fit: contain; /* Ajusta la imagen manteniendo su proporción */
-    margin: 10px;  /* Espacio entre las imágenes */
+    margin: 8px;  /* Espacio entre las imágenes */
     object-fit: cover; /* Asegura que las imágenes se ajusten bien */
     cursor: pointer;
 }
