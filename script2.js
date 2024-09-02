@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Define los pictogramas para cada categoría
     const pictograms = {
         Saludo: [
-            { src: 'https://i.pinimg.com/236x/d0/5c/49/d05c490462edd8f16e9ca52b9c00976a.jpg', text: 'Saludo 1' },
+            { src: 'https://drive.google.com/file/d/1SNysTbBTFlkVDJPPuDhgi1sxG6xEi4x4/view?usp=sharing', text: 'Saludo 1' },
             { src: 'https://i.pinimg.com/236x/1a/2d/19/1a2d19e7cb7952b56562dd94ae93ec97.jpg', text: 'Saludo 2' }
         ],
         Transporte: [
@@ -103,4 +103,23 @@ document.addEventListener('DOMContentLoaded', () => {
             pictogramContainer.appendChild(img);
         });
     }
+  // Añadir texto del pictograma al textbox1 y concatenar si ya tiene contenido
+  const sendButton = document.getElementById('send-button');
+pictogramContainer.addEventListener('click', (event) => {
+    if (event.target.tagName === 'IMG') {
+        const pictogramText = event.target.alt;
+        mainTextbox.value = mainTextbox.value ? `${mainTextbox.value} ${pictogramText}` : pictogramText;
+    }
+});
+
+// Convertir el texto en mainTextbox a voz cuando se presiona el botón "Enviar"
+sendButton.addEventListener('click', () => {
+    const textToSpeak = mainTextbox.value;
+    if (textToSpeak) {
+        const utterance = new SpeechSynthesisUtterance(textToSpeak);
+        utterance.lang = 'es-ES'; // Puedes cambiar el idioma si es necesario
+        window.speechSynthesis.speak(utterance);
+    }
+});
+
   });
