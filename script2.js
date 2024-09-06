@@ -49,12 +49,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Maneja el evento de clic en el botón para limpiar el textbox principal
     clearMainTextboxButton.addEventListener('click', () => {
         mainTextbox.value = ''; // Limpia el contenido del textbox principal
-   
-      // Cambia el GIF a la imagen principal
+     // Cambia el GIF a la imagen principal
     const gifImage = document.getElementById('selected-gif');
-    gifImage.src = 'URL_DEL_GIF_PRINCIPAL'; // URL del GIF principal
-});
-    
+    gifImage.src = 'https://media.giphy.com/media/sMyUVvComFZIJ7d8fV/giphy.gif?cid=790b76118ma61zm4gszrdt0cgyvdkutqh2zwmuqipqt5ihbf&ep=v1_gifs_search&rid=giphy.gif&ct=g'; // URL del GIF principal
     });
 
     // Maneja el evento de clic en el botón para limpiar el textbox grande
@@ -69,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const pictograms = {
         Saludo: [
             { src: 'https://imgur.com/0jMhvF1.png', text: 'Hola', gif: 'https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExN3VvZzl4NW15b3k4bHRycThqcmJmbW5obnRneGJobnZ4eHh4a21maSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/R6faonSqRcRBrb3kOe/giphy.gif'},
-            { src: 'https://imgur.com/uJcgD3m.png', text: 'OK' },
+            { src: 'https://imgur.com/uJcgD3m.png', text: 'OK', gif: 'https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExYzl3eTl3Y2diZjRpZTQ5eHJvdjRheG14YXdwOHA2N296aGVlNGl6NiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/G3Zba8juUZRxqkGLwq/giphy.gif'},
             { src: 'https://imgur.com/4isJHZV.png', text: 'Perdón' },
             { src: 'https://imgur.com/ykz2BHo.png', text: 'Por favor' },
             { src: 'https://imgur.com/81LKnZO.png', text: 'Puedes ayudarme' },  
@@ -148,6 +145,8 @@ function loadPictograms(category) {
 
   
   
+  
+  
     function loadPictograms(category) {
         pictogramContainer.innerHTML = ''; // Limpia el contenedor de pictogramas
         const items = pictograms[category] || [];
@@ -184,7 +183,7 @@ sendButton.addEventListener('click', () => {
         selectedGIFs.forEach((gif, index) => {
             setTimeout(() => {
                 document.getElementById('selected-gif').src = gif; // Cambia el GIF en el contenedor
-            }, index * 2000); // Cambia cada GIF después de 2 segundos (ajústalo si es necesario)
+            }, index * 1000); // Cambia cada GIF después de 1 segundos (ajústalo si es necesario)
         });
       const utterance = new SpeechSynthesisUtterance(textToSpeak);
         utterance.lang = 'es-ES'; // Puedes cambiar el idioma si es necesario
