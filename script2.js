@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Define los pictogramas para cada categoría
     const pictograms = {
         Saludo: [
-            { src: 'https://imgur.com/0jMhvF1.png', text: 'Hola', gif: 'https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExaWdyb3dzd2FpaXQxbnF5MDVhdjgyMGI2cTl1anh0YjFvMGt2dnJ6ciZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/hs67xo8fGYfx5KlBgV/giphy.gif'},
+            { src: 'https://imgur.com/0jMhvF1.png', text: 'Hola', gif: 'https://imgur.com/JAmxawE.gif'},
             { src: 'https://imgur.com/uJcgD3m.png', text: 'OK' },
             { src: 'https://imgur.com/4isJHZV.png', text: 'Perdón' },
             { src: 'https://imgur.com/ykz2BHo.png', text: 'Por favor' },
@@ -175,10 +175,18 @@ pictogramContainer.addEventListener('click', (event) => {
 sendButton.addEventListener('click', () => {
     const textToSpeak = mainTextbox.value;
     if (textToSpeak) {
-        const utterance = new SpeechSynthesisUtterance(textToSpeak);
+      
+      // Reproduce los GIFs
+        selectedGIFs.forEach((gif, index) => {
+            setTimeout(() => {
+                document.getElementById('selected-gif').src = gif; // Cambia el GIF en el contenedor
+            }, index * 5000); // Cambia cada GIF después de 2 segundos (ajústalo si es necesario)
+        });
+      const utterance = new SpeechSynthesisUtterance(textToSpeak);
         utterance.lang = 'es-ES'; // Puedes cambiar el idioma si es necesario
         window.speechSynthesis.speak(utterance);
     }
 });
+   
 
   });
