@@ -16,8 +16,11 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-#gif-container {
+#gif-container img {
     text-align: center;
+    width: 100px; /* Ajusta el ancho según tu necesidad */
+    height: 100px; /* Ajusta la altura según tu necesidad */
+    object-fit: contain; /* Mantener proporciones sin distorsión */
 }
 
 #selected-gif {
