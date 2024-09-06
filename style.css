@@ -1,7 +1,7 @@
 /* Estilos generales */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    font-family: 'Bebas Neue', sans-serif;
+    background-color: #304A6D;
     margin: 0;
     padding: 0;
 }
@@ -11,7 +11,7 @@ body {
     max-width: 800px;
     margin: 20px auto;
     padding: 20px;
-    background: #e0f7fa;
+    background: #304A6D;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
@@ -61,7 +61,7 @@ body {
 }
 
 .input-group button:hover {
-    background-color: #0056b3;
+    background-color: #304A6D;
 }
 
 /* Contenedor de categorías */
