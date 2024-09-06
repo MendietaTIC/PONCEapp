@@ -45,7 +45,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const clearMainTextboxButton = document.getElementById('clear-main-textbox');
     const clearLargeTextboxButton = document.getElementById('clear-large-textbox');
     const mainTextbox = document.getElementById('main-textbox');
-   
+ 
+    // Maneja el evento de clic en el botón para limpiar el textbox principal
+    clearMainTextboxButton.addEventListener('click', () => {
+         // Limpia el contenido del textbox principal
+     // Cambia el GIF a la imagen principal
     const gifImage = document.getElementById('selected-gif');
     gifImage.src = 'https://media.giphy.com/media/sMyUVvComFZIJ7d8fV/giphy.gif?cid=790b76118ma61zm4gszrdt0cgyvdkutqh2zwmuqipqt5ihbf&ep=v1_gifs_search&rid=giphy.gif&ct=g'; // URL del GIF principal
     });
@@ -174,7 +178,8 @@ pictogramContainer.addEventListener('click', (event) => {
 sendButton.addEventListener('click', () => {
     const textToSpeak = mainTextbox.value;
     if (textToSpeak) {
-      
+      // borra contenido
+      mainTextbox.value = '';
       // Reproduce los GIFs
         selectedGIFs.forEach((gif, index) => {
             setTimeout(() => {
@@ -186,6 +191,6 @@ sendButton.addEventListener('click', () => {
         window.speechSynthesis.speak(utterance);
     }
 });
-     // Maneja el evento de clic en el botón para limpiar el textbox grande
-mainTextbox.value = '';
+   
+
   });
