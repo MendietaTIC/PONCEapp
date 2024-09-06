@@ -49,6 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Maneja el evento de clic en el botón para limpiar el textbox principal
     clearMainTextboxButton.addEventListener('click', () => {
          // Limpia el contenido del textbox principal
+      
      // Cambia el GIF a la imagen principal
     const gifImage = document.getElementById('selected-gif');
     gifImage.src = 'https://media.giphy.com/media/sMyUVvComFZIJ7d8fV/giphy.gif?cid=790b76118ma61zm4gszrdt0cgyvdkutqh2zwmuqipqt5ihbf&ep=v1_gifs_search&rid=giphy.gif&ct=g'; // URL del GIF principal
@@ -58,6 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
     clearLargeTextboxButton.addEventListener('click', () => {
         largeTextbox.value = ''; // Limpia el contenido del textbox grande
     });
+  
   // Obtiene las referencias a los botones de categoría y al contenedor de pictogramas
     const categoryButtons = document.querySelectorAll('#category-container .category-button');
     const pictogramContainer = document.getElementById('pictogram-container');
