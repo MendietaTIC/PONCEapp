@@ -14,6 +14,7 @@ body {
     background: #304A6D;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    font-family: "Bebas Neue", sans-serif;
 }
 #gif-container {
     display: flex;
@@ -94,6 +95,7 @@ body {
     padding: 10px;
     border-radius: 4px;
     background-color: #f8f9fa;
+    font-family: "Bebas Neue", sans-serif;
 }
 
 
@@ -108,9 +110,11 @@ body {
 /* Botones de limpiar */
 .clear-button {
     background-color: #dc3545;
+    font-family: "Bebas Neue", sans-serif;
+}
+/*.clear-button:hover {
+    background-color: #c82333;
+    font-family: "Bebas Neue", sans-serif;
 }
 
-.clear-button:hover {
-    background-color: #c82333;
-}
 
