@@ -49,6 +49,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Maneja el evento de clic en el botón para limpiar el textbox principal
     clearMainTextboxButton.addEventListener('click', () => {
         mainTextbox.value = ''; // Limpia el contenido del textbox principal
+   
+      // Cambia el GIF a la imagen principal
+    const gifImage = document.getElementById('selected-gif');
+    gifImage.src = 'URL_DEL_GIF_PRINCIPAL'; // URL del GIF principal
+});
+    
     });
 
     // Maneja el evento de clic en el botón para limpiar el textbox grande
