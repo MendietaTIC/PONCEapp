@@ -59,15 +59,19 @@ body {
     background-color: #9FC20C;
     color: #000000;
     cursor: pointer;
+  font-family: "Bebas Neue", sans-serif;
+  
 }
 
 .input-group button:hover {
     background-color: #9FC20C;
+  font-family: "Bebas Neue", sans-serif;
 }
 
 /* Contenedor de categorías */
 #category-container {
     margin-bottom: 20px;
+  font-family: "Bebas Neue", sans-serif;
 }
 
 #category-container button {
@@ -78,6 +82,7 @@ body {
     background-color: #9FC20C;
     color: #000000;
     cursor: pointer;
+  font-family: "Bebas Neue", sans-serif;
 }
 
 #category-container button:hover {
