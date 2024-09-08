@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
       mainTextbox.value = '';
      // Cambia el GIF a la imagen principal
     const gifImage = document.getElementById('selected-gif');
-    gifImage.src = 'https://media.giphy.com/media/sMyUVvComFZIJ7d8fV/giphy.gif?cid=790b76118ma61zm4gszrdt0cgyvdkutqh2zwmuqipqt5ihbf&ep=v1_gifs_search&rid=giphy.gif&ct=g'; // URL del GIF principal
+    gifImage.src = 'https://imgur.com/u4azcOa.gif?cid=790b76118ma61zm4gszrdt0cgyvdkutqh2zwmuqipqt5ihbf&ep=v1_gifs_search&rid=giphy.gif&ct=g'; // URL del GIF principal
     });
 
     // Maneja el evento de clic en el botón para limpiar el textbox grande
