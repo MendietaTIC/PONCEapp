@@ -23,8 +23,8 @@ body {
 
 #gif-container img {
     text-align: center;
-    width: 150px; /* Ajusta el ancho según tu necesidad */
-    height: 150px; /* Ajusta la altura según tu necesidad */
+    width: 180px; /* Ajusta el ancho según tu necesidad */
+    height: 180px; /* Ajusta la altura según tu necesidad */
     object-fit: contain; /* Mantener proporciones sin distorsión */
     display: flex;
     justify-content: center;
