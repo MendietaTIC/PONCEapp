@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Define los pictogramas para cada categoría
     const pictograms = {
         Saludo: [
-            { src: 'https://imgur.com/0jMhvF1.png', text: 'Hola', gif: 'https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExN3VvZzl4NW15b3k4bHRycThqcmJmbW5obnRneGJobnZ4eHh4a21maSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/R6faonSqRcRBrb3kOe/giphy.gif'},
+            { src: 'https://imgur.com/0jMhvF1.png', text: 'Hola', gif: 'https://i.imgur.com/jkMwS5V.gif'},
             { src: 'https://imgur.com/uJcgD3m.png', text: 'OK', gif: 'https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExYzl3eTl3Y2diZjRpZTQ5eHJvdjRheG14YXdwOHA2N296aGVlNGl6NiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/G3Zba8juUZRxqkGLwq/giphy.gif'},
             { src: 'https://imgur.com/4isJHZV.png', text: 'Perdón' },
             { src: 'https://imgur.com/ykz2BHo.png', text: 'Por favor' },
