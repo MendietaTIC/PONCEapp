@@ -215,7 +215,7 @@ document.getElementById("clear-main-textbox").addEventListener("click", function
     selectedGIFs = [];
 
     // Restaurar el GIF principal en el contenedor de GIFs
-    document.getElementById("selected-gif").src = "https://imgur.com/XjHwig8.gif";
+    document.getElementById("selected-gif").src = "https://imgur.com/u4azcOa.gif";
 
     console.log("Caché de palabras seleccionadas limpiada");
 
@@ -223,19 +223,17 @@ document.getElementById("clear-main-textbox").addEventListener("click", function
     const gifContainer = document.getElementById("gif-container");
     gifContainer.innerHTML = ''; // Limpiar cualquier GIF actual
     const defaultGif = document.createElement("img");
-    defaultGif.src = "https://imgur.com/XjHwig8.gif"; // URL de tu GIF principal
-    gifContainer.appendChild(defaultGif);
+    defaultGif.src = "https://imgur.com/u4azcOa.gif"; // URL de tu GIF principal
+    gifContainer.appendChild(defaultGif);  
 });
-  // Restablecer el GIF principal
-    const gifContainer = document.getElementById("gif-container");
-    gifContainer.innerHTML = '';  // Limpiar cualquier GIF previo
-    const imgElement = document.createElement("img");
-    imgElement.src = mainGIF;  // Asignar el GIF principal
-    imgElement.style.width = "200px";  // Ajustar el tamaño del GIF si es necesario
-    imgElement.style.height = "200px";
-    gifContainer.appendChild(imgElement);  // Añadir el GIF al contenedor
 
-// Función para manejar la selección de pictogramas
+   // Cambia el GIF a la imagen principal
+    
+    gifImage.src = 'https://imgur.com/u4azcOa.gif?cid=790b76118ma61zm4gszrdt0cgyvdkutqh2zwmuqipqt5ihbf&ep=v1_gifs_search&rid=giphy.gif&ct=g'; // URL del GIF principal
+    });
+
+
+  // Función para manejar la selección de pictogramas
 function selectPictogram(pictogramWord, gifURL) {
     // Añadir la palabra del pictograma al array
     selectedWords.push(pictogramWord);
@@ -268,6 +266,7 @@ document.getElementById("send-button").addEventListener("click", function() {
         });
     }
 });
+  
 // Función para manejar el envío del texto a voz
 document.getElementById("send-button").addEventListener("click", function() {
     // Convertir el texto del textbox a voz
@@ -300,7 +299,6 @@ document.getElementById("send-button").addEventListener("click", function() {
         showGIFsSequentially(0);
     }
 });
-
 
    
 
