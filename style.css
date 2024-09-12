@@ -148,10 +148,10 @@ body {
     display: grid;
     grid-template-columns: repeat(3, 1fr);  /* 3 columnas */
     grid-template-rows: repeat(4, 1fr);     /* 4 filas */
-    gap: 10px;                              /* Espacio entre pictogramas */
+    gap: 0.1px;                              /* Espacio entre pictogramas */
     margin-bottom: 1px;
-    border: 3px solid #1B087E;
-    padding: 10px;
+    border: 1px solid #1B087E;
+    padding: 2px;
     border-radius: 4px;
     background-color: #f8f9fa;
     font-family: "Bebas Neue", sans-serif;
@@ -160,10 +160,14 @@ body {
 }
 
 #pictogram-container img {
-    width: 90px;    /* Ancho de la imagen */
-    height: 90px;   /* Altura de la imagen (igual para ajustarse mejor a un grid) */
+    width: 120px;    /* Ancho de la imagen */
+    height: 120px;   /* Altura de la imagen (igual para ajustarse mejor a un grid) */
     object-fit: contain;  /* Ajusta la imagen manteniendo su proporción */
     cursor: pointer;
+    margin-top: 0;
+    padding-top: 0;
+    margin: 0;
+    padding: 0;
 }
 
 /* Estilo de la barra de desplazamiento */
@@ -191,6 +195,19 @@ body {
 }
 
 /* Estilos para el botón de donación */
+
+#top-bar {
+    margin-top: 0;
+    padding-top: 0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #1B087E; /* Borde inferior */
+    margin-bottom: 5px;
+}
+
 #donate-button img {
     width: 100px; /* Tamaño del botón de donación */
     height: auto;
