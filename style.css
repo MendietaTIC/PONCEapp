@@ -101,7 +101,7 @@ body {
 }
 
 #category-container::-webkit-scrollbar-thumb {
-    background-color: #888888;       /* Color de la barra de desplazamiento */
+    background-color: #1560C2;       /* Color de la barra de desplazamiento */
     border-radius: 4px;           /* Bordes redondeados */
 }
 
@@ -127,25 +127,40 @@ body {
 
 /* Contenedor de pictogramas */
 #pictogram-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);  /* 3 columnas */
+    grid-template-rows: repeat(4, 1fr);     /* 4 filas */
+    gap: 10px;                              /* Espacio entre pictogramas */
     margin-bottom: 20px;
     border: 1px solid #1B087E;
     padding: 10px;
     border-radius: 4px;
     background-color: #f8f9fa;
     font-family: "Bebas Neue", sans-serif;
+    max-height: 250px;                      /* Altura máxima del contenedor (ajustar según necesidad) */
+    overflow-y: auto;                       /* Scroll vertical */
 }
 
 #pictogram-container img {
-    width: 90px;  /* Ancho de la imagen */
-    height: 50px; /* Altura de la imagen */
-    object-fit: contain; /* Ajusta la imagen manteniendo su proporción */
-    margin: 1px;  /* Espacio entre las imágenes */
+    width: 90px;    /* Ancho de la imagen */
+    height: 90px;   /* Altura de la imagen (igual para ajustarse mejor a un grid) */
+    object-fit: contain;  /* Ajusta la imagen manteniendo su proporción */
     cursor: pointer;
-  }
+}
+
+/* Estilo de la barra de desplazamiento */
+#pictogram-container::-webkit-scrollbar {
+    width: 8px;                            /* Ancho del scroll */
+}
+
+#pictogram-container::-webkit-scrollbar-thumb {
+    background-color: #1560C2;                 /* Color de la barra de scroll */
+    border-radius: 4px;
+}
+
+#pictogram-container::-webkit-scrollbar-thumb:hover {
+    background-color: #c82333;                 /* Color de la barra cuando pasas el cursor encima */
+}
 
 /* Botones de limpiar */
 .clear-button {
@@ -156,5 +171,6 @@ body {
     background-color: #c82333;
     font-family: "Bebas Neue", sans-serif;
 }
+
 
 
