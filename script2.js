@@ -206,7 +206,10 @@ let selectedWords = []; // Array para almacenar las palabras seleccionadas
 
 // Función para limpiar el textbox principal y reiniciar la caché de palabras seleccionadas
 document.getElementById("clear-main-textbox").addEventListener("click", function() {
-    // Limpiar el contenido del textbox principal
+   
+
+  
+  // Limpiar el contenido del textbox principal
     document.getElementById("main-textbox").value = "";
 
     // Limpiar la caché de palabras seleccionadas
@@ -295,8 +298,9 @@ document.getElementById("send-button").addEventListener("click", function() {
         // Iniciar la secuencia de GIFs
         showGIFsSequentially(0);
     }
+
+    
 });
 
 
-
-  });
+});
