@@ -56,8 +56,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const gifImage = document.getElementById('selected-gif');
     gifImage.src = 'https://imgur.com/u4azcOa.gif?cid=790b76118ma61zm4gszrdt0cgyvdkutqh2zwmuqipqt5ihbf&ep=v1_gifs_search&rid=giphy.gif&ct=g'; // URL del GIF principal
     });
-// Función para limpiar el textbox principal y la caché de pictogramas
-document.getElementById("clear-main-textbox").addEventListener("click", function() {
+
+     // Detener la reproducción de cualquier GIF anterior
+    const gifContainer = document.getElementById("gif-container");
+    gifContainer.innerHTML = ''; // Limpiar el contenedor de GIFs
+    const defaultGif = document.createElement("img");
+   gifContainer.appendChild(defaultGif);
+// Función para manejar la reproducción de GIFs al enviar el texto a voz
+document.getElementById("send-button").addEventListener("click", function() {
+    // Código para reproducir los GIFs según los pictogramas seleccionados
+    selectedGIFs.forEach(gifURL => {
+        const gifContainer = document.getElementById("gif-container");
+        const imgElement = document.createElement("img");
+        imgElement.src = gifURL;
+        imgElement.style.width = "200px"; // Tamaño del GIF
+        imgElement.style.height = "200px";
+        gifContainer.appendChild(imgElement);
+    
+  
     // Maneja el evento de clic en el botón para limpiar el textbox grande
     clearLargeTextboxButton.addEventListener('click', () => {
         largeTextbox.value = ''; // Limpia el contenido del textbox grande
