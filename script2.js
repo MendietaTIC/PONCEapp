@@ -46,18 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const clearLargeTextboxButton = document.getElementById('clear-large-textbox');
     const mainTextbox = document.getElementById('main-textbox');
  
-    // Maneja el evento de clic en el botón para limpiar el textbox principal
-    clearMainTextboxButton.addEventListener('click', () => {
-         // Limpia el contenido del textbox principal
-      // borra contenido
-      mainTextbox.value = '';
-      
-     // Cambia el GIF a la imagen principal
-    const gifImage = document.getElementById('selected-gif');
-    gifImage.src = 'https://imgur.com/u4azcOa.gif?cid=790b76118ma61zm4gszrdt0cgyvdkutqh2zwmuqipqt5ihbf&ep=v1_gifs_search&rid=giphy.gif&ct=g'; // URL del GIF principal
-    });
-
-   
+       
     // Maneja el evento de clic en el botón para limpiar el textbox grande
     clearLargeTextboxButton.addEventListener('click', () => {
         largeTextbox.value = ''; // Limpia el contenido del textbox grande
@@ -210,6 +199,69 @@ sendButton.addEventListener('click', () => {
         window.speechSynthesis.speak(utterance);
     }
 });
+  // Las palabras seleccionadas se almacenan en un array llamado 'selectedWords'
+let selectedWords = []; // Array para almacenar las palabras seleccionadas
+
+// Función para limpiar el textbox principal y reiniciar la caché de palabras seleccionadas
+document.getElementById("clear-main-textbox").addEventListener("click", function() {
+    // Limpiar el contenido del textbox principal
+    document.getElementById("main-textbox").value = "";
+
+    // Limpiar la caché de palabras seleccionadas
+    selectedWords = [];
+
+    // Reiniciar cualquier otra caché relacionada (si es necesario)
+    
+    selectedGIFs = [];
+
+    // Restaurar el GIF principal en el contenedor de GIFs
+    document.getElementById("selected-gif").src = "https://imgur.com/u4azcOa.gif?cid=790b76118ma61zm4gszrdt0cgyvdkutqh2zwmuqipqt5ihbf&ep=v1_gifs_search&rid=giphy.gif&ct=g";
+
+    console.log("Caché de palabras seleccionadas limpiada");
+
+    // Limpiar el contenedor de GIFs si hay alguno mostrado
+    const gifContainer = document.getElementById("gif-container");
+    gifContainer.innerHTML = ''; // Limpiar cualquier GIF actual
+    const defaultGif = document.createElement("img");
+    defaultGif.src = "https://imgur.com/u4azcOa.gif?cid=790b76118ma61zm4gszrdt0cgyvdkutqh2zwmuqipqt5ihbf&ep=v1_gifs_search&rid=giphy.gif&ct=g"; // Coloca aquí la URL de tu GIF principal
+    gifContainer.appendChild(defaultGif);
+});
+
+// Función para manejar la selección de pictogramas
+function selectPictogram(pictogramWord, gifURL) {
+    // Añadir la palabra del pictograma al array
+    selectedWords.push(pictogramWord);
+
+    // Actualizar el textbox con las palabras seleccionadas
+    document.getElementById("main-textbox").value = selectedWords.join(' ');
+
+    // Añadir el GIF correspondiente a la caché de GIFs seleccionados
+    selectedGIFs.push(gifURL);
+}
+
+// Función para manejar el envío del texto a voz
+document.getElementById("send-button").addEventListener("click", function() {
+    // Convertir el texto del textbox a voz
+    let text = document.getElementById("main-textbox").value;
+    if (text) {
+        // Aquí puedes implementar la conversión de texto a voz
+        console.log("Convirtiendo a voz: " + text);
+
+        // Mostrar los GIFs correspondientes a las palabras seleccionadas
+        const gifContainer = document.getElementById("gif-container");
+        gifContainer.innerHTML = ''; // Limpiar cualquier GIF previo
+
+        selectedGIFs.forEach(gifURL => {
+            const imgElement = document.createElement("img");
+            imgElement.src = gifURL;
+            imgElement.style.width = "200px"; // Ajusta el tamaño del GIF si es necesario
+            imgElement.style.height = "200px";
+            gifContainer.appendChild(imgElement);
+        });
+    }
+});
+
+
    
 
   });
