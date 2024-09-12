@@ -51,11 +51,13 @@ document.addEventListener('DOMContentLoaded', () => {
          // Limpia el contenido del textbox principal
       // borra contenido
       mainTextbox.value = '';
+      
      // Cambia el GIF a la imagen principal
     const gifImage = document.getElementById('selected-gif');
     gifImage.src = 'https://imgur.com/u4azcOa.gif?cid=790b76118ma61zm4gszrdt0cgyvdkutqh2zwmuqipqt5ihbf&ep=v1_gifs_search&rid=giphy.gif&ct=g'; // URL del GIF principal
     });
-
+// Función para limpiar el textbox principal y la caché de pictogramas
+document.getElementById("clear-main-textbox").addEventListener("click", function() {
     // Maneja el evento de clic en el botón para limpiar el textbox grande
     clearLargeTextboxButton.addEventListener('click', () => {
         largeTextbox.value = ''; // Limpia el contenido del textbox grande
