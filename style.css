@@ -1,12 +1,32 @@
-/* Estilos generales */
+/* Reducir el margen/padding superior del body */
 body {
-    font-family: "Bebas Neue", sans-serif;
+    margin-top: 0; /* Eliminar el margen superior */
+    padding-top: 0; /* Eliminar el padding superior */
+    font-family: "Bebas Neue", sans-serif; /* Estilos generales */
+     margin: 0;
+    padding: 0;
     background-color: #304A6D;
     margin: 0;
     padding: 0;
 }
 
+/* #top-bar tiene un margen */
+#top-bar {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+
+/* Estilos generales */
+
+/* Ajustar el contenedor GIF para que esté cerca del borde superior */
+#gif-container {
+    margin-top: 0;   /* Eliminar cualquier margen superior */
+    padding-top: 0;  /* Eliminar cualquier padding superior */
+}
+
 .container {
+    margin-top: 0;
     width: 90%;
     max-width: 800px;
     margin: 20px auto;
@@ -19,6 +39,8 @@ body {
 #gif-container {
     display: flex;
     justify-content: center; /* Centra horizontalmente */
+    margin-top: 0; /* Eliminar el margen superior */
+    padding-top: 0; /* Eliminar el padding superior */
 }
 
 #gif-container img {

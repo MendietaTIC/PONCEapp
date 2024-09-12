@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
             { src: 'https://imgur.com/iBXkPri.png', text: '¿Como Estás?',gif: 'https://imgur.com/ubnarne.gif'},
             { src: 'https://imgur.com/omz9Li2.png', text: 'Bienvenido' , gif: 'https://imgur.com/XjHwig8.gif'},
             { src: 'https://imgur.com/QzVmDit.png', text: 'Buenas Noches' ,gif: 'https://imgur.com/dXsrX7c.gif'},
-            { src: 'https://imgur.com/iKfxBjl.png', text: 'Buenas Tardes',gif: 'hhttps://imgur.com/7Gn5dX4.gif'},
+            { src: 'https://imgur.com/iKfxBjl.png', text: 'Buenas Tardes',gif: 'https://imgur.com/7Gn5dX4.gif'},
             { src: 'https://imgur.com/9NJ3XjK.png', text: 'Buenos Días' , gif: 'https://imgur.com/y5xoOSX.gif'},
             { src: 'https://imgur.com/LTpjLd1.png', text: 'Disculpa' ,gif: 'https://imgur.com/5kGGUxP.gif'},
             { src: 'https://imgur.com/DrV0M55.png', text: 'Estoy Bien' ,gif: 'hhttps://imgur.com/5f202zR.gif'},
@@ -153,9 +153,7 @@ function loadPictograms(category) {
 }
 
   
-  
-  
-  
+ 
     function loadPictograms(category) {
         pictogramContainer.innerHTML = ''; // Limpia el contenedor de pictogramas
         const items = pictograms[category] || [];
