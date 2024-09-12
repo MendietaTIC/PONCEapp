@@ -73,43 +73,40 @@ body {
 #category-container {
     margin-bottom: 20px;
   font-family: "Bebas Neue", sans-serif;
-}
-#category-container {
     display: flex;                /* Alinea los botones en fila */
     overflow-x: auto;             /* Habilita el scroll horizontal */
     white-space: nowrap;          /* Evita que los botones se envuelvan en línea nueva */
     padding: 10px;                /* Espaciado interno */
     box-sizing: border-box;       /* Incluir padding en el tamaño del contenedor */
     width: 100%;                  /* Ocupar todo el ancho disponible */
+    max-width: calc(100px * 4 + 30px);  /* Muestra solo el espacio de 4 botones */
+    overflow-x: scroll;                 /* Activa el scroll horizontal si hay más botones */
 }
+
 
 .category-button {
     flex: 0 0 auto;               /* Los botones no se ajustan automáticamente */
     margin-right: 10px;           /* Espacio entre botones */
     padding: 10px 20px;           /* Ajusta el tamaño de los botones */
     background-color: #f1f1f1;    /* Color de fondo */
-    border: 1px solid #ccc;       /* Borde de los botones */
+    
     border-radius: 5px;           /* Bordes redondeados */
     cursor: pointer;              /* Cursor de mano en hover */
     white-space: nowrap;          /* Mantener el texto en una sola línea */
 }
-
-#category-container {
-    max-width: calc(100px * 4 + 30px);  /* Muestra solo el espacio de 4 botones */
-    overflow-x: scroll;                 /* Activa el scroll horizontal si hay más botones */
-}
+ 
 
 #category-container::-webkit-scrollbar {
     height: 8px;                  /* Altura de la barra de desplazamiento */
 }
 
 #category-container::-webkit-scrollbar-thumb {
-    background-color: #888;       /* Color de la barra de desplazamiento */
+    background-color: #888888;       /* Color de la barra de desplazamiento */
     border-radius: 4px;           /* Bordes redondeados */
 }
 
 #category-container::-webkit-scrollbar-thumb:hover {
-    background-color: #555;       /* Color de la barra en hover */
+    background-color: #55555555;       /* Color de la barra en hover */
 }
 
 
@@ -129,39 +126,18 @@ body {
 }
 
 /* Contenedor de pictogramas */
-
 #pictogram-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 columnas */
-    grid-template-rows: repeat(4, 1fr);    /* 4 filas */
-    gap: 10px;                             /* Espacio entre los pictogramas */
-    max-height: 400px;                     /* Altura máxima del contenedor */
-    overflow-y: auto;                      /* Scroll vertical si hay más contenido */
-    padding: 10px;                         /* Espaciado interno */
-    border: 1px solid #ccc;                /* Borde del contenedor */
-    box-sizing: border-box;                /* Asegura que el padding se incluya en las dimensiones */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #1B087E;
+    padding: 10px;
+    border-radius: 4px;
+    background-color: #f8f9fa;
+    font-family: "Bebas Neue", sans-serif;
 }
-
-.pictogram {
-    width: 100%;                           /* Asegura que cada pictograma ocupe el 100% del ancho de la celda */
-    height: 100px;                         /* Altura fija de cada pictograma */
-    object-fit: contain;                   /* Mantener la proporción de los pictogramas */
-    cursor: pointer;                       /* Cursor cambia al pasar sobre el pictograma */
-}
-
-#pictogram-container::-webkit-scrollbar {
-    width: 8px;                            /* Ancho de la barra de desplazamiento */
-}
-
-#pictogram-container::-webkit-scrollbar-thumb {
-    background-color: #888;                /* Color de la barra de desplazamiento */
-    border-radius: 4px;                    /* Bordes redondeados */
-}
-
-#pictogram-container::-webkit-scrollbar-thumb:hover {
-    background-color: #555;                /* Color de la barra cuando pasas el cursor por encima */
-}
-
 
 #pictogram-container img {
     width: 90px;  /* Ancho de la imagen */
@@ -169,14 +145,14 @@ body {
     object-fit: contain; /* Ajusta la imagen manteniendo su proporción */
     margin: 1px;  /* Espacio entre las imágenes */
     cursor: pointer;
-}
+  }
 
 /* Botones de limpiar */
 .clear-button {
     background-color: #dc3545;
     font-family: "Bebas Neue", sans-serif;
 }
-/*.clear-button:hover {
+.clear-button:hover {
     background-color: #c82333;
     font-family: "Bebas Neue", sans-serif;
 }
