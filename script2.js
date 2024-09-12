@@ -57,23 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
     gifImage.src = 'https://imgur.com/u4azcOa.gif?cid=790b76118ma61zm4gszrdt0cgyvdkutqh2zwmuqipqt5ihbf&ep=v1_gifs_search&rid=giphy.gif&ct=g'; // URL del GIF principal
     });
 
-     // Detener la reproducción de cualquier GIF anterior
-    const gifContainer = document.getElementById("gif-container");
-    gifContainer.innerHTML = ''; // Limpiar el contenedor de GIFs
-    const defaultGif = document.createElement("img");
-   gifContainer.appendChild(defaultGif);
-// Función para manejar la reproducción de GIFs al enviar el texto a voz
-document.getElementById("send-button").addEventListener("click", function() {
-    // Código para reproducir los GIFs según los pictogramas seleccionados
-    selectedGIFs.forEach(gifURL => {
-        const gifContainer = document.getElementById("gif-container");
-        const imgElement = document.createElement("img");
-        imgElement.src = gifURL;
-        imgElement.style.width = "200px"; // Tamaño del GIF
-        imgElement.style.height = "200px";
-        gifContainer.appendChild(imgElement);
-    
-  
+   
     // Maneja el evento de clic en el botón para limpiar el textbox grande
     clearLargeTextboxButton.addEventListener('click', () => {
         largeTextbox.value = ''; // Limpia el contenido del textbox grande
@@ -102,11 +86,27 @@ document.getElementById("send-button").addEventListener("click", function() {
             { src: 'https://imgur.com/MVPNqS4.png', text: 'No' ,gif: 'https://imgur.com/q0qCp75.gif'},
             { src: 'https://imgur.com/ltDOrIj.png', text: 'si', gif: 'https://imgur.com/osUhU0J.gif'},
         ],
-        Transporte: [
+        Familia: [
             { src: 'https://i.pinimg.com/236x/d0/5c/49/d05c490462edd8f16e9ca52b9c00976a.jpg', text: 'Transporte 1' },
             { src: 'https://i.pinimg.com/236x/1a/2d/19/1a2d19e7cb7952b56562dd94ae93ec97.jpg', textpng: 'Transporte 2' }
         ],
-        Amor: [
+      Colores: [
+            { src: 'https://i.pinimg.com/236x/d0/5c/49/d05c490462edd8f16e9ca52b9c00976a.jpg', text: 'Transporte 1' },
+            { src: 'https://i.pinimg.com/236x/1a/2d/19/1a2d19e7cb7952b56562dd94ae93ec97.jpg', textpng: 'Transporte 2' }
+        ],
+      Tiempo: [
+            { src: 'https://i.pinimg.com/236x/d0/5c/49/d05c490462edd8f16e9ca52b9c00976a.jpg', text: 'Transporte 1' },
+            { src: 'https://i.pinimg.com/236x/1a/2d/19/1a2d19e7cb7952b56562dd94ae93ec97.jpg', textpng: 'Transporte 2' }
+        ],
+      Compras: [
+            { src: 'https://i.pinimg.com/236x/d0/5c/49/d05c490462edd8f16e9ca52b9c00976a.jpg', text: 'Transporte 1' },
+            { src: 'https://i.pinimg.com/236x/1a/2d/19/1a2d19e7cb7952b56562dd94ae93ec97.jpg', textpng: 'Transporte 2' }
+        ],
+      Números: [
+            { src: 'https://i.pinimg.com/236x/d0/5c/49/d05c490462edd8f16e9ca52b9c00976a.jpg', text: 'Transporte 1' },
+            { src: 'https://i.pinimg.com/236x/1a/2d/19/1a2d19e7cb7952b56562dd94ae93ec97.jpg', textpng: 'Transporte 2' }
+        ],
+        Sentimientos: [
             { src: 'https://imgur.com/l0nYpkD.png', text: 'Feliz' },
             { src: 'https://imgur.com/xWw7oYY.png', text: 'Aburrido' },
             { src: 'https://imgur.com/X8O2Ch4.png', text: 'Agradecido' },
@@ -203,7 +203,7 @@ sendButton.addEventListener('click', () => {
         selectedGIFs.forEach((gif, index) => {
             setTimeout(() => {
                 document.getElementById('selected-gif').src = gif; // Cambia el GIF en el contenedor
-            }, index * 1000); // Cambia cada GIF después de 1 segundos (ajústalo si es necesario)
+            }, index * 3000); // Cambia cada GIF después de 3 segundos (ajústalo si es necesario)
         });
       const utterance = new SpeechSynthesisUtterance(textToSpeak);
         utterance.lang = 'es-ES'; // Puedes cambiar el idioma si es necesario
