@@ -171,6 +171,34 @@ body {
     background-color: #c82333;
     font-family: "Bebas Neue", sans-serif;
 }
+/* Contenedor Inferior para el botón de donación y redes sociales */
+#top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+       padding: 10px 20px;
+    border-bottom: 2px solid #1B087E; /* Borde inferior */
+    margin-bottom: 20px;
+}
+
+/* Estilos para el botón de donación */
+#donate-button img {
+    width: 100px; /* Tamaño del botón de donación */
+    height: auto;
+    cursor: pointer;
+}
+
+/* Contenedor de redes sociales */
+#social-media {
+    display: flex;
+    gap: 10px; /* Espacio entre los iconos */
+}
+
+#social-media a img {
+    width: 40px; /* Tamaño de los iconos de redes sociales */
+    height: auto;
+    cursor: pointer;
+}
 
 
 
