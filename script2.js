@@ -215,7 +215,7 @@ document.getElementById("clear-main-textbox").addEventListener("click", function
     selectedGIFs = [];
 
     // Restaurar el GIF principal en el contenedor de GIFs
-    document.getElementById("selected-gif").src = "https://imgur.com/u4azcOa.gif";
+    document.getElementById("selected-gif").src = 'https://imgur.com/u4azcOa.gif?cid=790b76118ma61zm4gszrdt0cgyvdkutqh2zwmuqipqt5ihbf&ep=v1_gifs_search&rid=giphy.gif';
 
     console.log("Caché de palabras seleccionadas limpiada");
 
@@ -223,15 +223,10 @@ document.getElementById("clear-main-textbox").addEventListener("click", function
     const gifContainer = document.getElementById("gif-container");
     gifContainer.innerHTML = ''; // Limpiar cualquier GIF actual
     const defaultGif = document.createElement("img");
-    defaultGif.src = "https://imgur.com/u4azcOa.gif"; // URL de tu GIF principal
+    defaultGif.src = 'https://imgur.com/u4azcOa.gif?cid=790b76118ma61zm4gszrdt0cgyvdkutqh2zwmuqipqt5ihbf&ep=v1_gifs_search&rid=giphy.gif'; // URL de tu GIF principal
     gifContainer.appendChild(defaultGif);  
+  
 });
-
-   // Cambia el GIF a la imagen principal
-    
-    gifImage.src = 'https://imgur.com/u4azcOa.gif?cid=790b76118ma61zm4gszrdt0cgyvdkutqh2zwmuqipqt5ihbf&ep=v1_gifs_search&rid=giphy.gif&ct=g'; // URL del GIF principal
-    });
-
 
   // Función para manejar la selección de pictogramas
 function selectPictogram(pictogramWord, gifURL) {
@@ -260,7 +255,7 @@ document.getElementById("send-button").addEventListener("click", function() {
         selectedGIFs.forEach(gifURL => {
             const imgElement = document.createElement("img");
             imgElement.src = gifURL;
-            imgElement.style.width = "200px"; // Ajusta el tamaño del GIF si es necesario
+            imgElement.style.width = "200px"; // Ajusta el tamaño del GIF
             imgElement.style.height = "200px";
             gifContainer.appendChild(imgElement);
         });
