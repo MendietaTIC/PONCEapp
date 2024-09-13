@@ -76,8 +76,24 @@ document.addEventListener('DOMContentLoaded', () => {
             { src: 'https://imgur.com/ltDOrIj.png', text: 'si', gif: 'https://imgur.com/osUhU0J.gif'},
         ],
         Familia: [
-            { src: 'https://i.pinimg.com/236x/d0/5c/49/d05c490462edd8f16e9ca52b9c00976a.jpg', text: 'Transporte 1' },
-            { src: 'https://i.pinimg.com/236x/1a/2d/19/1a2d19e7cb7952b56562dd94ae93ec97.jpg', textpng: 'Transporte 2' }
+            { src: 'https://imgur.com/0HHVmSK.png', text: 'Abuela' },
+            { src: 'https://imgur.com/aI2mU9z.png', text: 'Abuelo' },
+            { src: 'https://imgur.com/0myfCAN.png', text: 'Amigas' },
+            { src: 'https://imgur.com/mh3KqlT.png', text: 'Amigos' },
+            { src: 'https://imgur.com/Mok952t.png', text: 'Esposo' },
+            { src: 'https://imgur.com/u8IgkZq.png', text: 'Mamá' },
+            { src: 'https://imgur.com/SUYdNQA.png', text: 'Hermana' },
+            { src: 'https://imgur.com/JagBK3k.png', text: 'Hermano' },
+            { src: 'https://imgur.com/0P2BLVj.png', text: 'Novio' },
+            { src: 'https://imgur.com/a7rwAN2.png', text: 'Nuera' },
+            { src: 'https://imgur.com/r38CYot.png', text: 'Papá' },
+            { src: 'https://imgur.com/vGqGSFz.png', text: 'Primo' },
+            { src: 'https://imgur.com/hyPBCIJ.png', text: 'Sobrina' },
+            { src: 'https://imgur.com/G9J3UVu.png', text: 'Sobrino' },
+            { src: 'https://imgur.com/pg8jb4b.png', text: 'Yerno' },
+            { src: 'https://imgur.com/8T7d4bm.png', text: 'Tío' },
+          
+          
         ],
       Colores: [
             { src: 'https://i.pinimg.com/236x/d0/5c/49/d05c490462edd8f16e9ca52b9c00976a.jpg', text: 'Transporte 1' },
@@ -116,8 +132,24 @@ document.addEventListener('DOMContentLoaded', () => {
             { src: 'https://imgur.com/650hJsd.png', text: 'Asco' },
         ],
         Deporte: [
-            { src: 'https://i.pinimg.com/236x/d0/5c/49/d05c490462edd8f16e9ca52b9c00976a.jpg', text: 'Deporte 1' },
-            { src: 'https://i.pinimg.com/236x/1a/2d/19/1a2d19e7cb7952b56562dd94ae93ec97.jpg', text: 'Deporte 2' }
+            { src: 'https://imgur.com/l0nYpkD.png', text: 'Feliz' },
+            { src: 'https://imgur.com/xWw7oYY.png', text: 'Aburrido' },
+            { src: 'https://imgur.com/X8O2Ch4.png', text: 'Agradecido' },
+            { src: 'https://imgur.com/l8yjOuA.png', text: 'Cansado' },
+            { src: 'https://imgur.com/KEqyPuj.png', text: 'Celos' },  
+            { src: 'https://imgur.com/bUv4PMw.png', text: 'Sorpresa' },
+            { src: 'https://imgur.com/Yw9MAAZ.png', text: 'Culposo' },
+            { src: 'https://imgur.com/ySVNu7m.png', text: 'Enfermo' },
+            { src: 'https://imgur.com/eI7uZpz.png', text: 'Enojo' },
+            { src: 'https://imgur.com/3UUhZc5.png', text: 'Envidia' },
+            { src: 'https://imgur.com/Aa010Tm.png', text: 'Estresado' },
+            { src: 'https://imgur.com/R44RLh1.png', text: 'Frustrado' },
+            { src: 'https://imgur.com/LXb8w8b.png', text: 'Miedo' },
+            { src: 'https://imgur.com/v2RM0ju.png', text: 'Orgulloso' },
+            { src: 'https://imgur.com/RyeykHd.png', text: 'Preocupado' },
+            { src: 'https://imgur.com/hkMBNR5.png', text: 'Triste' },
+            { src: 'https://imgur.com/r8hTMRR.png', text: 'Apenado' },
+            { src: 'https://imgur.com/650hJsd.png', text: 'Asco' },
         ],
        Sujeto: [
             { src: 'https://i.pinimg.com/236x/d0/5c/49/d05c490462edd8f16e9ca52b9c00976a.jpg', text: 'Deporte 1' },
