@@ -291,24 +291,8 @@ document.getElementById("send-button").addEventListener("click", function() {
         console.log("Convirtiendo a voz: " + text);
       
     // Aplicando unos cambios a texto a voz
-      // Obtener el texto del textarea
-    let text = document.getElementById('textbox').value;
-
-    // Verificar si el navegador soporta la API de síntesis de voz
-    if ('speechSynthesis' in window) {
-        // Crear una instancia de SpeechSynthesisUtterance
-        let speech = new SpeechSynthesisUtterance(text);
-        
-        // Configurar las propiedades del habla (opcional)
-        speech.lang = 'es-ES'; // Idioma: Español de España
-        speech.pitch = 1;      // Tono de voz (1 es el valor por defecto)
-        speech.rate = 1;       // Velocidad de habla (1 es el valor por defecto)
-
-        // Iniciar la síntesis de voz
-        window.speechSynthesis.speak(speech);
-    } else {
-        alert('Lo siento, tu navegador no soporta la API de síntesis de voz.');
-    }; 
+      
+      
       
     // probando hasta aqui 
       
