@@ -382,6 +382,14 @@ document.getElementById("send-button").addEventListener("click", function() {
         // Iniciar la secuencia de GIFs
         showGIFsSequentially(0);
     }
+// boton donar
+  function mostrarVentana() {
+    document.getElementById('ventanaModal').style.display = 'block'; // Muestra la ventana modal
+}
+
+function cerrarVentana() {
+    document.getElementById('ventanaModal').style.display = 'none'; // Oculta la ventana modal
+}
 
     
 });

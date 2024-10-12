@@ -240,6 +240,39 @@ button {
     height: auto;
     cursor: pointer;
 }
+/*para donar*/
+/* Estilos de la ventana modal */
+.modal {
+    display: none; /* Oculta por defecto */
+    position: fixed;
+    z-index: 1; /* Asegura que esté por encima del contenido */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+}
 
+.modal-content {
+    background-color: white;
+    margin: 15% auto; /* Centra verticalmente la ventana */
+    padding: 20px;
+    border: 1px solid #fffff8;
+    width: 60%; /* Ajusta el tamaño */
+    text-align: center; /* Centra el contenido */
+}
+
+/* Estilos del botón "Cerrar" */
+.cerrar {
+    color: #ffffff;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.cerrar:hover {
+    color: black;
+}
 
 
