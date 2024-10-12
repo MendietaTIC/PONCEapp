@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Define los pictogramas para cada categoría
     const pictograms = {
         Saludo: [
-            { src: 'https://imgur.com/0jMhvF1.png', text: 'Hola', gif: 'https://i.imgur.com/jkMwS5V.gif'},
+            { src: 'https://imgur.com/0jMhvF1.png', text: 'Hola', gif: 'https://imgur.com/gCm9Xme.gif'},
             { src: 'https://imgur.com/uJcgD3m.png', text: 'OK', gif: 'https://imgur.com/CTSf234.gif'},
             { src: 'https://imgur.com/4isJHZV.png', text: 'Perdón' ,gif: 'https://imgur.com/cCIbOx0.gif'},
             { src: 'https://imgur.com/ykz2BHo.png', text: 'Por favor', gif: 'https://imgur.com/NQrRaXe.gif'},
@@ -74,17 +74,18 @@ document.addEventListener('DOMContentLoaded', () => {
             { src: 'https://imgur.com/QzVmDit.png', text: 'Buenas Noches' ,gif: 'https://imgur.com/dXsrX7c.gif'},
             { src: 'https://imgur.com/iKfxBjl.png', text: 'Buenas Tardes',gif: 'https://imgur.com/7Gn5dX4.gif'},
             { src: 'https://imgur.com/9NJ3XjK.png', text: 'Buenos Días' , gif: 'https://imgur.com/y5xoOSX.gif'},
-            { src: 'https://imgur.com/LTpjLd1.png', text: 'Disculpa' ,gif: 'https://imgur.com/5kGGUxP.gif'},
+            { src: 'https://imgur.com/LTpjLd1.png', text: 'Disculpa' ,gif: 'https://imgur.com/7hFqsvv.gif'},
             { src: 'https://imgur.com/DrV0M55.png', text: 'Estoy Bien' ,gif: 'https://imgur.com/5kGGUxP.gif'},
             { src: 'https://imgur.com/TRGRCZr.png', text: 'Estoy mal' ,gif: 'https://imgur.com/5f202zR.gif'},
             { src: 'https://imgur.com/mr5ReMR.png', text: 'Gracias' ,gif: 'https://imgur.com/RVi4veK.gif'},
             { src: 'https://imgur.com/MVPNqS4.png', text: 'No' ,gif: 'https://imgur.com/vyTqnV5.gif'},
             { src: 'https://imgur.com/ltDOrIj.png', text: 'si', gif: 'https://imgur.com/q0qCp75.gif'},
+            { src: 'https://imgur.com/m7ajgH5.png', text: 'adios', gif: 'https://imgur.com/jkMwS5V.gif'},
         ],
         Familia: [
-            { src: 'https://imgur.com/0HHVmSK.png', text: 'Abuela' },
+            { src: 'https://imgur.com/0HHVmSK.png', text: 'Abuela',gif: 'https://imgur.com/5D79p3l.gif' },
             { src: 'https://imgur.com/aI2mU9z.png', text: 'Abuelo',gif: 'https://imgur.com/5D79p3l.gif'},
-            { src: 'https://imgur.com/0myfCAN.png', text: 'Amigas' },
+            { src: 'https://imgur.com/0myfCAN.png', text: 'Amigas',gif: 'https://imgur.com/1qxcekp.gif' },
             { src: 'https://imgur.com/mh3KqlT.png', text: 'Amigos',gif: 'https://imgur.com/1qxcekp.gif'},
             { src: 'https://imgur.com/Mok952t.png', text: 'Esposo',gif: 'https://imgur.com/dGniO7Q.gif'},
             { src: 'https://imgur.com/u8IgkZq.png', text: 'Mamá' ,gif: 'https://imgur.com/Xj4sF2i.gif'},
@@ -94,7 +95,6 @@ document.addEventListener('DOMContentLoaded', () => {
             { src: 'https://imgur.com/a7rwAN2.png', text: 'Nuera' },
             { src: 'https://imgur.com/r38CYot.png', text: 'Papá' ,gif: 'https://imgur.com/5cBQPJG.gif'},
             { src: 'https://imgur.com/vGqGSFz.png', text: 'Primo' },
-            { src: 'https://imgur.com/hyPBCIJ.png', text: 'Sobrina' },
             { src: 'https://imgur.com/G9J3UVu.png', text: 'Sobrino' },
             { src: 'https://imgur.com/pg8jb4b.png', text: 'Yerno' ,gif: 'https://imgur.com/bvPc8Te.gif'},
             { src: 'https://imgur.com/8T7d4bm.png', text: 'Tío' },
@@ -128,8 +128,13 @@ document.addEventListener('DOMContentLoaded', () => {
             { src: 'https://i.pinimg.com/236x/1a/2d/19/1a2d19e7cb7952b56562dd94ae93ec97.jpg', text: 'Siempre',gif: 'https://imgur.com/TCNin6s.gif'}
         ],
       Compras: [
-            { src: 'https://i.pinimg.com/236x/d0/5c/49/d05c490462edd8f16e9ca52b9c00976a.jpg', text: 'Transporte 1' },
-            { src: 'https://i.pinimg.com/236x/1a/2d/19/1a2d19e7cb7952b56562dd94ae93ec97.jpg', textpng: 'Transporte 2' }
+            { src: 'https://.jpg', text: 'Cuanto Vale' },
+            { src: 'https://.jpg', text: 'Hay descuento' },
+            { src: 'https://.jpg', text: 'Vuelto' },
+            { src: 'https://.jpg', text: 'Al detalle' },
+            { src: 'https://.jpg', text: 'Por mayor' },
+            { src: 'https://.jpg', text: 'Purpura' },
+            { src: 'https://.jpg', text: 'Azul' }
         ],
       Números: [
             { src: 'https://imgur.com/Lphcoeo.jpg', text: '0',gif: 'https://imgur.com/InHwYfv.gif' },
