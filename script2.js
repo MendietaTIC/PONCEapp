@@ -111,21 +111,21 @@ document.addEventListener('DOMContentLoaded', () => {
             { src: 'https://.jpg', text: 'Azul' }
         ],
       Tiempo: [
-            { src: 'https://i.pinimg.com/236x/d0/5c/49/d05c490462edd8f16e9ca52b9c00976a.jpg', text: 'Lunes ' ,gif: 'https://imgur.com/eROeJkX.gif'},
-            { src: 'https://i.pinimg.com/236x/1a/2d/19/1a2d19e7cb7952b56562dd94ae93ec97.jpg', text: 'Martes ',gif: 'https://imgur.com/bvPc8Te.gif'},
-            { src: 'https://i.pinimg.com/236x/d0/5c/49/d05c490462edd8f16e9ca52b9c00976a.jpg', text: 'Miercoles' ,gif: 'https://imgur.com/ngisDb7.gif'},
-            { src: 'https://i.pinimg.com/236x/1a/2d/19/1a2d19e7cb7952b56562dd94ae93ec97.jpg', text: 'Jueves' ,gif: 'https://imgur.com/rTRn6GT.gif'},
-            { src: 'https://i.pinimg.com/236x/d0/5c/49/d05c490462edd8f16e9ca52b9c00976a.jpg', text: 'Viernes' ,gif: 'https://imgur.com/OLpi6uU.gif'},
-            { src: 'https://i.pinimg.com/236x/d0/5c/49/d05c490462edd8f16e9ca52b9c00976a.jpg', text: 'Sabado' ,gif: 'https://imgur.com/eSg6aRd.gif'},
-            { src: 'https://i.pinimg.com/236x/1a/2d/19/1a2d19e7cb7952b56562dd94ae93ec97.jpg', text: 'Domingo' ,gif: 'https://imgur.com/RjKoSKo.gif'},
-            { src: 'https://i.pinimg.com/236x/d0/5c/49/d05c490462edd8f16e9ca52b9c00976a.jpg', text: 'Despues' ,gif: 'https://imgur.com/hSKagz8.gif'},
-            { src: 'https://i.pinimg.com/236x/1a/2d/19/1a2d19e7cb7952b56562dd94ae93ec97.jpg', text: 'Antier' ,gif: 'https://imgur.com/WM6hU89.gif'},
-            { src: 'https://i.pinimg.com/236x/d0/5c/49/d05c490462edd8f16e9ca52b9c00976a.jpg', text: 'Tarde' ,gif: 'https://imgur.com/i5qjeEW.gif'},
-            { src: 'https://i.pinimg.com/236x/1a/2d/19/1a2d19e7cb7952b56562dd94ae93ec97.jpg', text: 'Ayer' ,gif: 'https://imgur.com/yCivOu0.gif'},
-            { src: 'https://i.pinimg.com/236x/d0/5c/49/d05c490462edd8f16e9ca52b9c00976a.jpg', text: 'mañana' ,gif: 'https://imgur.com/iyTyYXm.gif'},
-            { src: 'https://i.pinimg.com/236x/d0/5c/49/d05c490462edd8f16e9ca52b9c00976a.jpg', text: 'hoy' ,gif: 'https://imgur.com/OBJ53dp.gif'},
-            { src: 'https://i.pinimg.com/236x/d0/5c/49/d05c490462edd8f16e9ca52b9c00976a.jpg', text: 'nunca' ,gif: 'https://imgur.com/JnwBGri.gif'},
-            { src: 'https://i.pinimg.com/236x/1a/2d/19/1a2d19e7cb7952b56562dd94ae93ec97.jpg', text: 'Siempre',gif: 'https://imgur.com/TCNin6s.gif'}
+            { src: '.jpg', text: 'Lunes ' ,gif: 'https://imgur.com/eROeJkX.gif'},
+            { src: '.jpg', text: 'Martes ',gif: 'https://imgur.com/bvPc8Te.gif'},
+            { src: '.jpg', text: 'Miercoles' ,gif: 'https://imgur.com/ngisDb7.gif'},
+            { src: '.jpg', text: 'Jueves' ,gif: 'https://imgur.com/rTRn6GT.gif'},
+            { src: '.jpg', text: 'Viernes' ,gif: 'https://imgur.com/OLpi6uU.gif'},
+            { src: '.jpg', text: 'Sabado' ,gif: 'https://imgur.com/eSg6aRd.gif'},
+            { src: '.jpg', text: 'Domingo' ,gif: 'https://imgur.com/RjKoSKo.gif'},
+            { src: '.jpg', text: 'Despues' ,gif: 'https://imgur.com/hSKagz8.gif'},
+            { src: '.jpg', text: 'Antier' ,gif: 'https://imgur.com/WM6hU89.gif'},
+            { src: '.jpg', text: 'Tarde' ,gif: 'https://imgur.com/i5qjeEW.gif'},
+            { src: '.jpg', text: 'Ayer' ,gif: 'https://imgur.com/yCivOu0.gif'},
+            { src: '.jpg', text: 'mañana' ,gif: 'https://imgur.com/iyTyYXm.gif'},
+            { src: '.jpg', text: 'hoy' ,gif: 'https://imgur.com/OBJ53dp.gif'},
+            { src: '.jpg', text: 'nunca' ,gif: 'https://imgur.com/JnwBGri.gif'},
+            { src: '.jpg', text: 'Siempre',gif: 'https://imgur.com/TCNin6s.gif'}
         ],
       Compras: [
             { src: 'https://.jpg', text: 'Cuanto Vale' },
@@ -133,8 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
             { src: 'https://.jpg', text: 'Vuelto' },
             { src: 'https://.jpg', text: 'Al detalle' },
             { src: 'https://.jpg', text: 'Por mayor' },
-            { src: 'https://.jpg', text: 'Purpura' },
-            { src: 'https://.jpg', text: 'Azul' }
+       
         ],
       Números: [
             { src: 'https://imgur.com/Lphcoeo.jpg', text: '0',gif: 'https://imgur.com/InHwYfv.gif' },
