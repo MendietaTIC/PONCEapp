@@ -108,8 +108,20 @@ document.addEventListener('DOMContentLoaded', () => {
             { src: 'https://i.pinimg.com/236x/1a/2d/19/1a2d19e7cb7952b56562dd94ae93ec97.jpg', textpng: 'Transporte 2' }
         ],
       Números: [
-            { src: 'https://i.pinimg.com/236x/d0/5c/49/d05c490462edd8f16e9ca52b9c00976a.jpg', text: 'Transporte 1' },
-            { src: 'https://i.pinimg.com/236x/1a/2d/19/1a2d19e7cb7952b56562dd94ae93ec97.jpg', textpng: 'Transporte 2' }
+            { src: 'https://imgur.com/Lphcoeo.jpg', text: '0' },
+            { src: 'https://imgur.com/ND7dfFa.jpg', text: '0' },
+            { src: 'https://imgur.com/Lphcoeo.jpg', text: '1' },
+            { src: 'https://imgur.com/Lphcoeo.jpg', text: '2' },
+            { src: 'https://imgur.com/Lphcoeo.jpg', text: '3' },
+            { src: 'https://imgur.com/Lphcoeo.jpg', text: '4' },
+            { src: 'https://imgur.com/Lphcoeo.jpg', text: '5' },
+            { src: 'https://imgur.com/Lphcoeo.jpg', text: '6' },
+            { src: 'https://imgur.com/Lphcoeo.jpg', text: '7' },
+            { src: 'https://imgur.com/Lphcoeo.jpg', text: '8' },
+            { src: 'https://imgur.com/Lphcoeo.jpg', text: '9' },
+            { src: 'https://imgur.com/Lphcoeo.jpg', text: '10' },
+            { src: 'https://imgur.com/Lphcoeo.jpg', text: '100' },
+            
         ],
         Sentimientos: [
             { src: 'https://imgur.com/l0nYpkD.png', text: 'Feliz' },
