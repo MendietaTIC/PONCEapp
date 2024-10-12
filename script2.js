@@ -102,8 +102,13 @@ document.addEventListener('DOMContentLoaded', () => {
           
         ],
       Colores: [
-            { src: 'https://i.pinimg.com/236x/d0/5c/49/d05c490462edd8f16e9ca52b9c00976a.jpg', text: 'Transporte 1' },
-            { src: 'https://i.pinimg.com/236x/1a/2d/19/1a2d19e7cb7952b56562dd94ae93ec97.jpg', textpng: 'Transporte 2' }
+            { src: 'https://.jpg', text: 'Rojo' },
+            { src: 'https://.jpg', text: 'verde' },
+            { src: 'https://.jpg', text: 'naranja' },
+            { src: 'https://.jpg', text: 'negro' },
+            { src: 'https://.jpg', text: 'blanco' },
+            { src: 'https://.jpg', text: 'Purpura' },
+            { src: 'https://.jpg', text: 'Azul' }
         ],
       Tiempo: [
             { src: 'https://i.pinimg.com/236x/d0/5c/49/d05c490462edd8f16e9ca52b9c00976a.jpg', text: 'Lunes ' ,gif: 'https://imgur.com/eROeJkX.gif'},

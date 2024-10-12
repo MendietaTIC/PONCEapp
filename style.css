@@ -39,7 +39,7 @@ body {
 }
 
 #main-textbox {
-    width: 50%; /* Ajusta el tamaño del TextBox según sea necesario */
+    width: 60%; /* Ajusta el tamaño del TextBox según sea necesario */
     margin-right: 5px; /* Espacio entre el TextBox y los botones */
 }
 
