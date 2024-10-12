@@ -33,6 +33,21 @@ body {
     padding: 0;
 }
 
+.input-container {
+    display: flex;
+    align-items: center;
+}
+
+#main-textbox {
+    width: 50%; /* Ajusta el tamaño del TextBox según sea necesario */
+    margin-right: 5px; /* Espacio entre el TextBox y los botones */
+}
+
+button {
+    margin-right: 2px;
+    
+}
+
 #gif-container img {
     text-align: center;
     width: 180px; /* Ajusta el ancho según tu necesidad */

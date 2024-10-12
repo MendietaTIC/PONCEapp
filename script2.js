@@ -40,7 +40,13 @@ document.addEventListener('DOMContentLoaded', () => {
         largeTextbox.value = transcript; // Muestra el texto reconocido en el textbox
     };
    
-    
+    //  añadir pictogramas al texbox_Main
+  function agregarPictograma(pictogramaTexto) {
+    var textBox1 = document.getElementById('textBox1');
+    textBox1.value += ' ' + pictogramaTexto;  // Añade la palabra del pictograma al texto existente
+}
+
+  
    // Obtiene las referencias a los elementos
     const clearMainTextboxButton = document.getElementById('clear-main-textbox');
     const clearLargeTextboxButton = document.getElementById('clear-large-textbox');
