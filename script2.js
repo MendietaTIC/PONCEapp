@@ -231,8 +231,7 @@ function loadPictograms(category) {
     });
 }
 
-  
- 
+   
     function loadPictograms(category) {
         pictogramContainer.innerHTML = ''; // Limpia el contenedor de pictogramas
         const items = pictograms[category] || [];
@@ -327,13 +326,8 @@ document.getElementById("send-button").addEventListener("click", function() {
     if (text) {
         // Aquí puedes implementar la conversión de texto a voz
         console.log("Convirtiendo a voz: " + text);
-      
-  
-      
-      
-      // Aplicando unos cambios a texto a voz
-   
-   
+        
+
       
     // probando hasta aqui 
       
@@ -382,14 +376,7 @@ document.getElementById("send-button").addEventListener("click", function() {
         // Iniciar la secuencia de GIFs
         showGIFsSequentially(0);
     }
-// boton donar
-  function mostrarVentana() {
-    document.getElementById('ventanaModal').style.display = 'block'; // Muestra la ventana modal
-}
 
-function cerrarVentana() {
-    document.getElementById('ventanaModal').style.display = 'none'; // Oculta la ventana modal
-}
 
     
 });

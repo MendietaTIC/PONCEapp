@@ -46,18 +46,71 @@
         </div>
     
 <div id="top-bar">
-    <div id="donate-button">
-        
-          <img src="https://imgur.com/WpuNgCW.png" alt="Donar" />
-        </a>
-    </div>
-  <!-- Ventana modal -->
+  <!-- boton donate -->
+     <style>
+        /* Estilos del botón "Cerrar" */
+        .cerrar {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .cerrar:hover {
+            color: black;
+        }
+
+        /* Estilos de la ventana modal */
+        .modal {
+            display: none; /* Oculta por defecto */
+            position: fixed; 
+            z-index: 1; /* Asegura que esté por encima del contenido */
+            left: 0;
+            top: 0;
+            width: 100%; /* Tamaño completo */
+            height: 100%; /* Tamaño completo */
+            background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 15% auto; /* Centra verticalmente la ventana */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 60%; /* Ajusta el tamaño */
+            text-align: center; /* Centra el contenido */
+        }
+    </style>
+
+<body>
+
+<div id="donate-button">
+    <a href="javascript:void(0);" onclick="mostrarVentana();">
+        <img src="https://imgur.com/WpuNgCW.png" alt="Donar" />
+    </a>
+</div>
+
+<!-- Ventana modal -->
 <div id="ventanaModal" class="modal">
     <div class="modal-content">
         <span class="cerrar" onclick="cerrarVentana()">&times;</span>
         <img src="https://imgur.com/9YbLpoK.png" alt="Imagen de Donación" style="width: 100%;">
     </div>
 </div>
+
+<script>
+    function mostrarVentana() {
+        document.getElementById('ventanaModal').style.display = 'block'; // Muestra la ventana modal
+    }
+
+    function cerrarVentana() {
+        document.getElementById('ventanaModal').style.display = 'none'; // Oculta la ventana modal
+    }
+</script>
+
+</body>
+        <!-- End of boton donate -->
   
     <div id="social-media">
         <a href="https://www.facebook.com" target="_blank">
