@@ -118,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
             { src: 'https://imgur.com/kv0AkV7.jpg', text: 'Viernes' ,gif: 'https://imgur.com/OLpi6uU.gif'},
             { src: 'https://imgur.com/xUnHw2L.jpg', text: 'Sabado' ,gif: 'https://imgur.com/eSg6aRd.gif'},
             { src: 'https://imgur.com/Nw4RWW3.jpg', text: 'Domingo' ,gif: 'https://imgur.com/RjKoSKo.gif'},
-            { src: '.jpg', text: 'Despues' ,gif: 'https://imgur.com/hSKagz8.gif'},
+            { src: 'https://imgur.com/VdAkLvA.jpg', text: 'Despues' ,gif: 'https://imgur.com/hSKagz8.gif'},
             { src: 'https://imgur.com/xdzWzP4.jpg', text: 'Antier' ,gif: 'https://imgur.com/WM6hU89.gif'},
             { src: 'https://imgur.com/eluRWEE.jpg', text: 'Tarde' ,gif: 'https://imgur.com/i5qjeEW.gif'},
             { src: 'https://imgur.com/UkeWgTo.jpg', text: 'Ayer' ,gif: 'https://imgur.com/yCivOu0.gif'},
@@ -191,11 +191,11 @@ document.addEventListener('DOMContentLoaded', () => {
             { src: 'https://imgur.com/DWz8qwS.png', text: 'Zumba' },
         ],
        Sujeto: [
-            { src: 'https://i.pinimg.com/236x/d0/5c/49/d05c490462edd8f16e9ca52b9c00976a.jpg', text: 'Yo',gif: 'https://imgur.com/xcuk66z.gif'},
-            { src: 'https://i.pinimg.com/236x/d0/5c/49/d05c490462edd8f16e9ca52b9c00976a.jpg', text: 'TU', gif: 'https://imgur.com/Uni8g4W.gif'},
-            { src: 'https://i.pinimg.com/236x/d0/5c/49/d05c490462edd8f16e9ca52b9c00976a.jpg', text: 'Él', gif: 'https://imgur.com/DFMD5mH.gif'},
-            { src: 'https://i.pinimg.com/236x/d0/5c/49/d05c490462edd8f16e9ca52b9c00976a.jpg', text: 'Nosotros', gif: 'https://imgur.com/L6pkD6U.gif'},
-            { src: 'https://i.pinimg.com/236x/d0/5c/49/d05c490462edd8f16e9ca52b9c00976a.jpg', text: 'Ellos', gif: 'https://imgur.com/pevG8Uz.gif'},
+            { src: 'https://imgur.com/YSA6x9B.png', text: 'Yo',gif: 'https://imgur.com/xcuk66z.gif'},
+            { src: 'https://imgur.com/4j5HxtL.png', text: 'TU', gif: 'https://imgur.com/Uni8g4W.gif'},
+            { src: 'https://imgur.com/4x9wNE5.png', text: 'Él', gif: 'https://imgur.com/DFMD5mH.gif'},
+            { src: 'https://imgur.com/MSH4UJq.png', text: 'Nosotros', gif: 'https://imgur.com/L6pkD6U.gif'},
+            { src: 'https://imgur.com/evw33Fo.png', text: 'Ellos', gif: 'https://imgur.com/pevG8Uz.gif'},
             
         ]
     };
