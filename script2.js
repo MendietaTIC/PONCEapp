@@ -129,10 +129,10 @@ document.addEventListener('DOMContentLoaded', () => {
         ],
       Compras: [
             { src: 'https://imgur.com/Fk7MjpC.jpg', text: 'Cuanto Vale' },
-            { src: 'https://.jpg', text: 'Hay descuento' },
-            { src: 'https://.jpg', text: 'Vuelto' },
-            { src: 'https://.jpg', text: 'Al detalle' },
-            { src: 'https://.jpg', text: 'Por mayor' },
+            { src: 'https://imgur.com/L8TIxo5.jpg', text: 'Hay descuento' },
+            { src: 'https://imgur.com/9SeN1Lw.jpg', text: 'Vuelto' },
+            { src: 'https://imgur.com/g7LUgQN.jpg', text: 'Cuanto es lo menos' },
+            { src: 'https://imgur.com/vkhH9gd.jpg', text: 'Por mayor' },
        
         ],
       Números: [
