@@ -102,12 +102,14 @@ document.addEventListener('DOMContentLoaded', () => {
           
         ],
       Colores: [
-            { src: '.jpg', text: 'Rojo' },
-            { src: '.jpg', text: 'verde' },
-            { src: '.jpg', text: 'naranja' },
-            { src: '.jpg', text: 'negro' },
+            { src: 'https://imgur.com/pc2tPRE.jpg', text: 'Rojo' },
+            { src: 'https://imgur.com/qH44qFk.jpg', text: 'verde' },
+            { src: 'https://imgur.com/l2SQYm2.jpg', text: 'naranja' },
+            { src: 'https://imgur.com/9HjWN3Q.jpg', text: 'negro' },
             { src: 'https://imgur.com/Hh8ITaJ.jpg', text: 'blanco' },
-            { src: '.jpg', text: 'Purpura' },
+            { src: 'https://imgur.com/z2IFVp5.jpg', text: 'Amarillo' },
+            { src: 'https://imgur.com/QZD7Y0F.jpg', text: 'Morado' },
+            { src: 'https://imgur.com/aQRu1gm.jpg', text: 'Celeste' },
             { src: 'https://imgur.com/ZNH8La0.jpg', text: 'Azul' }
             
         ],
