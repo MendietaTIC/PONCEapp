@@ -102,13 +102,14 @@ document.addEventListener('DOMContentLoaded', () => {
           
         ],
       Colores: [
-            { src: 'https://.jpg', text: 'Rojo' },
-            { src: 'https://.jpg', text: 'verde' },
-            { src: 'https://.jpg', text: 'naranja' },
-            { src: 'https://.jpg', text: 'negro' },
-            { src: 'https://.jpg', text: 'blanco' },
-            { src: 'https://.jpg', text: 'Purpura' },
-            { src: 'https://.jpg', text: 'Azul' }
+            { src: '.jpg', text: 'Rojo' },
+            { src: '.jpg', text: 'verde' },
+            { src: '.jpg', text: 'naranja' },
+            { src: '.jpg', text: 'negro' },
+            { src: 'https://imgur.com/Hh8ITaJ.jpg', text: 'blanco' },
+            { src: '.jpg', text: 'Purpura' },
+            { src: 'https://imgur.com/ZNH8La0.jpg', text: 'Azul' }
+            { src: 'https://imgur.com/aQRu1gm.jpg', text: 'Celeste' }
         ],
       Tiempo: [
             { src: 'https://imgur.com/qC3rObd.jpg', text: 'Lunes ' ,gif: 'https://imgur.com/eROeJkX.gif'},
