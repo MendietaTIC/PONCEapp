@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
             { src: 'https://imgur.com/Hh8ITaJ.jpg', text: 'blanco' },
             { src: '.jpg', text: 'Purpura' },
             { src: 'https://imgur.com/ZNH8La0.jpg', text: 'Azul' }
-            { src: 'https://imgur.com/aQRu1gm.jpg', text: 'Celeste' }
+            
         ],
       Tiempo: [
             { src: 'https://imgur.com/qC3rObd.jpg', text: 'Lunes ' ,gif: 'https://imgur.com/eROeJkX.gif'},
