@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📚 Aventuras de Lectura – 5 Cuentos por Grado</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', 'Segoe UI', cursive, sans-serif;
+            background: linear-gradient(145deg, #f9e7b3 0%, #f5d78c 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            margin: 0;
+        }
+        #app {
+            max-width: 1100px;
+            width: 100%;
+            background: rgba(255, 248, 225, 0.9);
+            backdrop-filter: blur(4px);
+            border-radius: 60px 60px 40px 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 0 8px #d9b382 inset;
+            padding: 25px 30px 35px;
+            border: 4px solid #b5895c;
+        }
+        .screen {
+            display: none;
+            flex-direction: column;
+            gap: 20px;
+            animation: fadeIn 0.5s ease;
+        }
+        .screen.active {
+            display: flex;
+        }
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.96);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            background: #b5895c;
+            padding: 12px 20px;
+            border-radius: 100px;
+            color: #fff9e6;
+            font-weight: bold;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 0 #6d4f32;
+        }
+        .header .stats span {
+            margin: 0 8px;
+            background: #3f2c1b;
+            padding: 5px 14px;
+            border-radius: 30px;
+            display: inline-block;
+            box-shadow: inset 0 -2px 0 #d9b382;
+        }
+        .btn {
+            background: #ffd966;
+            border: 4px solid #b5895c;
+            border-radius: 60px;
+            padding: 10px 24px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #3f2c1b;
+            cursor: pointer;
+            transition: 0.15s;
+            box-shadow: 0 5px 0 #6d4f32;
+            border: none;
+            background: #f5e3c4;
+        }
+        .btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 9px 0 #6d4f32;
+            background: #ffe8c8;
+        }
+        .btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 1px 0 #6d4f32;
+        }
+        .btn-primary {
+            background: #b5895c;
+            color: white;
+            box-shadow: 0 5px 0 #6d4f32;
+        }
+        .btn-primary:hover {
+            background: #c49a6c;
+        }
+        #login .logo {
+            text-align: center;
+            font-size: 4rem;
+            margin-bottom: 10px;
+        }
+        #login h1 {
+            text-align: center;
+            font-size: 2.8rem;
+            color: #4f2e1a;
+            text-shadow: 4px 4px 0 #d9b382;
+        }
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            background: #fef5e0;
+            padding: 30px;
+            border-radius: 60px;
+            border: 4px solid #b5895c;
+        }
+        .login-form input,
+        .login-form select {
+            font-size: 1.2rem;
+            padding: 12px 20px;
+            border-radius: 60px;
+            border: 3px solid #b5895c;
+            background: white;
+            width: 80%;
+            max-width: 400px;
+        }
+        .usuario-lista {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin: 10px 0;
+        }
+        .usuario-item {
+            background: #fff2d7;
+            border: 3px solid #b5895c;
+            border-radius: 40px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: 0.1s;
+            font-weight: bold;
+        }
+        .usuario-item:hover {
+            background: #ffe8c8;
+            transform: scale(1.05);
+        }
+        #menu .cuento-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 15px;
+        }
+        .cuento-card {
+            background: #fff7e0;
+            border-radius: 30px;
+            padding: 15px;
+            border: 4px solid #b5895c;
+            box-shadow: 0 6px 0 #6d4f32;
+            cursor: pointer;
+            transition: 0.2s;
+            text-align: center;
+        }
+        .cuento-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 0 #6d4f32;
+            background: #ffefcf;
+        }
+        .cuento-card .progreso {
+            font-size: 0.9rem;
+            color: #6d4f32;
+            margin-top: 8px;
+        }
+        .cuento-card .completado {
+            color: #2f6b33;
+            font-weight: bold;
+        }
+        #juego .escena {
+            background: #fef5e0;
+            border-radius: 50px;
+            padding: 25px;
+            border: 4px solid #b5895c;
+            box-shadow: 0 8px 0 #6d4f32;
+        }
+        .imagen-placeholder {
+            background: #d9c8a8;
+            border-radius: 30px;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            padding: 15px;
+            border: 4px dashed #b5895c;
+            color: #4f2e1a;
+            text-align: center;
+        }
+        .narracion {
+            background: #e8dccc;
+            padding: 18px 22px;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: #2d1e12;
+            margin: 15px 0;
+            border-left: 10px solid #b5895c;
+        }
+        .dialogo {
+            background: #d6c5ad;
+            padding: 14px 20px;
+            border-radius: 30px 30px 30px 5px;
+            font-style: italic;
+            font-size: 1.1rem;
+            color: #1f140c;
+            margin: 10px 0;
+        }
+        .pregunta {
+            background: #faf0db;
+            padding: 18px;
+            border-radius: 30px;
+            border: 3px solid #b5895c;
+            margin: 15px 0;
+        }
+        .opciones {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin: 15px 0;
+        }
+        .opcion-btn {
+            background: #f5e3c4;
+            border: 4px solid #b5895c;
+            border-radius: 60px;
+            padding: 12px 24px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #3f2c1b;
+            cursor: pointer;
+            transition: 0.15s;
+            box-shadow: 0 5px 0 #6d4f32;
+            flex: 1 1 180px;
+        }
+        .opcion-btn:hover {
+            background: #ffe8c8;
+            transform: scale(1.02);
+        }
+        .opcion-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 1px 0 #6d4f32;
+        }
+        .opcion-btn.correcta {
+            background: #7bc47f;
+            border-color: #2f6b33;
+            box-shadow: 0 5px 0 #1f4a23;
+            color: white;
+        }
+        .opcion-btn.incorrecta {
+            background: #e07c7c;
+            border-color: #9e4545;
+            box-shadow: 0 5px 0 #6d2e2e;
+            color: white;
+        }
+        .opcion-btn:disabled {
+            opacity: 0.7;
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #6d4f32;
+            cursor: not-allowed;
+        }
+        .feedback {
+            background: #fff2d7;
+            border-radius: 30px;
+            padding: 16px 22px;
+            margin: 15px 0;
+            border-left: 12px solid #b5895c;
+            font-size: 1.1rem;
+            min-height: 70px;
+        }
+        .barra-progreso {
+            height: 20px;
+            background: #d9c8a8;
+            border-radius: 40px;
+            overflow: hidden;
+            border: 3px solid #b5895c;
+            margin: 12px 0;
+        }
+        .barra-progreso .relleno {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #f7d44a, #f5b342);
+            border-radius: 40px;
+            transition: width 0.6s ease;
+        }
+        #final .resumen {
+            background: #fef5e0;
+            border-radius: 50px;
+            padding: 25px;
+            border: 4px solid #b5895c;
+            text-align: center;
+        }
+        .estadisticas {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .estadistica-item {
+            background: #fff7e0;
+            padding: 15px;
+            border-radius: 30px;
+            border: 3px solid #b5895c;
+            font-size: 1.2rem;
+        }
+        .frase-final {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #4f2e1a;
+            background: #d9b382;
+            padding: 15px;
+            border-radius: 60px;
+        }
+        @media (max-width: 700px) {
+            #app {
+                padding: 15px;
+            }
+            .header {
+                font-size: 0.9rem;
+                flex-direction: column;
+                gap: 8px;
+            }
+            .login-form input,
+            .login-form select {
+                width: 100%;
+            }
+            .cuento-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            .opcion-btn {
+                font-size: 1rem;
+                padding: 10px 16px;
+                flex: 1 1 140px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- LOGIN -->
+        <div id="login" class="screen active">
+            <div class="logo">📚</div>
+            <h1>¡Aventuras de Lectura!</h1>
+            <div class="login-form">
+                <input type="text" id="inputUsuario" placeholder="Tu nombre" autocomplete="off">
+                <select id="selectGrado">
+                    <option value="2">2° Grado</option>
+                    <option value="3">3° Grado</option>
+                    <option value="4">4° Grado</option>
+                    <option value="5">5° Grado</option>
+                    <option value="6">6° Grado</option>
+                </select>
+                <button class="btn btn-primary" id="btnLogin">Ingresar</button>
+                <div style="margin-top:10px;font-weight:bold;">Usuarios registrados:</div>
+                <div class="usuario-lista" id="usuarioLista"></div>
+            </div>
+        </div>
+
+        <!-- MENÚ -->
+        <div id="menu" class="screen">
+            <div class="header">
+                <div>👤 <span id="menuUsuario">Usuario</span> · <span id="menuGrado">Grado</span></div>
+                <div>
+                    <span>⭐ <span id="menuEstrellas">0</span></span>
+                    <span>🪙 <span id="menuMonedas">0</span></span>
+                    <button class="btn" id="btnCerrarSesion" style="padding:5px 15px;font-size:1rem;">Salir</button>
+                </div>
+            </div>
+            <h2>📖 Elige tu aventura</h2>
+            <div class="cuento-grid" id="cuentoGrid"></div>
+        </div>
+
+        <!-- JUEGO -->
+        <div id="juego" class="screen">
+            <div class="header">
+                <div id="juegoTitulo">📖 Aventura</div>
+                <div>
+                    <span>⭐ <span id="juegoEstrellas">0</span></span>
+                    <span>🪙 <span id="juegoMonedas">0</span></span>
+                    <span>📌 <span id="juegoLetras">🔤 </span></span>
+                </div>
+            </div>
+            <div class="barra-progreso">
+                <div class="relleno" id="barraProgreso" style="width:0%"></div>
+            </div>
+            <div id="escenaContainer" class="escena">
+                <!-- Se llena dinámicamente -->
+            </div>
+        </div>
+
+        <!-- FINAL -->
+        <div id="final" class="screen">
+            <div class="header">
+                <div>🎉 ¡Cuento completado!</div>
+                <div>
+                    <span>⭐ <span id="finalEstrellas">0</span></span>
+                    <span>🪙 <span id="finalMonedas">0</span></span>
+                </div>
+            </div>
+            <div class="resumen">
+                <h2>📊 Estadísticas</h2>
+                <div class="estadisticas">
+                    <div class="estadistica-item">✅ Aciertos: <span id="finalAciertos">0</span></div>
+                    <div class="estadistica-item">❌ Errores: <span id="finalErrores">0</span></div>
+                    <div class="estadistica-item">📈 Porcentaje: <span id="finalPorcentaje">0%</span></div>
+                </div>
+                <div class="frase-final" id="fraseFinal">"..."</div>
+                <button class="btn btn-primary" id="btnVolverMenu" style="margin-top:20px;">🏠 Volver al menú</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ================================================================
+        //  GENERADOR DE 5 CUENTOS POR GRADO, 5 CAPÍTULOS CADA UNO
+        // ================================================================
+
+        // Bancos de elementos narrativos
+        const PERSONAJES = ['Lucas', 'Sofía', 'Mateo', 'Valentina', 'Tomás', 'Clara', 'Diego', 'Emma', 'Martín', 'Lucía'];
+        const LUGARES = ['Bosque Encantado', 'Castillo Antiguo', 'Isla Misteriosa', 'Ciudad Submarina', 'Montaña Nevada',
+            'Jardín Secreto', 'Desierto de Cristal', 'Cueva de los Susurros', 'Valle de las Flores', 'Lago Esmeralda'
+        ];
+        const OBJETOS = ['Mapa Estelar', 'Llave de Oro', 'Estrella Fugaz', 'Pergamino Antiguo', 'Brújula Mágica',
+            'Cofre del Tiempo', 'Lámpara de los Deseos', 'Reloj de Arena', 'Espejo de la Verdad', 'Libro de Hechizos'
+        ];
+        const CONFLICTOS = [
+            'encontrar un tesoro perdido',
+            'salvar a un amigo en peligro',
+            'romper un hechizo oscuro',
+            'descubrir un secreto familiar',
+            'restaurar la paz en el reino',
+            'resolver un enigma ancestral',
+            'recuperar un objeto robado',
+            'proteger un lugar sagrado',
+            'despertar a un ser mágico',
+            'deshacer una maldición'
+        ];
+
+        // Frases finales (5 letras para 5 capítulos)
+        const FRASES = [
+            'LEER', 'AVENT', 'SABER', 'CRECER', 'VIAJAR',
+            'AMIST', 'VALOR', 'CONOC', 'LIBRO', 'MUNDO'
+        ];
+
+        // Genera un cuento con 5 capítulos
+        function generarCuento(grado, indice) {
+            const seed = (grado * 100 + indice) * 7;
+            const p = PERSONAJES[(seed + 1) % PERSONAJES.length];
+            const l = LUGARES[(seed + 3) % LUGARES.length];
+            const o = OBJETOS[(seed + 5) % OBJETOS.length];
+            const c = CONFLICTOS[(seed + 7) % CONFLICTOS.length];
+
+            const titulo = `El ${o} del ${l}`;
+            const descripcion = `${p} debe ${c} en el ${l}.`;
+            const frase = FRASES[(seed + 11) % FRASES.length];
+            const letras = frase.split('');
+
+            // Estructura del cuento: 5 partes (intro, desarrollo1, desarrollo2, clímax, resolución)
+            const intro = `${p} se enteró de que el ${o} estaba escondido en el ${l}. Decidió emprender la aventura.`;
+            const dev1 = `En el camino, ${p} encontró un animal que le dio una pista importante.`;
+            const dev2 = `Luego, ${p} superó un obstáculo: ${Math.random() > 0.5 ? 'un río caudaloso' : 'una cueva oscura'}.`;
+            const climax = `Finalmente, ${p} llegó al lugar donde estaba el ${o}, pero debía resolver un acertijo para obtenerlo.`;
+            const resol = `${p} logró ${c} y regresó a casa con una gran enseñanza.`;
+
+            const narraciones = [intro, dev1, dev2, climax, resol];
+            const dialogos = [
+                `— ¡Qué emocionante! — dijo ${p}.`,
+                `— Gracias por la ayuda — agradeció ${p}.`,
+                `— No me rendiré — se dijo ${p}.`,
+                `— ¡Este es el momento! — exclamó ${p}.`,
+                `— Lo logramos — celebró ${p}.`
+            ];
+
+            // Generar preguntas según grado y posición
+            const capitulos = [];
+            for (let i = 0; i < 5; i++) {
+                let pregunta, opciones, correcta, retro, pista;
+                const nivel = grado;
+
+                // Variedad de preguntas según el tipo de capítulo
+                if (nivel <= 3) {
+                    // Preguntas literales y de vocabulario
+                    const pool = [
+                        [`¿Qué buscaba ${p}?`, [`El ${o}`, 'Un tesoro', 'Un amigo', 'Un mapa'], 0,
+                            `Buscaba el ${o}.`, 'Lee el inicio.'
+                        ],
+                        [`¿Cómo se sintió ${p} al comenzar?`, ['Emocionado', 'Triste', 'Enojado', 'Asustado'], 0,
+                            'Estaba emocionado.', 'Piensa en la aventura.'
+                        ],
+                        [`¿Qué encontró ${p} en el camino?`, [`El ${o}`, 'Una piedra', 'Un árbol', 'Un río'], 0,
+                            `Encontró el ${o}.`, 'Recuerda lo que dice.'
+                        ],
+                        [`¿Quién ayudó a ${p}?`, ['Un animal', 'Un anciano', 'Un niño', 'Una hada'], 0,
+                            'Un animal le dio una pista.', 'Fíjate en el cuento.'
+                        ],
+                        [`¿Qué hizo ${p} al final?`, [`${c}`, 'Jugar', 'Dormir', 'Comer'], 0,
+                            `Logró ${c}.`, 'Al final todo se resuelve.'
+                        ]
+                    ];
+                    const idx = (seed + i) % pool.length;
+                    [pregunta, opciones, correcta, retro, pista] = pool[idx];
+                } else if (nivel <= 4) {
+                    // Inferencias básicas
+                    const pool = [
+                        [`¿Por qué ${p} fue al ${l}?`, ['Por curiosidad', 'Por obligación', 'Por accidente',
+                                'Por aburrimiento'
+                            ], 0, 'Fue por curiosidad.', 'Piensa en el motivo.'],
+                        [`¿Qué problema enfrentó ${p}?`, ['Un río', 'Una tormenta', 'Un monstruo', 'Un hechizo'], 0,
+                            'Enfrentó un río.', 'Lee la parte del obstáculo.'],
+                        [`¿Qué significa el ${o} para la historia?`, ['Es la clave del misterio', 'Es un adorno',
+                                'Es un regalo', 'Es un arma'
+                            ], 0, 'Es la clave.', 'El objeto es importante.'],
+                        [`¿Cómo cambió ${p} después de la aventura?`, ['Más valiente', 'Más triste', 'Más egoísta',
+                                'Más perezoso'
+                            ], 0, 'Se volvió más valiente.', 'Reflexiona sobre el final.'],
+                        [`¿Cuál es la moraleja?`, ['La perseverancia', 'La riqueza', 'La soledad', 'La competencia'],
+                            0, 'La perseverancia es clave.', '¿Qué aprendió?'
+                        ]
+                    ];
+                    const idx = (seed + i * 2) % pool.length;
+                    [pregunta, opciones, correcta, retro, pista] = pool[idx];
+                } else {
+                    // 5to y 6to: preguntas complejas
+                    const pool = [
+                        [`¿Qué dilema enfrentó ${p}?`, ['Elegir entre el deber y la amistad', 'Decidir entre dos caminos',
+                                'Saber si confiar o no', 'Aceptar una oferta peligrosa'
+                            ], 0, 'El dilema fue elegir entre el deber y la amistad.', 'Piensa en las opciones.'],
+                        [`¿Cómo influye el entorno del ${l} en las decisiones de ${p}?`, ['Lo vuelve cauteloso',
+                                'Lo vuelve audaz', 'Lo vuelve temeroso', 'Lo vuelve distraído'
+                            ], 0, 'El entorno lo vuelve cauteloso.', 'Analiza el lugar.'],
+                        [`¿Qué enseñanza profunda deja el ${o}?`, ['La sabiduría es el verdadero tesoro',
+                                'La riqueza es efímera', 'El poder corrompe', 'La soledad es necesaria'
+                            ], 0, 'La sabiduría es el verdadero tesoro.', 'Reflexiona sobre el objeto.'],
+                        [`¿Cómo se relaciona el conflicto con la realidad de ${p}?`, ['Es una metáfora de la vida real',
+                                'Es un simple juego', 'Es una fantasía sin sentido', 'Es una lección de historia'
+                            ], 0, 'Es una metáfora de la vida real.', 'Conecta con la realidad.'],
+                        [`¿Qué hubiera pasado si ${p} no hubiera ${c}?`, ['Habría perdido la oportunidad de aprender',
+                                'Habría encontrado otro tesoro', 'Habría sido feliz igual', 'Nada cambiaría'
+                            ], 0, 'Habría perdido la oportunidad de aprender.', 'Imagina el escenario.'
+                        ]
+                    ];
+                    const idx = (seed + i * 3) % pool.length;
+                    [pregunta, opciones, correcta, retro, pista] = pool[idx];
+                }
+
+                // Asegurar 4 opciones
+                while (opciones.length < 4) opciones.push('Opción ' + (opciones.length + 1));
+
+                // A veces variar la correcta
+                if ((seed + i) % 2 === 0) correcta = 1;
+                if ((seed + i) % 3 === 0) correcta = 2;
+
+                capitulos.push({
+                    id: `c${i+1}`,
+                    imagenPrompt: `${l} con ${o}, estilo infantil colorido`,
+                    narracion: narraciones[i],
+                    dialogo: dialogos[i],
+                    pregunta: pregunta,
+                    opciones: opciones,
+                    correcta: correcta,
+                    retroalimentacion: retro,
+                    pista: pista,
+                    letra: letras[i] || '?'
+                });
+            }
+
+            return {
+                id: `cuento_${grado}_${indice}`,
+                grado: grado,
+                titulo: titulo,
+                descripcion: descripcion,
+                personajes: [p],
+                capitulos: capitulos,
+                fraseFinal: frase,
+                letras: letras.join('')
+            };
+        }
+
+        // Generar 5 cuentos por grado (2 a 6)
+        const CUENTOS = [];
+        for (let g = 2; g <= 6; g++) {
+            for (let i = 0; i < 5; i++) {
+                CUENTOS.push(generarCuento(g, i));
+            }
+        }
+
+        // ================================================================
+        //  APLICACIÓN PRINCIPAL
+        // ================================================================
+        const app = {
+            usuarioActual: null,
+            gradoActual: 2,
+            cuentoActual: null,
+            capituloIndex: 0,
+            aciertos: 0,
+            errores: 0,
+            monedas: 0,
+            estrellas: 0,
+            letrasObtenidas: [],
+            esperandoFeedback: false,
+            tiempoInicio: null,
+            usuarios: {},
+
+            elLogin: document.getElementById('login'),
+            elMenu: document.getElementById('menu'),
+            elJuego: document.getElementById('juego'),
+            elFinal: document.getElementById('final'),
+            elInputUsuario: document.getElementById('inputUsuario'),
+            elSelectGrado: document.getElementById('selectGrado'),
+            elBtnLogin: document.getElementById('btnLogin'),
+            elUsuarioLista: document.getElementById('usuarioLista'),
+            elMenuUsuario: document.getElementById('menuUsuario'),
+            elMenuGrado: document.getElementById('menuGrado'),
+            elMenuEstrellas: document.getElementById('menuEstrellas'),
+            elMenuMonedas: document.getElementById('menuMonedas'),
+            elCuentoGrid: document.getElementById('cuentoGrid'),
+            elBtnCerrarSesion: document.getElementById('btnCerrarSesion'),
+            elJuegoTitulo: document.getElementById('juegoTitulo'),
+            elJuegoEstrellas: document.getElementById('juegoEstrellas'),
+            elJuegoMonedas: document.getElementById('juegoMonedas'),
+            elJuegoLetras: document.getElementById('juegoLetras'),
+            elBarraProgreso: document.getElementById('barraProgreso'),
+            elEscenaContainer: document.getElementById('escenaContainer'),
+            elFinalEstrellas: document.getElementById('finalEstrellas'),
+            elFinalMonedas: document.getElementById('finalMonedas'),
+            elFinalAciertos: document.getElementById('finalAciertos'),
+            elFinalErrores: document.getElementById('finalErrores'),
+            elFinalPorcentaje: document.getElementById('finalPorcentaje'),
+            elFraseFinal: document.getElementById('fraseFinal'),
+            elBtnVolverMenu: document.getElementById('btnVolverMenu'),
+
+            init() {
+                this.cargarUsuarios();
+                this.renderUsuarioLista();
+                this.elBtnLogin.addEventListener('click', () => this.login());
+                this.elBtnCerrarSesion.addEventListener('click', () => this.logout());
+                this.elBtnVolverMenu.addEventListener('click', () => this.irMenu());
+                this.elInputUsuario.addEventListener('keyup', (e) => { if (e.key === 'Enter') this.login(); });
+            },
+
+            cargarUsuarios() {
+                const data = localStorage.getItem('usuariosAventura');
+                this.usuarios = data ? JSON.parse(data) : {};
+            },
+
+            guardarUsuarios() {
+                localStorage.setItem('usuariosAventura', JSON.stringify(this.usuarios));
+            },
+
+            renderUsuarioLista() {
+                const lista = this.elUsuarioLista;
+                lista.innerHTML = '';
+                const nombres = Object.keys(this.usuarios);
+                if (nombres.length === 0) {
+                    lista.innerHTML = '<span style="color:#6d4f32;">(No hay usuarios registrados)</span>';
+                    return;
+                }
+                nombres.forEach(nombre => {
+                    const div = document.createElement('div');
+                    div.className = 'usuario-item';
+                    div.textContent = nombre;
+                    div.addEventListener('click', () => {
+                        this.elInputUsuario.value = nombre;
+                        const grado = this.usuarios[nombre].grado || 2;
+                        this.elSelectGrado.value = grado;
+                    });
+                    lista.appendChild(div);
+                });
+            },
+
+            login() {
+                const nombre = this.elInputUsuario.value.trim();
+                if (!nombre) { alert('Por favor, ingresa tu nombre.'); return; }
+                const grado = parseInt(this.elSelectGrado.value);
+                if (!this.usuarios[nombre]) {
+                    this.usuarios[nombre] = { grado, progreso: {}, monedas: 0, estrellas: 0 };
+                } else {
+                    this.usuarios[nombre].grado = grado;
+                }
+                this.guardarUsuarios();
+                this.usuarioActual = nombre;
+                this.gradoActual = grado;
+                this.mostrarPantalla('menu');
+                this.actualizarMenu();
+            },
+
+            logout() {
+                this.usuarioActual = null;
+                this.mostrarPantalla('login');
+                this.renderUsuarioLista();
+                this.elInputUsuario.value = '';
+            },
+
+            actualizarMenu() {
+                const user = this.usuarios[this.usuarioActual];
+                this.elMenuUsuario.textContent = this.usuarioActual;
+                this.elMenuGrado.textContent = `${user.grado}° Grado`;
+                this.elMenuEstrellas.textContent = user.estrellas || 0;
+                this.elMenuMonedas.textContent = user.monedas || 0;
+
+                const grid = this.elCuentoGrid;
+                grid.innerHTML = '';
+                const cuentosGrado = CUENTOS.filter(c => c.grado === user.grado);
+                cuentosGrado.forEach(cuento => {
+                    const prog = user.progreso[cuento.id] || { aciertos: 0, errores: 0, completado: false };
+                    const total = cuento.capitulos.length;
+                    const hecho = prog.aciertos + prog.errores;
+                    const pct = total > 0 ? Math.round((hecho / total) * 100) : 0;
+
+                    const card = document.createElement('div');
+                    card.className = 'cuento-card';
+                    card.innerHTML = `
+                        <div style="font-size:2.5rem;">📖</div>
+                        <h3>${cuento.titulo}</h3>
+                        <p>${cuento.descripcion}</p>
+                        <div class="progreso ${prog.completado ? 'completado' : ''}">
+                            ${prog.completado ? '✅ Completado' : `Progreso: ${hecho}/${total} (${pct}%)`}
+                        </div>
+                    `;
+                    card.addEventListener('click', () => this.iniciarCuento(cuento.id));
+                    grid.appendChild(card);
+                });
+            },
+
+            iniciarCuento(cuentoId) {
+                const cuento = CUENTOS.find(c => c.id === cuentoId);
+                if (!cuento) return;
+                this.cuentoActual = cuento;
+                this.capituloIndex = 0;
+                this.aciertos = 0;
+                this.errores = 0;
+                this.letrasObtenidas = [];
+                this.monedas = 0;
+                this.estrellas = 0;
+                this.esperandoFeedback = false;
+                this.tiempoInicio = Date.now();
+
+                this.mostrarPantalla('juego');
+                this.renderEscena();
+            },
+
+            renderEscena() {
+                const cuento = this.cuentoActual;
+                const capitulos = cuento.capitulos;
+                if (this.capituloIndex >= capitulos.length) {
+                    this.finalizarCuento();
+                    return;
+                }
+                const cap = capitulos[this.capituloIndex];
+                const total = capitulos.length;
+
+                const pct = ((this.capituloIndex) / total) * 100;
+                this.elBarraProgreso.style.width = Math.min(pct, 100) + '%';
+
+                this.elJuegoTitulo.textContent = `📖 ${cuento.titulo} (${this.capituloIndex+1}/${total})`;
+                this.elJuegoEstrellas.textContent = this.estrellas;
+                this.elJuegoMonedas.textContent = this.monedas;
+                this.elJuegoLetras.textContent = '🔤 ' + (this.letrasObtenidas.length > 0 ? this.letrasObtenidas.join(' ') :
+                    '---');
+
+                const container = this.elEscenaContainer;
+                container.innerHTML = '';
+
+                const imgDiv = document.createElement('div');
+                imgDiv.className = 'imagen-placeholder';
+                imgDiv.innerHTML =
+                    `<div style="font-size:5rem;">📜</div><div style="font-size:0.9rem;">🎨 ${cap.imagenPrompt}</div>`;
+                container.appendChild(imgDiv);
+
+                const nar = document.createElement('div');
+                nar.className = 'narracion';
+                nar.textContent = cap.narracion;
+                container.appendChild(nar);
+
+                if (cap.dialogo) {
+                    const dial = document.createElement('div');
+                    dial.className = 'dialogo';
+                    dial.textContent = cap.dialogo;
+                    container.appendChild(dial);
+                }
+
+                const preg = document.createElement('div');
+                preg.className = 'pregunta';
+                preg.innerHTML = `<strong>❓ ${cap.pregunta}</strong>`;
+                container.appendChild(preg);
+
+                const opcionesDiv = document.createElement('div');
+                opcionesDiv.className = 'opciones';
+                cap.opciones.forEach((texto, idx) => {
+                    const btn = document.createElement('button');
+                    btn.className = 'opcion-btn';
+                    btn.textContent = texto;
+                    btn.dataset.idx = idx;
+                    btn.addEventListener('click', () => this.seleccionarOpcion(idx, btn));
+                    opcionesDiv.appendChild(btn);
+                });
+                container.appendChild(opcionesDiv);
+
+                const feedbackDiv = document.createElement('div');
+                feedbackDiv.className = 'feedback';
+                feedbackDiv.id = 'feedbackArea';
+                feedbackDiv.style.display = 'none';
+                container.appendChild(feedbackDiv);
+
+                this.esperandoFeedback = false;
+            },
+
+            seleccionarOpcion(idx, btn) {
+                if (this.esperandoFeedback) return;
+                const cap = this.cuentoActual.capitulos[this.capituloIndex];
+                const esCorrecta = (idx === cap.correcta);
+
+                const opcionesBtns = this.elEscenaContainer.querySelectorAll('.opcion-btn');
+                opcionesBtns.forEach(b => b.disabled = true);
+
+                opcionesBtns.forEach((b, i) => {
+                    if (i === cap.correcta) b.classList.add('correcta');
+                    else if (i === idx && !esCorrecta) b.classList.add('incorrecta');
+                });
+
+                const feedback = document.getElementById('feedbackArea');
+                feedback.style.display = 'block';
+
+                if (esCorrecta) {
+                    this.aciertos++;
+                    this.estrellas++;
+                    this.monedas += 5;
+                    const letra = cap.letra || '?';
+                    this.letrasObtenidas.push(letra);
+                    feedback.innerHTML =
+                        `✅ ¡Correcto! ${cap.retroalimentacion} <br> ⭐ +1 estrella, 🪙 +5 monedas. Letra: <strong>${letra}</strong>`;
+                } else {
+                    this.errores++;
+                    feedback.innerHTML =
+                        `❌ Incorrecto. <br> 💡 Pista: ${cap.pista} <br> <span style="color:#8b5a2b;">La respuesta correcta era: ${cap.opciones[cap.correcta]}</span>`;
+                }
+
+                this.elJuegoEstrellas.textContent = this.estrellas;
+                this.elJuegoMonedas.textContent = this.monedas;
+                this.elJuegoLetras.textContent = '🔤 ' + (this.letrasObtenidas.length > 0 ? this.letrasObtenidas.join(' ') :
+                    '---');
+
+                this.esperandoFeedback = true;
+
+                setTimeout(() => {
+                    this.capituloIndex++;
+                    if (this.capituloIndex >= this.cuentoActual.capitulos.length) {
+                        this.finalizarCuento();
+                    } else {
+                        this.renderEscena();
+                    }
+                }, 2000);
+            },
+
+            finalizarCuento() {
+                const user = this.usuarios[this.usuarioActual];
+                const cuentoId = this.cuentoActual.id;
+                const total = this.cuentoActual.capitulos.length;
+                const completado = (this.aciertos + this.errores) >= total;
+                user.progreso[cuentoId] = {
+                    aciertos: this.aciertos,
+                    errores: this.errores,
+                    completado: completado
+                };
+                user.monedas = (user.monedas || 0) + this.monedas;
+                user.estrellas = (user.estrellas || 0) + this.estrellas;
+                this.guardarUsuarios();
+
+                this.mostrarPantalla('final');
+                this.elFinalEstrellas.textContent = this.estrellas;
+                this.elFinalMonedas.textContent = this.monedas;
+                this.elFinalAciertos.textContent = this.aciertos;
+                this.elFinalErrores.textContent = this.errores;
+                const totalPreg = this.aciertos + this.errores;
+                const pct = totalPreg > 0 ? Math.round((this.aciertos / totalPreg) * 100) : 0;
+                this.elFinalPorcentaje.textContent = pct + '%';
+                this.elFraseFinal.textContent = `"${this.cuentoActual.fraseFinal}"`;
+            },
+
+            irMenu() {
+                this.mostrarPantalla('menu');
+                this.actualizarMenu();
+            },
+
+            mostrarPantalla(pantalla) {
+                document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
+                if (pantalla === 'login') this.elLogin.classList.add('active');
+                else if (pantalla === 'menu') this.elMenu.classList.add('active');
+                else if (pantalla === 'juego') this.elJuego.classList.add('active');
+                else if (pantalla === 'final') this.elFinal.classList.add('active');
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => app.init());
+    </script>
+</body>
+</html>

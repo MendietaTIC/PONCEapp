@@ -1,0 +1,1502 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Super Math Bros</title>
+    <!-- Tailwind CSS para diseño moderno -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts estilo Retro -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Quicksand:wght500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+            touch-action: none; /* Previene scroll molesto en tablets al jugar */
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        .pixel-font {
+            font-family: 'Press Start 2P', monospace;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-white min-h-screen flex flex-col items-center justify-center overflow-hidden p-2">
+
+    <!-- CONTENEDOR PRINCIPAL DEL JUEGO -->
+    <div id="game-container" class="relative w-full max-w-4xl bg-slate-900 rounded-2xl border-4 border-slate-700 shadow-2xl overflow-hidden flex flex-col aspect-[4/3] max-h-[95vh]">
+        
+        <!-- PANTALLA DE INICIO / SELECCIÓN -->
+        <div id="menu-screen" class="absolute inset-0 z-20 flex flex-col items-center justify-center bg-gradient-to-b from-sky-400 via-sky-300 to-emerald-400 p-4 text-center">
+            <!-- Nubes de fondo animadas -->
+            <div class="absolute top-10 left-10 w-24 h-8 bg-white opacity-80 rounded-full filter blur-[1px] animate-pulse"></div>
+            <div class="absolute top-24 right-16 w-32 h-10 bg-white opacity-80 rounded-full filter blur-[1px] animate-pulse" style="animation-delay: 1s;"></div>
+            
+            <div class="z-10 flex flex-col items-center max-w-lg bg-slate-950/85 p-6 rounded-2xl border-4 border-amber-400 shadow-2xl backdrop-blur-sm">
+                <h1 class="pixel-font text-2xl md:text-4xl text-yellow-400 mb-2 tracking-wider drop-shadow-[0_4px_0_rgba(0,0,0,0.8)] animate-bounce">SUPER MATH</h1>
+                <h2 class="pixel-font text-xl md:text-3xl text-emerald-400 mb-6 tracking-wider drop-shadow-[0_3px_0_rgba(0,0,0,0.8)]">BROS</h2>
+                
+                <p class="text-xs md:text-sm text-slate-300 mb-5 leading-relaxed">
+                    ¡Completa las 10 preguntas! ¡Salta <strong>encima</strong> de los bloques <span class="text-yellow-300">?</span> para conseguir Champiñones 🍄 y Flores de Fuego 🔥 para disparar a los enemigos!
+                </p>
+
+                <div class="w-full">
+                    <span class="text-[10px] uppercase tracking-widest text-amber-400 pixel-font block mb-3">Elige la Operación:</span>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button onclick="startGame('suma')" class="bg-emerald-500 hover:bg-emerald-400 active:scale-95 transition-all py-3 rounded-xl font-bold border-b-4 border-emerald-700 flex flex-col items-center justify-center shadow-lg">
+                            <span class="text-2xl">➕</span>
+                            <span class="text-sm">Sumas</span>
+                        </button>
+                        <button onclick="startGame('resta')" class="bg-rose-500 hover:bg-rose-400 active:scale-95 transition-all py-3 rounded-xl font-bold border-b-4 border-rose-700 flex flex-col items-center justify-center shadow-lg">
+                            <span class="text-2xl">➖</span>
+                            <span class="text-sm">Restas</span>
+                        </button>
+                        <button onclick="startGame('multiplicacion')" class="bg-amber-500 hover:bg-amber-400 active:scale-95 transition-all py-3 rounded-xl font-bold border-b-4 border-amber-700 flex flex-col items-center justify-center shadow-lg">
+                            <span class="text-2xl">✖️</span>
+                            <span class="text-sm">Multiplicar</span>
+                        </button>
+                        <button onclick="startGame('mixto')" class="bg-indigo-500 hover:bg-indigo-400 active:scale-95 transition-all py-3 rounded-xl font-bold border-b-4 border-indigo-700 flex flex-col items-center justify-center shadow-lg">
+                            <span class="text-2xl">🎲</span>
+                            <span class="text-sm">Mixto</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PANTALLA DE JUEGO TERMINADO (GAME OVER) -->
+        <div id="gameover-screen" class="absolute inset-0 z-20 hidden flex-col items-center justify-center bg-black/90 p-6 text-center">
+            <div class="max-w-md bg-slate-900 border-4 border-red-600 p-8 rounded-2xl shadow-2xl">
+                <h2 class="pixel-font text-3xl text-red-500 mb-4">GAME OVER</h2>
+                <p class="text-lg mb-2">¡Tu aventura matemática terminó!</p>
+                <div class="bg-slate-800 p-4 rounded-xl mb-6 border border-slate-700">
+                    <p class="text-xs text-slate-400">Puntuación Final</p>
+                    <p id="final-score" class="text-3xl font-black text-yellow-400">0</p>
+                    <p id="final-level" class="text-xs text-slate-400 mt-1">Preguntas respondidas: 0/10</p>
+                </div>
+                <button onclick="resetToMenu()" class="w-full bg-yellow-500 hover:bg-yellow-400 text-slate-950 font-black py-4 rounded-xl border-b-4 border-yellow-700 transition-all active:scale-95 text-lg">
+                    🔄 Volver a Intentar
+                </button>
+            </div>
+        </div>
+
+        <!-- PANTALLA DE VICTORIA TOTAL (NIVEL 10 COMPLETADO) -->
+        <div id="victory-screen" class="absolute inset-0 z-20 hidden flex-col items-center justify-center bg-gradient-to-b from-indigo-900 via-slate-900 to-emerald-900 p-6 text-center">
+            <div class="max-w-lg bg-slate-950/90 border-4 border-yellow-400 p-8 rounded-2xl shadow-2xl backdrop-blur-sm">
+                <h2 class="pixel-font text-2xl md:text-3xl text-yellow-400 mb-4 animate-pulse">👑 ¡CAMPEÓN! 👑</h2>
+                <div class="text-6xl mb-4">🎉🏆🎉</div>
+                <p class="text-base text-emerald-300 font-bold mb-4">¡Has completado las 10 operaciones de forma exitosa!</p>
+                <div class="bg-slate-900 p-4 rounded-xl mb-6 border border-slate-800 grid grid-cols-2 gap-4">
+                    <div>
+                        <p class="text-xs text-slate-400">Puntos Totales</p>
+                        <p id="victory-score" class="text-2xl font-black text-yellow-400">0</p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-400">Preguntas Superadas</p>
+                        <p class="text-2xl font-black text-emerald-400">10 / 10</p>
+                    </div>
+                </div>
+                <button onclick="resetToMenu()" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black py-4 rounded-xl border-b-4 border-emerald-700 transition-all active:scale-95 text-lg">
+                    ⭐ Jugar de Nuevo
+                </button>
+            </div>
+        </div>
+
+        <!-- PANTALLA INTERMEDIA DE NIVEL COMPLETO -->
+        <div id="levelclear-screen" class="absolute inset-0 z-20 hidden flex-col items-center justify-center bg-slate-950/85 p-6 text-center">
+            <div class="max-w-md bg-slate-900 border-4 border-emerald-500 p-8 rounded-2xl shadow-2xl">
+                <h2 class="pixel-font text-xl md:text-2xl text-emerald-400 mb-2">¡CORRECTO!</h2>
+                <p id="levelclear-info" class="text-sm text-slate-300 mb-6">¡Excelente respuesta!</p>
+                <button onclick="nextLevel()" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black py-4 rounded-xl border-b-4 border-emerald-700 transition-all active:scale-95 text-lg">
+                    Siguiente Pregunta ➔
+                </button>
+            </div>
+        </div>
+
+        <!-- HUD DE ESTADÍSTICAS DEL JUEGO (SUPERIOR) - Rediseñado para integrar la pregunta -->
+        <div class="h-16 bg-slate-950 border-b-2 border-slate-700 px-4 py-2 flex items-center justify-between z-10">
+            <!-- Vidas y Puntuación -->
+            <div class="flex items-center space-x-3">
+                <div class="flex items-center space-x-1">
+                    <span class="text-slate-400 text-[10px] font-bold mr-1">VIDAS:</span>
+                    <div id="hearts-container" class="flex space-x-0.5"></div>
+                </div>
+                <div class="bg-slate-900 px-2 py-1 rounded-md border border-slate-800">
+                    <span class="text-[9px] text-slate-400 block leading-none">PUNTOS</span>
+                    <span id="score-text" class="font-bold text-yellow-400 text-xs">0000</span>
+                </div>
+            </div>
+
+            <!-- PREGUNTA MATEMÁTICA INTEGRADA EN EL HUD (Ahorra espacio y maximiza la altura del juego) -->
+            <div class="flex items-center space-x-2 bg-slate-900 border-2 border-yellow-400 px-4 py-1.5 rounded-xl shadow-inner max-w-xs">
+                <span class="text-[10px] text-yellow-400 font-bold pixel-font">¿?</span>
+                <span id="math-problem" class="text-base md:text-xl font-black text-white tracking-wider"></span>
+            </div>
+
+            <!-- Contador de pregunta actual (Nivel) -->
+            <div id="level-display" class="bg-indigo-900/60 border border-indigo-500 px-2 py-1 rounded-lg">
+                <span class="text-xs text-indigo-300 font-bold"><span id="level-num">1</span> / 10</span>
+            </div>
+        </div>
+
+        <!-- ÁREA DE CANVAS DEL JUEGO (Ahora es mucho más alta y espaciosa) -->
+        <div class="relative flex-1 bg-gradient-to-b from-sky-400 to-sky-100 overflow-hidden">
+            <canvas id="game-canvas" class="w-full h-full block"></canvas>
+        </div>
+
+        <!-- CONTROLES TÁCTILES MEJORADOS (PointerEvents universales) -->
+        <div class="h-28 bg-slate-950 border-t-2 border-slate-700 flex items-center justify-between px-4 py-2 select-none">
+            <!-- Botones de Dirección (Izquierda, Derecha) -->
+            <div class="flex space-x-3">
+                <button id="btn-left" class="w-14 h-14 md:w-16 md:h-16 bg-slate-800 border-2 border-slate-600 rounded-2xl flex items-center justify-center text-2xl text-white shadow-lg touch-none active:bg-slate-700">
+                    ◀
+                </button>
+                <button id="btn-right" class="w-14 h-14 md:w-16 md:h-16 bg-slate-800 border-2 border-slate-600 rounded-2xl flex items-center justify-center text-2xl text-white shadow-lg touch-none active:bg-slate-700">
+                    ▶
+                </button>
+            </div>
+
+            <!-- Botón de Acción Especial: DISPARAR -->
+            <div id="action-shoot-container">
+                <button id="btn-shoot" class="w-16 h-14 md:w-20 md:h-16 bg-orange-600 border-2 border-orange-500 rounded-2xl flex flex-col items-center justify-center text-white shadow-lg touch-none active:bg-orange-500">
+                    <span class="text-sm">🔥</span>
+                    <span class="text-[10px] font-bold">FUEGO</span>
+                </button>
+            </div>
+
+            <!-- Botón de Salto -->
+            <div>
+                <button id="btn-jump" class="w-16 h-14 md:w-20 md:h-16 bg-amber-500 border-2 border-amber-600 rounded-2xl flex flex-col items-center justify-center text-white shadow-lg touch-none active:bg-amber-400">
+                    <span class="text-lg">▲</span>
+                    <span class="text-[10px] font-bold">SALTAR</span>
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- SCRIPT DE LÓGICA RETRO -->
+    <script>
+        // --- SINTETIZADOR DE SONIDO RETRO (Web Audio API) ---
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playSound(type) {
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            const now = audioCtx.currentTime;
+
+            switch(type) {
+                case 'jump':
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(140, now);
+                    osc.frequency.exponentialRampToValueAtTime(700, now + 0.18);
+                    gain.gain.setValueAtTime(0.25, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.18);
+                    osc.start(now);
+                    osc.stop(now + 0.18);
+                    break;
+                case 'correct':
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(587.33, now); 
+                    osc.frequency.setValueAtTime(880, now + 0.08); 
+                    gain.gain.setValueAtTime(0.2, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
+                    osc.start(now);
+                    osc.stop(now + 0.35);
+                    break;
+                case 'wrong':
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(180, now);
+                    osc.frequency.linearRampToValueAtTime(60, now + 0.3);
+                    gain.gain.setValueAtTime(0.25, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+                    osc.start(now);
+                    osc.stop(now + 0.3);
+                    break;
+                case 'shoot':
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(800, now);
+                    osc.frequency.exponentialRampToValueAtTime(200, now + 0.12);
+                    gain.gain.setValueAtTime(0.15, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.12);
+                    osc.start(now);
+                    osc.stop(now + 0.12);
+                    break;
+                case 'hit':
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(300, now);
+                    osc.frequency.exponentialRampToValueAtTime(40, now + 0.1);
+                    gain.gain.setValueAtTime(0.2, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+                    osc.start(now);
+                    osc.stop(now + 0.1);
+                    break;
+                case 'hurt':
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(330, now);
+                    osc.frequency.linearRampToValueAtTime(100, now + 0.25);
+                    gain.gain.setValueAtTime(0.3, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
+                    osc.start(now);
+                    osc.stop(now + 0.25);
+                    break;
+                case 'stomp':
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(150, now);
+                    osc.frequency.exponentialRampToValueAtTime(50, now + 0.12);
+                    gain.gain.setValueAtTime(0.3, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.12);
+                    osc.start(now);
+                    osc.stop(now + 0.12);
+                    break;
+                case 'block':
+                    osc.type = 'square';
+                    osc.frequency.setValueAtTime(320, now);
+                    osc.frequency.setValueAtTime(480, now + 0.05);
+                    gain.gain.setValueAtTime(0.2, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
+                    osc.start(now);
+                    osc.stop(now + 0.15);
+                    break;
+                case 'powerup_spawns':
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(330, now);
+                    osc.frequency.setValueAtTime(392, now + 0.06);
+                    osc.frequency.setValueAtTime(659, now + 0.12);
+                    gain.gain.setValueAtTime(0.2, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
+                    osc.start(now);
+                    osc.stop(now + 0.25);
+                    break;
+                case 'powerup_get':
+                    osc.type = 'sine';
+                    const notes = [330, 392, 659, 523, 587, 784];
+                    notes.forEach((freq, i) => {
+                        const o = audioCtx.createOscillator();
+                        const g = audioCtx.createGain();
+                        o.connect(g);
+                        g.connect(audioCtx.destination);
+                        o.type = 'sine';
+                        o.frequency.setValueAtTime(freq, now + i * 0.05);
+                        g.gain.setValueAtTime(0.15, now + i * 0.05);
+                        g.gain.exponentialRampToValueAtTime(0.01, now + i * 0.05 + 0.1);
+                        o.start(now + i * 0.05);
+                        o.stop(now + i * 0.05 + 0.1);
+                    });
+                    break;
+                case 'gameover':
+                    osc.type = 'square';
+                    [392, 349, 311, 261].forEach((freq, i) => {
+                        const o = audioCtx.createOscillator();
+                        const g = audioCtx.createGain();
+                        o.connect(g);
+                        g.connect(audioCtx.destination);
+                        o.frequency.setValueAtTime(freq, now + i * 0.18);
+                        g.gain.setValueAtTime(0.15, now + i * 0.18);
+                        g.gain.exponentialRampToValueAtTime(0.01, now + i * 0.18 + 0.18);
+                        o.start(now + i * 0.18);
+                        o.stop(now + i * 0.18 + 0.18);
+                    });
+                    break;
+                case 'victory':
+                    const winNotes = [523, 659, 784, 1046, 1318];
+                    winNotes.forEach((freq, i) => {
+                        const o = audioCtx.createOscillator();
+                        const g = audioCtx.createGain();
+                        o.connect(g);
+                        g.connect(audioCtx.destination);
+                        o.type = 'square';
+                        o.frequency.setValueAtTime(freq, now + i * 0.1);
+                        g.gain.setValueAtTime(0.15, now + i * 0.1);
+                        g.gain.exponentialRampToValueAtTime(0.01, now + i * 0.1 + 0.2);
+                        o.start(now + i * 0.1);
+                        o.stop(now + i * 0.1 + 0.2);
+                    });
+                    break;
+            }
+        }
+
+        // --- REFERENCIAS HTML / CANVAS ---
+        const canvas = document.getElementById('game-canvas');
+        const ctx = canvas.getContext('2d');
+        const scoreText = document.getElementById('score-text');
+        const heartsContainer = document.getElementById('hearts-container');
+        const levelNumText = document.getElementById('level-num');
+        const mathProblemBanner = document.getElementById('math-problem');
+        
+        // Pantallas
+        const menuScreen = document.getElementById('menu-screen');
+        const gameoverScreen = document.getElementById('gameover-screen');
+        const levelclearScreen = document.getElementById('levelclear-screen');
+        const victoryScreen = document.getElementById('victory-screen');
+        const finalScoreText = document.getElementById('final-score');
+        const finalLevelText = document.getElementById('final-level');
+        const victoryScoreText = document.getElementById('victory-score');
+
+        // --- CONSTANTES DEL CANVAS VIRTUAL ---
+        const VIRTUAL_WIDTH = 800;
+        const VIRTUAL_HEIGHT = 600;
+
+        // Ajustar tamaño del Canvas dinámicamente preservando escala interna
+        function resizeCanvas() {
+            const rect = canvas.parentElement.getBoundingClientRect();
+            canvas.width = rect.width;
+            canvas.height = rect.height;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        // --- VARIABLES DEL ESTADO DE JUEGO ---
+        let gameMode = 'suma'; 
+        let score = 0;
+        let lives = 3;
+        let level = 1; 
+        let gameActive = false;
+        let currentProblem = { question: '', answer: 0 };
+        
+        // Entidades
+        let numberEntities = []; 
+        let enemies = [];
+        let particles = [];
+        let clouds = [];
+        let powerups = [];
+        let blocks = [];
+        let fireballs = [];
+        let enemyProjectiles = [];
+        let deadEnemyRespawnQueue = []; // Respawn de enemigos tras 3 segundos
+
+        // --- SISTEMA DE ENTRADAS (Input) ---
+        const keys = { left: false, right: false, jump: false, shoot: false };
+        
+        // Soporte Teclado
+        window.addEventListener('keydown', (e) => {
+            if (!gameActive) return;
+            if (e.code === 'ArrowLeft' || e.code === 'KeyA') keys.left = true;
+            if (e.code === 'ArrowRight' || e.code === 'KeyD') keys.right = true;
+            if (e.code === 'ArrowUp' || e.code === 'KeyW' || e.code === 'Space') keys.jump = true;
+            if (e.code === 'KeyF' || e.code === 'ShiftLeft' || e.code === 'ShiftRight') {
+                if (!keys.shoot) { 
+                    shootFireball();
+                }
+                keys.shoot = true;
+            }
+        });
+
+        window.addEventListener('keyup', (e) => {
+            if (e.code === 'ArrowLeft' || e.code === 'KeyA') keys.left = false;
+            if (e.code === 'ArrowRight' || e.code === 'KeyD') keys.right = false;
+            if (e.code === 'ArrowUp' || e.code === 'KeyW' || e.code === 'Space') keys.jump = false;
+            if (e.code === 'KeyF' || e.code === 'ShiftLeft' || e.code === 'ShiftRight') keys.shoot = false;
+        });
+
+        // Configuración de PointerEvents Universales para Tablets/Móviles
+        function bindTouchButton(elementId, actionKey) {
+            const btn = document.getElementById(elementId);
+            if (!btn) return;
+
+            const handleStart = (e) => {
+                e.preventDefault();
+                keys[actionKey] = true;
+                if (actionKey === 'shoot') {
+                    shootFireball();
+                }
+            };
+
+            const handleEnd = (e) => {
+                e.preventDefault();
+                keys[actionKey] = false;
+            };
+
+            btn.addEventListener('pointerdown', handleStart);
+            btn.addEventListener('pointerup', handleEnd);
+            btn.addEventListener('pointerleave', handleEnd);
+            btn.addEventListener('touchstart', handleStart, { passive: false });
+            btn.addEventListener('touchend', handleEnd, { passive: false });
+        }
+
+        bindTouchButton('btn-left', 'left');
+        bindTouchButton('btn-right', 'right');
+        bindTouchButton('btn-jump', 'jump');
+        bindTouchButton('btn-shoot', 'shoot');
+
+        // --- FÍSICAS Y CONFIGURACIÓN DEL PERSONAJE ---
+        const player = {
+            x: 100,
+            y: 400,
+            width: 32,
+            height: 44, 
+            vx: 0,
+            vy: 0,
+            speed: 5.2,
+            jumpPower: -12.5,
+            gravity: 0.58,
+            grounded: false,
+            invincible: 0, 
+            facing: 'right',
+            walkFrame: 0,
+            isJumping: false,
+            powerState: 'normal' // 'normal', 'super', 'fire'
+        };
+
+        // --- PLATAFORMAS (Diseño optimizado de niveles con mayor altura libre) ---
+        const platforms = [
+            // Suelo base principal
+            { x: 0, y: 550, width: 800, height: 50, type: 'ground' },
+            
+            // Fila de plataformas - Nivel 1 (Bajo)
+            { x: 60, y: 440, width: 180, height: 18, type: 'grass' },
+            { x: 560, y: 440, width: 180, height: 18, type: 'grass' },
+            
+            // Fila de plataformas - Nivel 2 (Medio)
+            { x: 300, y: 320, width: 200, height: 18, type: 'grass' },
+            
+            // Plataformas flotantes - Nivel 3 (Alto)
+            { x: 80, y: 200, width: 160, height: 18, type: 'grass' },
+            { x: 560, y: 200, width: 160, height: 18, type: 'grass' },
+            { x: 320, y: 140, width: 160, height: 18, type: 'brick' }
+        ];
+
+        // --- CONFIGURAR BLOQUES SORPRESA "?" ---
+        // Ahora colocados directamente SOBRE las plataformas para que el jugador los salte encima
+        function resetBlocks() {
+            blocks = [
+                // Colocado sobre plataforma baja izquierda (y: 440), de modo que el bloque descansa encima
+                { x: 130, y: 410, width: 30, height: 30, hasItem: 'mushroom', hit: false, animY: 0 },
+                // Colocado sobre plataforma baja derecha (y: 440)
+                { x: 640, y: 410, width: 30, height: 30, hasItem: 'flower', hit: false, animY: 0 },
+                // Colocado sobre la plataforma de ladrillos central superior (y: 140)
+                { x: 385, y: 110, width: 30, height: 30, hasItem: 'mushroom', hit: false, animY: 0 }
+            ];
+        }
+
+        // --- GENERADOR DE PROBLEMAS MATEMÁTICOS ---
+        function generateMathProblem() {
+            let num1, num2, question, answer;
+            const maxVal = 10 + (level * 3);
+            const multVal = 2 + Math.min(level, 6);
+
+            let currentType = gameMode;
+            if (gameMode === 'mixto') {
+                const types = ['suma', 'resta', 'multiplicacion'];
+                currentType = types[Math.floor(Math.random() * types.length)];
+            }
+
+            if (currentType === 'suma') {
+                num1 = Math.floor(Math.random() * maxVal) + 2;
+                num2 = Math.floor(Math.random() * maxVal) + 2;
+                question = `${num1} + ${num2} = ?`;
+                answer = num1 + num2;
+            } else if (currentType === 'resta') {
+                num1 = Math.floor(Math.random() * maxVal) + 12;
+                num2 = Math.floor(Math.random() * (num1 - 2)) + 1;
+                question = `${num1} - ${num2} = ?`;
+                answer = num1 - num2;
+            } else { 
+                num1 = Math.floor(Math.random() * multVal) + 2;
+                num2 = Math.floor(Math.random() * 8) + 2;
+                question = `${num1} × ${num2} = ?`;
+                answer = num1 * num2;
+            }
+
+            currentProblem = { question, answer };
+            mathProblemBanner.textContent = question;
+
+            // Generar distractores lógicos
+            const options = new Set();
+            options.add(answer);
+
+            while (options.size < 4) {
+                let offset = (Math.floor(Math.random() * 5) + 1) * (Math.random() < 0.5 ? 1 : -1);
+                let fakeAns = answer + offset;
+                if (fakeAns >= 0 && fakeAns !== answer) {
+                    options.add(fakeAns);
+                }
+            }
+
+            const arrayOptions = Array.from(options);
+            shuffleArray(arrayOptions);
+
+            // Coordenadas estratégicas de spawn con AMPLIA DISTRIBUCIÓN
+            // Se distancian mucho más en X e Y para evitar acumulaciones
+            const spawnPoints = [
+                { x: 120, y: 100 }, // Extremo superior izquierdo
+                { x: 680, y: 100 }, // Extremo superior derecho
+                { x: 230, y: 260 }, // Centro-izq medio
+                { x: 570, y: 260 }, // Centro-der medio
+                { x: 140, y: 370 }, // Bajo izquierdo
+                { x: 660, y: 370 }, // Bajo derecho
+            ];
+            shuffleArray(spawnPoints);
+
+            numberEntities = [];
+            for (let i = 0; i < 4; i++) {
+                const isCorrect = arrayOptions[i] === answer;
+                numberEntities.push({
+                    x: spawnPoints[i].x,
+                    y: spawnPoints[i].y,
+                    value: arrayOptions[i],
+                    isCorrect: isCorrect,
+                    radius: 20,
+                    bobOffset: Math.random() * Math.PI * 2
+                });
+            }
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        // --- SISTEMA DE ENEMIGOS AVANZADOS ---
+        function spawnEnemies() {
+            enemies = [];
+            deadEnemyRespawnQueue = [];
+
+            // El Goomba clásico terrestre
+            const patrolPoints = [
+                { plat: platforms[1], speed: 1.1, type: 'goomba' }, 
+                { plat: platforms[2], speed: -1.1, type: 'goomba' }, 
+            ];
+
+            // Tortugas Koopa Troopa (Lanzadoras, requieren 2 golpes)
+            const koopaPoints = [
+                { plat: platforms[4], speed: -0.9, type: 'koopa' }, 
+                { plat: platforms[6], speed: 1.0, type: 'koopa' }   
+            ];
+
+            patrolPoints.forEach((p, idx) => {
+                if (idx <= 1 + Math.floor(level / 3)) {
+                    createEnemy(p.plat, p.speed, p.type);
+                }
+            });
+
+            koopaPoints.forEach((p, idx) => {
+                if (level >= 2 && idx <= Math.floor(level / 4)) {
+                    createEnemy(p.plat, p.speed, p.type);
+                }
+            });
+        }
+
+        function createEnemy(plat, speed, type) {
+            enemies.push({
+                x: plat.x + plat.width / 2,
+                y: plat.y - 32,
+                width: 30,
+                height: 32,
+                vx: speed,
+                leftBound: plat.x,
+                rightBound: plat.x + plat.width,
+                color: type === 'goomba' ? '#ea580c' : '#22c55e', 
+                type: type,
+                hp: type === 'koopa' ? 2 : 1, 
+                maxHp: type === 'koopa' ? 2 : 1,
+                animTimer: 0,
+                shootCooldown: 120 + Math.random() * 100, 
+                originalPlat: plat,
+                originalSpeed: speed,
+                originalType: type
+            });
+        }
+
+        // --- DISPARAR BOLAS DE FUEGO ---
+        function shootFireball() {
+            if (player.powerState !== 'fire') return;
+            playSound('shoot');
+
+            const fvx = player.facing === 'right' ? 8 : -8;
+            fireballs.push({
+                x: player.facing === 'right' ? player.x + player.width : player.x - 10,
+                y: player.y + player.height / 2 - 5,
+                width: 10,
+                height: 10,
+                vx: fvx,
+                vy: 2,
+                gravity: 0.4
+            });
+        }
+
+        // --- GOLPEAR BLOQUES SORPRESA AL CAER DE ARRIBA (Pisotón) ---
+        function checkBlockHitting(prevPlayerY) {
+            const playerRect = { x: player.x, y: player.y, width: player.width, height: player.height };
+            
+            for (let b of blocks) {
+                if (b.hit) continue;
+
+                const blockRect = { x: b.x, y: b.y, width: b.width, height: b.height };
+                if (checkCollision(playerRect, blockRect)) {
+                    // ¿El jugador cae sobre la cabeza/parte superior del bloque "?"
+                    if (prevPlayerY + player.height <= b.y + 6 && player.vy > 0) {
+                        b.hit = true;
+                        b.animY = 6; // Pequeño rebote hacia abajo al ser pisado
+                        playSound('block');
+                        
+                        // Impulsar un poco hacia arriba para simular salto en el bloque
+                        player.vy = -6.5;
+                        player.y = b.y - player.height;
+                        player.grounded = true;
+                        player.isJumping = false;
+                        
+                        // Generar el ítem flotando hacia arriba
+                        spawnPowerup(b.x + b.width / 2, b.y - 10, b.hasItem);
+                    }
+                }
+            }
+        }
+
+        // --- SISTEMA DE POWER-UPS (Champiñón y Flor) ---
+        function spawnPowerup(x, y, type) {
+            playSound('powerup_spawns');
+            powerups.push({
+                x: x - 12,
+                y: y - 24,
+                width: 24,
+                height: 24,
+                type: type,
+                vy: -5, // Fuerza inicial de salida hacia arriba
+                vx: type === 'mushroom' ? 1.8 : 0, 
+                gravity: 0.4,
+                grounded: false
+            });
+        }
+
+        function applyPowerup(type) {
+            playSound('powerup_get');
+            if (type === 'mushroom') {
+                if (player.powerState === 'normal') {
+                    player.powerState = 'super';
+                    player.height = 54; 
+                    player.y -= 10;
+                }
+                score += 150;
+            } else if (type === 'flower') {
+                player.powerState = 'fire';
+                player.height = 54; 
+                score += 250;
+            }
+            updateHUD();
+            spawnParticles(player.x + player.width / 2, player.y + player.height / 2, '#fbbf24', 20);
+        }
+
+        // --- PARTÍCULAS EMISORAS ---
+        function spawnParticles(x, y, color, count = 10) {
+            for (let i = 0; i < count; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const speed = 1.5 + Math.random() * 3.5;
+                particles.push({
+                    x: x,
+                    y: y,
+                    vx: Math.cos(angle) * speed,
+                    vy: Math.sin(angle) * speed,
+                    size: 2 + Math.random() * 3,
+                    color: color,
+                    alpha: 1,
+                    decay: 0.02 + Math.random() * 0.03
+                });
+            }
+        }
+
+        // --- FLUJO DE CONTROL Y MENÚS ---
+        function startGame(mode) {
+            gameMode = mode;
+            score = 0;
+            lives = 3;
+            level = 1;
+            
+            updateHUD();
+            
+            // Restablecer jugador a estado normal
+            player.x = 100;
+            player.y = 400;
+            player.vx = 0;
+            player.vy = 0;
+            player.powerState = 'normal';
+            player.height = 44;
+            player.invincible = 0;
+
+            resetBlocks();
+            generateMathProblem();
+            spawnEnemies();
+            
+            particles = [];
+            fireballs = [];
+            enemyProjectiles = [];
+            powerups = [];
+            
+            // Generar nubes de fondo
+            clouds = [];
+            for (let i = 0; i < 5; i++) {
+                clouds.push({
+                    x: Math.random() * VIRTUAL_WIDTH,
+                    y: 40 + Math.random() * 110,
+                    speed: 0.25 + Math.random() * 0.35,
+                    size: 40 + Math.random() * 40
+                });
+            }
+
+            menuScreen.classList.add('hidden');
+            gameoverScreen.classList.add('hidden');
+            levelclearScreen.classList.add('hidden');
+            victoryScreen.classList.add('hidden');
+            
+            gameActive = true;
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        function updateHUD() {
+            scoreText.textContent = String(score).padStart(4, '0');
+            levelNumText.textContent = level;
+
+            // Renderizar corazones de vida
+            heartsContainer.innerHTML = '';
+            for (let i = 0; i < 3; i++) {
+                const heart = document.createElement('span');
+                heart.className = 'text-base md:text-lg transition-all duration-200';
+                heart.textContent = i < lives ? '❤️' : '🖤';
+                heartsContainer.appendChild(heart);
+            }
+        }
+
+        function handleAnswer(entityHit) {
+            if (entityHit.isCorrect) {
+                playSound('correct');
+                spawnParticles(entityHit.x, entityHit.y, '#10b981', 30);
+                score += 150 * level;
+                updateHUD();
+                
+                gameActive = false;
+
+                if (level >= 10) {
+                    setTimeout(() => {
+                        victoryScoreText.textContent = score;
+                        victoryScreen.classList.remove('hidden');
+                        victoryScreen.classList.add('flex');
+                        playSound('victory');
+                        for (let k = 0; k < 4; k++) {
+                            setTimeout(() => {
+                                spawnParticles(200 + Math.random() * 400, 150 + Math.random() * 200, '#f59e0b', 35);
+                            }, k * 300);
+                        }
+                    }, 400);
+                } else {
+                    setTimeout(() => {
+                        document.getElementById('levelclear-info').textContent = `¡Excelente! Superaste el desafío ${level} de 10.`;
+                        levelclearScreen.classList.remove('hidden');
+                        levelclearScreen.classList.add('flex');
+                    }, 400);
+                }
+
+            } else {
+                playSound('wrong');
+                spawnParticles(entityHit.x, entityHit.y, '#ef4444', 20);
+                numberEntities = numberEntities.filter(n => n !== entityHit);
+                
+                lives--;
+                updateHUD();
+                
+                if (lives <= 0) {
+                    triggerGameOver();
+                } else {
+                    mathProblemBanner.classList.add('border-red-500', 'bg-red-950');
+                    setTimeout(() => {
+                        mathProblemBanner.classList.remove('border-red-500', 'bg-red-950');
+                    }, 500);
+                }
+            }
+        }
+
+        function nextLevel() {
+            level++;
+            levelclearScreen.classList.add('hidden');
+            levelclearScreen.classList.remove('flex');
+            
+            player.x = 100;
+            player.y = 400;
+            player.vx = 0;
+            player.vy = 0;
+
+            generateMathProblem();
+            spawnEnemies();
+            
+            fireballs = [];
+            enemyProjectiles = [];
+            powerups = [];
+            
+            gameActive = true;
+        }
+
+        function triggerGameOver() {
+            gameActive = false;
+            playSound('gameover');
+            
+            finalScoreText.textContent = score;
+            finalLevelText.textContent = `Desafíos completados: ${level - 1} / 10`;
+            
+            gameoverScreen.classList.remove('hidden');
+            gameoverScreen.classList.add('flex');
+        }
+
+        function resetToMenu() {
+            gameoverScreen.classList.add('hidden');
+            victoryScreen.classList.add('hidden');
+            menuScreen.classList.remove('hidden');
+        }
+
+        // --- COLISIÓN CAJA A CAJA AABB ---
+        function checkCollision(rect1, rect2) {
+            return rect1.x < rect2.x + rect2.width &&
+                   rect1.x + rect1.width > rect2.x &&
+                   rect1.y < rect2.y + rect2.height &&
+                   rect1.y + rect1.height > rect2.y;
+        }
+
+        // --- DAÑO AL JUGADOR (MECÁNICA REDUCCIÓN O MUERTE) ---
+        function damagePlayer() {
+            if (player.invincible > 0) return;
+
+            if (player.powerState === 'fire') {
+                player.powerState = 'super';
+                playSound('hurt');
+                player.invincible = 90; 
+            } else if (player.powerState === 'super') {
+                player.powerState = 'normal';
+                player.height = 44; 
+                playSound('hurt');
+                player.invincible = 90;
+            } else {
+                lives--;
+                playSound('hurt');
+                updateHUD();
+                if (lives <= 0) {
+                    triggerGameOver();
+                } else {
+                    player.invincible = 90;
+                    player.x = 100;
+                    player.y = 400;
+                    player.vx = 0;
+                    player.vy = 0;
+                }
+            }
+        }
+
+        // --- ACTUALIZAR TODA LA LÓGICA DE JUEGO (PHYSICS & LOOPS) ---
+        function updateGame() {
+            if (!gameActive) return;
+
+            if (player.invincible > 0) player.invincible--;
+
+            // Movimiento horizontal
+            if (keys.left) {
+                player.vx = -player.speed;
+                player.facing = 'left';
+                player.walkFrame += 0.25;
+            } else if (keys.right) {
+                player.vx = player.speed;
+                player.facing = 'right';
+                player.walkFrame += 0.25;
+            } else {
+                player.vx *= 0.8;
+                if (Math.abs(player.vx) < 0.1) player.vx = 0;
+            }
+
+            player.vy += player.gravity;
+
+            if (keys.jump && player.grounded) {
+                player.vy = player.jumpPower;
+                player.grounded = false;
+                player.isJumping = true;
+                playSound('jump');
+            }
+
+            const prevPlayerX = player.x;
+            const prevPlayerY = player.y;
+
+            player.x += player.vx;
+            if (player.x < 0) player.x = 0;
+            if (player.x + player.width > VIRTUAL_WIDTH) player.x = VIRTUAL_WIDTH - player.width;
+
+            player.y += player.vy;
+            player.grounded = false;
+
+            // Colisiones de Mario con plataformas
+            for (let plat of platforms) {
+                if (player.x < plat.x + plat.width &&
+                    player.x + player.width > plat.x &&
+                    player.y < plat.y + plat.height &&
+                    player.y + player.height > plat.y) {
+                    
+                    if (prevPlayerY + player.height <= plat.y + 4) {
+                        player.y = plat.y - player.height;
+                        player.vy = 0;
+                        player.grounded = true;
+                        player.isJumping = false;
+                    } 
+                    else if (prevPlayerY >= plat.y + plat.height - 4) {
+                        player.y = plat.y + plat.height;
+                        player.vy = 0.5;
+                    }
+                }
+            }
+
+            // Validar si cayó encima de un bloque "?"
+            checkBlockHitting(prevPlayerY);
+
+            // Re-animar bloques golpeados
+            for (let b of blocks) {
+                if (b.animY > 0) {
+                    b.animY -= 0.35;
+                    if (b.animY < 0) b.animY = 0;
+                }
+            }
+
+            // Procesar cola de respawn (3 segundos)
+            for (let i = deadEnemyRespawnQueue.length - 1; i >= 0; i--) {
+                let respawnItem = deadEnemyRespawnQueue[i];
+                respawnItem.timer--;
+                if (respawnItem.timer <= 0) {
+                    createEnemy(respawnItem.plat, respawnItem.speed, respawnItem.type);
+                    deadEnemyRespawnQueue.splice(i, 1);
+                }
+            }
+
+            // Proyectiles enemigos
+            for (let p of enemyProjectiles) {
+                p.x += p.vx;
+                p.y += p.vy;
+                p.vy += 0.25; 
+
+                const pRect = { x: p.x - 6, y: p.y - 6, width: 12, height: 12 };
+                const playerRect = { x: player.x, y: player.y, width: player.width, height: player.height };
+                if (checkCollision(pRect, playerRect)) {
+                    damagePlayer();
+                    p.dead = true;
+                }
+
+                if (p.y > VIRTUAL_HEIGHT) p.dead = true;
+            }
+            enemyProjectiles = enemyProjectiles.filter(p => !p.dead);
+
+            // Bolas de fuego del jugador
+            for (let f of fireballs) {
+                f.x += f.vx;
+                f.y += f.vy;
+                f.vy += f.gravity;
+
+                for (let plat of platforms) {
+                    const fRect = { x: f.x, y: f.y, width: f.width, height: f.height };
+                    const platRect = { x: plat.x, y: plat.y, width: plat.width, height: plat.height };
+                    if (checkCollision(fRect, platRect)) {
+                        f.y = plat.y - f.height;
+                        f.vy = -5; 
+                    }
+                }
+
+                if (f.x < 0 || f.x > VIRTUAL_WIDTH || f.y > VIRTUAL_HEIGHT) {
+                    f.dead = true;
+                }
+            }
+            fireballs = fireballs.filter(f => !f.dead);
+
+            // Power-ups generados
+            for (let pw of powerups) {
+                pw.vy += pw.gravity;
+                pw.x += pw.vx;
+                pw.y += pw.vy;
+
+                let onPlat = false;
+                for (let plat of platforms) {
+                    if (pw.x < plat.x + plat.width &&
+                        pw.x + pw.width > plat.x &&
+                        pw.y < plat.y + plat.height &&
+                        pw.y + pw.height > plat.y) {
+                        
+                        if (pw.y + pw.height <= plat.y + 6) {
+                            pw.y = plat.y - pw.height;
+                            pw.vy = 0;
+                            onPlat = true;
+                        }
+                    }
+                }
+                pw.grounded = onPlat;
+
+                if (pw.x < 0 || pw.x + pw.width > VIRTUAL_WIDTH) {
+                    pw.vx = -pw.vx;
+                }
+
+                const playerRect = { x: player.x, y: player.y, width: player.width, height: player.height };
+                const pwRect = { x: pw.x, y: pw.y, width: pw.width, height: pw.height };
+                if (checkCollision(playerRect, pwRect)) {
+                    applyPowerup(pw.type);
+                    pw.dead = true;
+                }
+            }
+            powerups = powerups.filter(pw => !pw.dead);
+
+            // Respuestas Flotantes
+            for (let num of numberEntities) {
+                num.bobOffset += 0.05;
+
+                const playerRect = { x: player.x, y: player.y, width: player.width, height: player.height };
+                const numRect = { 
+                    x: num.x - num.radius, 
+                    y: num.y - num.radius + Math.sin(num.bobOffset) * 6, 
+                    width: num.radius * 2, 
+                    height: num.radius * 2 
+                };
+
+                if (checkCollision(playerRect, numRect)) {
+                    handleAnswer(num);
+                    break;
+                }
+            }
+
+            // Enemigos patrullando
+            for (let enemy of enemies) {
+                enemy.x += enemy.vx;
+                enemy.animTimer += 0.15;
+
+                if (enemy.x <= enemy.leftBound) {
+                    enemy.x = enemy.leftBound;
+                    enemy.vx = -enemy.vx;
+                } else if (enemy.x + enemy.width >= enemy.rightBound) {
+                    enemy.x = enemy.rightBound - enemy.width;
+                    enemy.vx = -enemy.vx;
+                }
+
+                if (enemy.type === 'koopa') {
+                    enemy.shootCooldown--;
+                    if (enemy.shootCooldown <= 0) {
+                        enemy.shootCooldown = 150 + Math.random() * 120; 
+                        const pDirection = (player.x < enemy.x) ? -4.5 : 4.5;
+                        enemyProjectiles.push({
+                            x: enemy.x + enemy.width / 2,
+                            y: enemy.y,
+                            vx: pDirection,
+                            vy: -4, 
+                            dead: false
+                        });
+                    }
+                }
+
+                const playerRect = { x: player.x, y: player.y, width: player.width, height: player.height };
+                const enemyRect = { x: enemy.x, y: enemy.y, width: enemy.width, height: enemy.height };
+
+                // Colisión Bola de fuego vs Enemigo
+                for (let f of fireballs) {
+                    const fRect = { x: f.x, y: f.y, width: f.width, height: f.height };
+                    if (checkCollision(fRect, enemyRect)) {
+                        f.dead = true;
+                        enemy.hp--;
+                        playSound('hit');
+                        spawnParticles(enemy.x + enemy.width/2, enemy.y + enemy.height/2, '#ea580c', 8);
+                        
+                        if (enemy.hp <= 0) {
+                            enemy.isDead = true;
+                            score += 100;
+                            updateHUD();
+                            spawnParticles(enemy.x + enemy.width/2, enemy.y + enemy.height/2, enemy.color, 16);
+                            
+                            deadEnemyRespawnQueue.push({
+                                timer: 180,
+                                plat: enemy.originalPlat,
+                                speed: enemy.originalSpeed,
+                                type: enemy.originalType
+                            });
+                        }
+                    }
+                }
+
+                if (enemy.isDead) continue;
+
+                // Colisión pisotón clásico
+                if (checkCollision(playerRect, enemyRect)) {
+                    if (prevPlayerY + player.height <= enemy.y + 12 && player.vy > 0) {
+                        player.vy = -8; 
+                        enemy.hp--;
+                        playSound('stomp');
+
+                        if (enemy.hp <= 0) {
+                            enemy.isDead = true;
+                            score += 100;
+                            updateHUD();
+                            spawnParticles(enemy.x + enemy.width/2, enemy.y + enemy.height/2, enemy.color, 16);
+
+                            deadEnemyRespawnQueue.push({
+                                timer: 180,
+                                plat: enemy.originalPlat,
+                                speed: enemy.originalSpeed,
+                                type: enemy.originalType
+                            });
+                        } else {
+                            enemy.vx *= 1.5;
+                            spawnParticles(enemy.x + enemy.width/2, enemy.y + enemy.height/2, '#fca5a5', 10);
+                        }
+                    } else {
+                        damagePlayer();
+                    }
+                }
+            }
+
+            enemies = enemies.filter(e => !e.isDead);
+
+            for (let cloud of clouds) {
+                cloud.x += cloud.speed;
+                if (cloud.x > VIRTUAL_WIDTH + cloud.size) cloud.x = -cloud.size;
+            }
+
+            for (let p of particles) {
+                p.x += p.vx;
+                p.y += p.vy;
+                p.alpha -= p.decay;
+            }
+            particles = particles.filter(p => p.alpha > 0);
+        }
+
+        // --- RENDERIZADOR GENERAL (SISTEMA CANVAS DRAWING) ---
+        function drawGame() {
+            const skyGrad = ctx.createLinearGradient(0, 0, 0, canvas.height);
+            skyGrad.addColorStop(0, '#38bdf8'); 
+            skyGrad.addColorStop(1, '#bae6fd'); 
+            ctx.fillStyle = skyGrad;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.save();
+            const scaleX = canvas.width / VIRTUAL_WIDTH;
+            const scaleY = canvas.height / VIRTUAL_HEIGHT;
+            ctx.scale(scaleX, scaleY);
+
+            // 1. Dibujar nubes
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.85)';
+            for (let cloud of clouds) {
+                ctx.beginPath();
+                ctx.arc(cloud.x, cloud.y, cloud.size * 0.4, 0, Math.PI * 2);
+                ctx.arc(cloud.x + cloud.size * 0.3, cloud.y - cloud.size * 0.1, cloud.size * 0.4, 0, Math.PI * 2);
+                ctx.arc(cloud.x + cloud.size * 0.6, cloud.y, cloud.size * 0.3, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            // 2. Dibujar Colinas
+            ctx.fillStyle = '#65a30d'; 
+            ctx.beginPath();
+            ctx.moveTo(-50, 550);
+            ctx.lineTo(150, 360);
+            ctx.lineTo(350, 550);
+            ctx.fill();
+
+            ctx.fillStyle = '#84cc16'; 
+            ctx.beginPath();
+            ctx.moveTo(180, 550);
+            ctx.lineTo(440, 290);
+            ctx.lineTo(700, 550);
+            ctx.fill();
+
+            ctx.fillStyle = '#15803d';
+            ctx.beginPath();
+            ctx.arc(110, 540, 22, 0, Math.PI * 2);
+            ctx.arc(135, 535, 26, 0, Math.PI * 2);
+            ctx.arc(160, 540, 22, 0, Math.PI * 2);
+            ctx.fill();
+
+            // 3. Dibujar Plataformas
+            for (let plat of platforms) {
+                if (plat.type === 'ground') {
+                    ctx.fillStyle = '#9a3412'; 
+                    ctx.fillRect(plat.x, plat.y, plat.width, plat.height);
+                    
+                    ctx.fillStyle = '#22c55e'; 
+                    ctx.fillRect(plat.x, plat.y, plat.width, 14);
+                    
+                    ctx.fillStyle = '#7c2d12'; 
+                    for (let x = 20; x < plat.width; x += 60) {
+                        ctx.fillRect(plat.x + x, plat.y + 24, 8, 8);
+                    }
+                } else if (plat.type === 'grass') {
+                    ctx.fillStyle = '#4ade80'; 
+                    ctx.beginPath();
+                    ctx.roundRect(plat.x, plat.y, plat.width, plat.height, 6);
+                    ctx.fill();
+
+                    ctx.fillStyle = '#86efac';
+                    ctx.fillRect(plat.x, plat.y, plat.width, 4);
+                } else if (plat.type === 'brick') {
+                    ctx.fillStyle = '#ea580c';
+                    ctx.fillRect(plat.x, plat.y, plat.width, plat.height);
+                    
+                    ctx.strokeStyle = '#431407';
+                    ctx.lineWidth = 2;
+                    ctx.strokeRect(plat.x, plat.y, plat.width, plat.height);
+
+                    ctx.beginPath();
+                    const brickWidth = plat.width / 4;
+                    for (let i = 1; i < 4; i++) {
+                        ctx.moveTo(plat.x + i * brickWidth, plat.y);
+                        ctx.lineTo(plat.x + i * brickWidth, plat.y + plat.height);
+                    }
+                    ctx.stroke();
+                }
+            }
+
+            // 4. Dibujar Bloques "?" Sorpresa
+            for (let b of blocks) {
+                const drawY = b.y + b.animY;
+                if (!b.hit) {
+                    const isBlink = Math.floor(Date.now() / 250) % 2 === 0;
+                    ctx.fillStyle = isBlink ? '#eab308' : '#ca8a04';
+                    ctx.fillRect(b.x, drawY, b.width, b.height);
+                    
+                    ctx.strokeStyle = '#451a03';
+                    ctx.lineWidth = 2;
+                    ctx.strokeRect(b.x, drawY, b.width, b.height);
+
+                    ctx.fillStyle = '#ffffff';
+                    ctx.font = 'bold 16px "Press Start 2P", Courier, monospace';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText('?', b.x + b.width / 2, drawY + b.height / 2 + 1);
+                } else {
+                    ctx.fillStyle = '#7c2d12';
+                    ctx.fillRect(b.x, drawY, b.width, b.height);
+                    ctx.strokeStyle = '#451a03';
+                    ctx.lineWidth = 2;
+                    ctx.strokeRect(b.x, drawY, b.width, b.height);
+
+                    ctx.fillStyle = '#451a03';
+                    ctx.fillRect(b.x + 3, drawY + 3, 3, 3);
+                    ctx.fillRect(b.x + b.width - 6, drawY + 3, 3, 3);
+                    ctx.fillRect(b.x + 3, drawY + b.height - 6, 3, 3);
+                    ctx.fillRect(b.x + b.width - 6, drawY + b.height - 6, 3, 3);
+                }
+            }
+
+            // 5. Dibujar Power-Ups
+            for (let pw of powerups) {
+                if (pw.type === 'mushroom') {
+                    ctx.fillStyle = '#dc2626'; 
+                    ctx.beginPath();
+                    ctx.arc(pw.x + pw.width / 2, pw.y + 10, 10, Math.PI, 0);
+                    ctx.fill();
+
+                    ctx.fillStyle = '#ffffff'; 
+                    ctx.beginPath();
+                    ctx.arc(pw.x + pw.width / 2 - 4, pw.y + 6, 3, 0, Math.PI*2);
+                    ctx.arc(pw.x + pw.width / 2 + 4, pw.y + 6, 3, 0, Math.PI*2);
+                    ctx.fill();
+
+                    ctx.fillStyle = '#fed7aa'; 
+                    ctx.fillRect(pw.x + pw.width / 2 - 5, pw.y + 10, 10, 10);
+                } else {
+                    const pulseCol = Math.floor(Date.now() / 100) % 3;
+                    const colors = ['#ea580c', '#eab308', '#ffffff'];
+                    ctx.fillStyle = colors[pulseCol];
+                    ctx.beginPath();
+                    ctx.arc(pw.x + pw.width / 2, pw.y + 10, 11, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    ctx.fillStyle = '#16a34a'; 
+                    ctx.fillRect(pw.x + pw.width / 2 - 2, pw.y + 15, 4, 8);
+                }
+            }
+
+            // 6. Dibujar Bolas de fuego
+            for (let f of fireballs) {
+                ctx.fillStyle = '#ea580c';
+                ctx.beginPath();
+                ctx.arc(f.x + f.width / 2, f.y + f.height / 2, 6, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.fillStyle = '#fef08a';
+                ctx.beginPath();
+                ctx.arc(f.x + f.width / 2, f.y + f.height / 2, 3, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            // 7. Proyectiles enemigos
+            for (let p of enemyProjectiles) {
+                ctx.fillStyle = '#15803d';
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, 7, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.strokeStyle = '#ffffff';
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+            }
+
+            // 8. Números de Respuesta
+            for (let num of numberEntities) {
+                const animY = num.y + Math.sin(num.bobOffset) * 6;
+
+                const grad = ctx.createRadialGradient(num.x, animY, 2, num.x, animY, num.radius);
+                grad.addColorStop(0, '#fef08a'); 
+                grad.addColorStop(1, '#eab308'); 
+                ctx.fillStyle = grad;
+
+                ctx.beginPath();
+                ctx.arc(num.x, animY, num.radius, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.strokeStyle = '#ca8a04';
+                ctx.lineWidth = 3;
+                ctx.stroke();
+
+                ctx.fillStyle = '#0f172a'; 
+                ctx.font = 'bold 18px "Press Start 2P", Courier, monospace';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(num.value, num.x, animY + 2);
+            }
+
+            // 9. Dibujar Enemigos
+            for (let enemy of enemies) {
+                const bounce = Math.abs(Math.sin(enemy.animTimer)) * 4;
+
+                if (enemy.type === 'goomba') {
+                    ctx.fillStyle = enemy.color;
+                    ctx.beginPath();
+                    ctx.arc(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2 + bounce / 2, enemy.width / 2, Math.PI, 0); 
+                    ctx.lineTo(enemy.x + enemy.width, enemy.y + enemy.height - 6);
+                    ctx.lineTo(enemy.x, enemy.y + enemy.height - 6);
+                    ctx.closePath();
+                    ctx.fill();
+
+                    ctx.fillStyle = '#ffffff';
+                    ctx.fillRect(enemy.x + 6, enemy.y + 12 + bounce / 2, 4, 4);
+                    ctx.fillRect(enemy.x + enemy.width - 10, enemy.y + 12 + bounce / 2, 4, 4);
+
+                    ctx.strokeStyle = '#000000';
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    ctx.moveTo(enemy.x + 4, enemy.y + 9 + bounce / 2);
+                    ctx.lineTo(enemy.x + 10, enemy.y + 11 + bounce / 2);
+                    ctx.moveTo(enemy.x + enemy.width - 4, enemy.y + 9 + bounce / 2);
+                    ctx.lineTo(enemy.x + enemy.width - 10, enemy.y + 11 + bounce / 2);
+                    ctx.stroke();
+
+                    ctx.fillStyle = '#451a03';
+                    const walkAlt = Math.floor(enemy.animTimer) % 2 === 0;
+                    ctx.fillRect(enemy.x + 2, enemy.y + enemy.height - 6 + (walkAlt ? -1 : 1), 9, 6);
+                    ctx.fillRect(enemy.x + enemy.width - 11, enemy.y + enemy.height - 6 + (walkAlt ? 1 : -1), 9, 6);
+                } else if (enemy.type === 'koopa') {
+                    ctx.fillStyle = enemy.hp === 2 ? '#22c55e' : '#f43f5e'; 
+                    ctx.beginPath();
+                    ctx.arc(enemy.x + enemy.width / 2, enemy.y + 12 + bounce / 2, 12, Math.PI, 0);
+                    ctx.fill();
+
+                    ctx.fillStyle = '#fef08a'; 
+                    ctx.beginPath();
+                    ctx.arc(enemy.x + enemy.width / 2 + (enemy.vx > 0 ? 8 : -8), enemy.y + 8, 7, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    ctx.fillStyle = '#000000';
+                    ctx.fillRect(enemy.x + enemy.width / 2 + (enemy.vx > 0 ? 8 : -10), enemy.y + 6, 3, 4);
+
+                    ctx.strokeStyle = '#064e3b';
+                    ctx.lineWidth = 1;
+                    ctx.strokeRect(enemy.x + 4, enemy.y + 12, enemy.width - 8, 10);
+
+                    ctx.fillStyle = '#fef08a';
+                    ctx.fillRect(enemy.x + 4, enemy.y + enemy.height - 8, 6, 8);
+                    ctx.fillRect(enemy.x + enemy.width - 10, enemy.y + enemy.height - 8, 6, 8);
+                }
+            }
+
+            // 10. Dibujar Héroe (Mario)
+            if (player.invincible === 0 || Math.floor(Date.now() / 70) % 2 === 0) {
+                ctx.save();
+                ctx.translate(player.x + player.width / 2, player.y + player.height / 2);
+                
+                if (player.facing === 'left') {
+                    ctx.scale(-1, 1);
+                }
+
+                const walkCycle = Math.sin(player.walkFrame) * 4;
+                const shirtColor = player.powerState === 'fire' ? '#ffffff' : '#dc2626'; 
+                const overallColor = player.powerState === 'fire' ? '#dc2626' : '#1d4ed8'; 
+
+                ctx.fillStyle = overallColor;
+                ctx.fillRect(-12, -2, 24, player.height/2 - 2);
+
+                ctx.fillStyle = shirtColor;
+                ctx.fillRect(-12, -12, 24, 10);
+
+                ctx.fillStyle = '#fed7aa'; 
+                ctx.fillRect(-10, -26, 20, 14);
+
+                ctx.fillStyle = '#1e293b'; 
+                ctx.fillRect(3, -22, 4, 4);
+                ctx.fillStyle = '#451a03'; 
+                ctx.fillRect(1, -17, 9, 4);
+
+                ctx.fillStyle = shirtColor;
+                ctx.fillRect(-12, -30, 24, 5); 
+                ctx.fillRect(-5, -32, 15, 3); 
+
+                ctx.fillStyle = '#fed7aa'; 
+                if (player.isJumping) {
+                    ctx.fillRect(-16, -16, 6, 6);
+                    ctx.fillRect(10, -16, 6, 6);
+                } else if (Math.abs(player.vx) > 0) {
+                    ctx.fillRect(-16 + walkCycle, -4, 6, 6);
+                    ctx.fillRect(10 - walkCycle, -4, 6, 6);
+                } else {
+                    ctx.fillRect(-15, -2, 5, 5);
+                    ctx.fillRect(10, -2, 5, 5);
+                }
+
+                ctx.fillStyle = '#451a03'; 
+                if (player.isJumping) {
+                    ctx.fillRect(-13, player.height/2 - 8, 10, 6);
+                    ctx.fillRect(3, player.height/2 - 11, 10, 6);
+                } else if (Math.abs(player.vx) > 0) {
+                    ctx.fillRect(-13, player.height/2 - 8 + walkCycle / 2, 10, 6);
+                    ctx.fillRect(3, player.height/2 - 8 - walkCycle / 2, 10, 6);
+                } else {
+                    ctx.fillRect(-12, player.height/2 - 6, 10, 6);
+                    ctx.fillRect(2, player.height/2 - 6, 10, 6);
+                }
+
+                ctx.restore();
+            }
+
+            // 11. Partículas
+            for (let p of particles) {
+                ctx.fillStyle = `rgba(${hexToRgb(p.color)}, ${p.alpha})`;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            ctx.restore();
+        }
+
+        function hexToRgb(hex) {
+            hex = hex.replace('#', '');
+            const r = parseInt(hex.substring(0, 2), 16);
+            const g = parseInt(hex.substring(2, 4), 16);
+            const b = parseInt(hex.substring(4, 6), 16);
+            return `${r}, ${g}, ${b}`;
+        }
+
+        // --- BUCLE DE JUEGO GENERAL ---
+        function gameLoop() {
+            updateGame();
+            drawGame();
+            requestAnimationFrame(gameLoop);
+        }
+
+        window.onload = function() {
+            gameLoop();
+        };
+
+    </script>
+<p> Creado por Prof. Juan Mendieta </p>
+</body>
+</html>
