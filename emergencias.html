@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#B71C1C" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>Modo Emergencia · PONCE</title>
+  <link rel="stylesheet" href="emergencia.css" />
+</head>
+<body class="emg-body">
+
+  <!-- ================= HEADER ================= -->
+  <header class="emg-header" role="banner">
+    <button class="emg-btn-back" id="btnVolver" aria-label="Volver al menú">
+      <span aria-hidden="true">←</span>
+    </button>
+    <h1 class="emg-title">EMERGENCIA</h1>
+    <button class="emg-btn-solo-top" id="btnSoloTop" aria-label="Modo estoy solo">
+      <span aria-hidden="true">🆘</span>
+      <span class="emg-btn-solo-top-text">SOLO</span>
+    </button>
+  </header>
+
+  <!-- ================= MAIN ================= -->
+  <main class="emg-main" role="main">
+    <p class="emg-hint">Toca una frase para mostrarla en pantalla gigante y en voz alta.</p>
+
+    <section class="emg-grid" id="gridFrases" aria-label="Frases de emergencia"></section>
+
+    <button class="emg-btn-solo-grande" id="btnSoloGrande">
+      🆘 ESTOY SOLO · NECESITO AYUDA
+    </button>
+  </main>
+
+  <!-- ================= OVERLAY FRASE ================= -->
+  <div class="emg-overlay" id="overlayFrase" hidden role="dialog" aria-modal="true">
+    <div class="emg-frase-top">
+      <button class="emg-mini" id="btnCerrarFrase" aria-label="Cerrar">✕</button>
+      <button class="emg-mini" id="btnInvertir" aria-label="Invertir colores">◐</button>
+      <button class="emg-mini" id="btnRepetir" aria-label="Repetir en voz alta">🔊</button>
+    </div>
+
+    <div class="emg-frase-centro">
+      <div class="emg-frase-icono" id="fraseIcono" aria-hidden="true">🚨</div>
+      <p class="emg-frase-texto" id="fraseTexto">Necesito ayuda</p>
+    </div>
+
+    <div class="emg-frase-bottom">
+      <button class="emg-btn-responder" id="btnAbrirRespuesta">
+        💬 RESPONDER
+      </button>
+    </div>
+  </div>
+
+  <!-- ================= OVERLAY RESPUESTA (persona oyente) ================= -->
+  <div class="emg-overlay emg-overlay-resp" id="overlayRespuesta" hidden role="dialog" aria-modal="true">
+    <div class="emg-resp-header">
+      <h2>RESPONDER AL SORDO</h2>
+      <button class="emg-mini" id="btnCerrarRespuesta" aria-label="Cerrar">✕</button>
+    </div>
+
+    <p class="emg-resp-hint">Toca una respuesta rápida o escribe / dicta un mensaje.</p>
+
+    <section class="emg-resp-grid" id="gridRespuestas" aria-label="Respuestas rápidas"></section>
+
+    <div class="emg-resp-texto">
+      <textarea id="inputRespuesta" class="emg-textarea"
+        placeholder="Escribe aquí tu respuesta..." rows="3"></textarea>
+      <div class="emg-resp-acciones">
+        <button class="emg-btn-accion emg-btn-dictar" id="btnDictar" aria-label="Dictar respuesta">
+          🎤 DICTAR
+        </button>
+        <button class="emg-btn-accion emg-btn-enviar" id="btnEnviarRespuesta">
+          MOSTRAR AL SORDO
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= OVERLAY LECTURA (el sordo lee la respuesta) ================= -->
+  <div class="emg-overlay emg-overlay-lectura" id="overlayLectura" hidden role="dialog" aria-modal="true">
+    <div class="emg-lectura-marca">RESPUESTA</div>
+    <p class="emg-lectura-texto" id="lecturaTexto">…</p>
+    <button class="emg-btn-lectura-ok" id="btnCerrarLectura">ENTENDIDO</button>
+  </div>
+
+  <!-- ================= OVERLAY MODO SOLO ================= -->
+  <div class="emg-overlay emg-overlay-solo" id="overlaySolo" hidden role="dialog" aria-modal="true">
+    <div class="emg-solo-contenido">
+      <div class="emg-solo-icono" aria-hidden="true">🆘</div>
+      <p class="emg-solo-texto">NECESITO AYUDA</p>
+      <p class="emg-solo-sub">Soy sordo · Estoy solo · Por favor ayúdeme</p>
+    </div>
+    <button class="emg-btn-detener" id="btnDetenerSolo">DETENER</button>
+  </div>
+
+  <script src="emergencia.js"></script>
+</body>
+</html>
