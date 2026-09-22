@@ -66,6 +66,15 @@ border-radius:10px;
 cursor:pointer;
 font-weight:bold;
 }
+.btn-card{
+    display:inline-block;
+    background:#8CC63F;
+    color:#000;
+    text-decoration:none;
+    padding:12px 25px;
+    border-radius:10px;
+    font-weight:bold;
+}
 
 .extras{
 padding:30px;
