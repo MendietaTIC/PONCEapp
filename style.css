@@ -230,6 +230,16 @@ button {
 }
 
 /* Contenedor de redes sociales */
+#mas {
+    display: flex;
+    display: flex;
+  justify-content: center;
+}
+#mas {
+    width: 40px; /* Tamaño de los iconos de redes sociales */
+    height: auto;
+    cursor: pointer;
+}
 #social-media {
     display: flex;
     gap: 10px; /* Espacio entre los iconos */
