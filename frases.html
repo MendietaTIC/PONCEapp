@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#1565C0" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <title>Frases por Contexto · PONCE</title>
+  <link rel="stylesheet" href="frases.css" />
+</head>
+<body class="frs-body">
+
+  <!-- ================= HEADER ================= -->
+  <header class="frs-header" role="banner">
+    <button class="frs-btn-back" id="btnVolver" aria-label="Volver al menú">
+      <span aria-hidden="true">←</span>
+    </button>
+    <h1 class="frs-title">Frases</h1>
+    <button class="frs-btn-libre" id="btnLibre" aria-label="Modo comunicación libre">
+      ✍️
+    </button>
+  </header>
+
+  <!-- ================= SELECTOR DE CONTEXTO ================= -->
+  <nav class="frs-contextos" id="contextos" aria-label="Contextos"></nav>
+
+  <!-- ================= MAIN ================= -->
+  <main class="frs-main" role="main">
+    <p class="frs-hint" id="hintContexto">Toca una frase para mostrarla y escucharla en voz alta.</p>
+    <section class="frs-grid" id="gridFrases" aria-label="Frases del contexto"></section>
+
+    <button class="frs-btn-libre-grande" id="btnLibreGrande">
+      ✍️ ESCRIBIR O ARMAR MENSAJE
+    </button>
+  </main>
+
+  <!-- ================= OVERLAY FRASE ================= -->
+  <div class="frs-overlay" id="overlayFrase" hidden role="dialog" aria-modal="true">
+    <div class="frs-frase-top">
+      <button class="frs-mini" id="btnCerrarFrase" aria-label="Cerrar">✕</button>
+      <button class="frs-mini" id="btnInvertir" aria-label="Invertir colores">◐</button>
+      <button class="frs-mini" id="btnRepetir" aria-label="Repetir en voz alta">🔊</button>
+    </div>
+
+    <div class="frs-frase-centro">
+      <div class="frs-frase-icono" id="fraseIcono" aria-hidden="true">💬</div>
+      <p class="frs-frase-texto" id="fraseTexto">…</p>
+    </div>
+
+    <div class="frs-frase-bottom">
+      <button class="frs-btn-ok" id="btnOkFrase">ENTENDIDO</button>
+    </div>
+  </div>
+
+  <!-- ================= OVERLAY COMUNICACIÓN LIBRE ================= -->
+  <div class="frs-overlay frs-overlay-libre" id="overlayLibre" hidden role="dialog" aria-modal="true">
+    <div class="frs-libre-header">
+      <h2>ESCRIBIR MENSAJE</h2>
+      <button class="frs-mini" id="btnCerrarLibre" aria-label="Cerrar">✕</button>
+    </div>
+
+    <p class="frs-libre-hint">Escribe, dicta o toca pictogramas. Luego presiona HABLAR o MOSTRAR.</p>
+
+    <textarea id="inputLibre" class="frs-textarea"
+      placeholder="Escribe aquí tu mensaje..." rows="4"></textarea>
+
+    <div class="frs-libre-acciones">
+      <button class="frs-btn-accion frs-btn-dictar" id="btnDictar">🎤 DICTAR</button>
+      <button class="frs-btn-accion frs-btn-limpiar" id="btnLimpiar">🧹 LIMPIAR</button>
+      <button class="frs-btn-accion frs-btn-mostrar" id="btnMostrarLibre">👁 MOSTRAR</button>
+      <button class="frs-btn-accion frs-btn-hablar" id="btnHablarLibre">🔊 HABLAR</button>
+    </div>
+
+    <h3 class="frs-libre-subtitulo">PICTOGRAMAS</h3>
+    <section class="frs-pictos" id="gridPictos" aria-label="Pictogramas"></section>
+  </div>
+
+  <script src="frases.js"></script>
+</body>
+</html>
