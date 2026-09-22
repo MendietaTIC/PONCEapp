@@ -235,7 +235,7 @@ button {
     display: flex;
   justify-content: center;
 }
-#mas {
+#mas a img {
     width: 40px; /* Tamaño de los iconos de redes sociales */
     height: auto;
     cursor: pointer;
