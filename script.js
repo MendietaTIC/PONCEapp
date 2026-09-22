@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let progress = 0;
 
     // Configura la barra de progreso para que se llene en 4 segundos
-    const duration = 5200; // Duración en milisegundos
+    const duration = 4200; // Duración en milisegundos
     const intervalTime = 50; // Intervalo de actualización en milisegundos
     const increment = (100 / (duration / intervalTime)); // Incremento en porcentaje
 
