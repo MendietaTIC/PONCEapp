@@ -1,101 +1,843 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="theme-color" content="#B71C1C" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <title>Modo Emergencia · PONCE</title>
-  <link rel="stylesheet" href="emergencia.css" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#B71C1C" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<title>Modo Emergencia · PONCE</title>
+
+<style>
+/* =========================================================
+   PONCE · Modo Emergencia
+   ========================================================= */
+
+:root {
+  --emg-rojo:       #E53935;
+  --emg-rojo-osc:   #B71C1C;
+  --emg-rojo-prof:  #7F0000;
+  --emg-amarillo:   #FFD600;
+  --emg-blanco:     #FFFFFF;
+  --emg-negro:      #0D0D0D;
+  --emg-gris:       #1C1C1C;
+  --emg-gris-claro: #2A2A2A;
+  --emg-verde:      #2E7D32;
+  --emg-radius:     18px;
+  --emg-shadow:     0 6px 20px rgba(0,0,0,.45);
+  --emg-font:       system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+html, body {
+  height: 100%;
+  background: var(--emg-negro);
+  color: var(--emg-blanco);
+  font-family: var(--emg-font);
+  overscroll-behavior: none;
+}
+
+body {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+/* ================= HEADER ================= */
+.emg-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: grid;
+  grid-template-columns: 56px 1fr 92px;
+  align-items: center;
+  gap: 8px;
+  padding: calc(env(safe-area-inset-top, 0) + 12px) 12px 12px;
+  background: var(--emg-rojo-osc);
+  border-bottom: 3px solid var(--emg-rojo-prof);
+}
+.emg-title {
+  font-size: 1.15rem;
+  letter-spacing: 2px;
+  text-align: center;
+  font-weight: 800;
+}
+.emg-btn-back,
+.emg-btn-solo-top {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 44px;
+  border: none;
+  border-radius: 12px;
+  background: rgba(0,0,0,.28);
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .15s, transform .1s;
+}
+.emg-btn-back:active,
+.emg-btn-solo-top:active { transform: scale(.96); }
+.emg-btn-solo-top {
+  background: var(--emg-amarillo);
+  color: var(--emg-negro);
+  font-size: .78rem;
+  padding: 0 10px;
+}
+
+/* ================= MAIN ================= */
+.emg-main {
+  flex: 1;
+  padding: 16px 14px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.emg-hint {
+  font-size: .9rem;
+  color: #CFCFCF;
+  text-align: center;
+}
+.emg-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+@media (min-width: 520px) { .emg-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 820px) { .emg-grid { grid-template-columns: repeat(4, 1fr); } }
+
+.emg-btn-frase {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 18px 10px;
+  min-height: 118px;
+  border: none;
+  border-radius: var(--emg-radius);
+  background: linear-gradient(160deg, var(--emg-rojo) 0%, var(--emg-rojo-osc) 100%);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1.15;
+  text-align: center;
+  box-shadow: var(--emg-shadow);
+  cursor: pointer;
+  transition: transform .08s, box-shadow .15s;
+}
+.emg-btn-frase:active {
+  transform: scale(.96);
+  box-shadow: 0 2px 8px rgba(0,0,0,.5);
+}
+.emg-btn-frase-icono { font-size: 2rem; line-height: 1; }
+
+.emg-btn-solo-grande {
+  margin-top: 6px;
+  padding: 20px 16px;
+  border: 3px solid var(--emg-amarillo);
+  border-radius: var(--emg-radius);
+  background: var(--emg-negro);
+  color: var(--emg-amarillo);
+  font-size: 1.05rem;
+  font-weight: 900;
+  letter-spacing: 1px;
+  cursor: pointer;
+  box-shadow: 0 0 0 4px rgba(255,214,0,.12);
+}
+.emg-btn-solo-grande:active { transform: scale(.97); }
+
+/* ================= OVERLAY BASE ================= */
+.emg-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  padding: calc(env(safe-area-inset-top, 0) + 12px) 14px calc(env(safe-area-inset-bottom, 0) + 16px);
+  background: var(--emg-negro);
+  animation: emgFade .18s ease;
+}
+@keyframes emgFade { from { opacity: 0; } to { opacity: 1; } }
+
+.emg-mini {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,.12);
+  color: #fff;
+  font-size: 1.15rem;
+  font-weight: 800;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.emg-mini:active { background: rgba(255,255,255,.24); }
+
+/* ================= OVERLAY FRASE ================= */
+.emg-frase-top { display: flex; justify-content: space-between; gap: 10px; }
+.emg-frase-centro {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  text-align: center;
+  padding: 10px 6px;
+}
+.emg-frase-icono {
+  font-size: clamp(3rem, 14vw, 6rem);
+  line-height: 1;
+  filter: drop-shadow(0 0 14px rgba(229,57,53,.55));
+}
+.emg-frase-texto {
+  font-size: clamp(2.4rem, 12vw, 7rem);
+  font-weight: 900;
+  line-height: 1.02;
+  letter-spacing: -1px;
+  text-transform: uppercase;
+  color: #fff;
+}
+.emg-frase-bottom { display: flex; justify-content: center; }
+.emg-btn-responder {
+  width: 100%;
+  max-width: 520px;
+  padding: 20px 18px;
+  border: none;
+  border-radius: var(--emg-radius);
+  background: var(--emg-amarillo);
+  color: var(--emg-negro);
+  font-size: 1.1rem;
+  font-weight: 900;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+.emg-btn-responder:active { transform: scale(.98); }
+
+.emg-overlay.emg-invertido { background: #fff; }
+.emg-overlay.emg-invertido .emg-frase-texto,
+.emg-overlay.emg-invertido .emg-frase-icono { color: var(--emg-negro); filter: none; }
+.emg-overlay.emg-invertido .emg-mini { background: rgba(0,0,0,.1); color: var(--emg-negro); }
+
+/* ================= OVERLAY RESPUESTA ================= */
+.emg-overlay-resp { background: #111; }
+.emg-resp-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.emg-resp-header h2 {
+  font-size: 1.05rem;
+  letter-spacing: 1.5px;
+  color: var(--emg-amarillo);
+}
+.emg-resp-hint {
+  font-size: .88rem;
+  color: #C9C9C9;
+  margin-bottom: 12px;
+  text-align: center;
+}
+.emg-resp-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin-bottom: 14px;
+  overflow-y: auto;
+  max-height: 42vh;
+  padding-right: 4px;
+}
+@media (min-width: 560px) {
+  .emg-resp-grid { grid-template-columns: repeat(2, 1fr); max-height: 40vh; }
+}
+.emg-btn-resp {
+  padding: 16px 14px;
+  border: 2px solid rgba(255,255,255,.14);
+  border-radius: 14px;
+  background: var(--emg-gris);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+  transition: background .15s, border-color .15s;
+}
+.emg-btn-resp:active {
+  background: var(--emg-verde);
+  border-color: var(--emg-verde);
+}
+.emg-resp-texto { display: flex; flex-direction: column; gap: 10px; margin-top: auto; }
+.emg-textarea {
+  width: 100%;
+  min-height: 78px;
+  resize: none;
+  padding: 14px;
+  border-radius: 14px;
+  border: 2px solid rgba(255,255,255,.14);
+  background: var(--emg-gris);
+  color: #fff;
+  font-size: 1.05rem;
+  font-family: inherit;
+  outline: none;
+}
+.emg-textarea:focus { border-color: var(--emg-amarillo); }
+.emg-resp-acciones {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 10px;
+}
+.emg-btn-accion {
+  padding: 16px 12px;
+  border: none;
+  border-radius: 14px;
+  font-weight: 900;
+  font-size: 1rem;
+  letter-spacing: .6px;
+  cursor: pointer;
+}
+.emg-btn-dictar {
+  background: var(--emg-gris-claro);
+  color: #fff;
+  border: 2px solid rgba(255,255,255,.14);
+}
+.emg-btn-enviar { background: var(--emg-verde); color: #fff; }
+.emg-btn-accion:active { transform: scale(.97); }
+
+/* ================= OVERLAY LECTURA ================= */
+.emg-overlay-lectura {
+  background: #fff;
+  color: var(--emg-negro);
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 20px;
+  padding: 24px;
+}
+.emg-lectura-marca {
+  font-size: .95rem;
+  letter-spacing: 4px;
+  font-weight: 800;
+  color: var(--emg-rojo-osc);
+  text-transform: uppercase;
+}
+.emg-lectura-texto {
+  font-size: clamp(1.8rem, 8vw, 4.2rem);
+  font-weight: 900;
+  line-height: 1.1;
+  color: var(--emg-negro);
+  max-width: 900px;
+}
+.emg-btn-lectura-ok {
+  margin-top: 10px;
+  padding: 18px 34px;
+  border: none;
+  border-radius: 999px;
+  background: var(--emg-negro);
+  color: #fff;
+  font-size: 1.05rem;
+  font-weight: 900;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+/* ================= MODO SOLO ================= */
+.emg-overlay-solo {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 24px;
+  background: var(--emg-rojo-prof);
+  animation: emgSoloFlash 1s infinite alternate;
+}
+@keyframes emgSoloFlash {
+  from { background: var(--emg-rojo-prof); }
+  to   { background: #FF0000; }
+}
+.emg-solo-contenido {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  max-width: 720px;
+}
+.emg-solo-icono {
+  font-size: clamp(3.5rem, 18vw, 8rem);
+  line-height: 1;
+  filter: drop-shadow(0 0 20px rgba(255,255,255,.5));
+  animation: emgPulse 1s infinite alternate;
+}
+@keyframes emgPulse {
+  from { transform: scale(1); opacity: .85; }
+  to   { transform: scale(1.12); opacity: 1; }
+}
+.emg-solo-texto {
+  font-size: clamp(2.2rem, 11vw, 5.5rem);
+  font-weight: 900;
+  line-height: 1;
+  color: #fff;
+  text-shadow: 0 4px 14px rgba(0,0,0,.6);
+}
+.emg-solo-sub {
+  font-size: clamp(1rem, 4vw, 1.4rem);
+  font-weight: 700;
+  color: var(--emg-amarillo);
+}
+.emg-btn-detener {
+  margin-top: 26px;
+  padding: 20px 44px;
+  border: 4px solid #fff;
+  border-radius: 999px;
+  background: var(--emg-negro);
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+  cursor: pointer;
+}
+.emg-btn-detener:active { transform: scale(.96); }
+
+@media (prefers-reduced-motion: reduce) {
+  .emg-overlay, .emg-overlay-solo, .emg-solo-icono { animation: none !important; }
+}
+
+.emg-btn-frase:focus-visible,
+.emg-btn-solo-grande:focus-visible,
+.emg-btn-responder:focus-visible,
+.emg-mini:focus-visible,
+.emg-btn-resp:focus-visible,
+.emg-btn-accion:focus-visible,
+.emg-btn-detener:focus-visible,
+.emg-btn-lectura-ok:focus-visible,
+.emg-btn-back:focus-visible,
+.emg-btn-solo-top:focus-visible {
+  outline: 3px solid var(--emg-amarillo);
+  outline-offset: 3px;
+}
+</style>
 </head>
-<body class="emg-body">
+<body>
 
-  <!-- ================= HEADER ================= -->
-  <header class="emg-header" role="banner">
-    <button class="emg-btn-back" id="btnVolver" aria-label="Volver al menú">
-      <span aria-hidden="true">←</span>
-    </button>
-    <h1 class="emg-title">EMERGENCIA </h1>
-    <button class="emg-btn-solo-top" id="btnSoloTop" aria-label="Modo estoy solo">
-      <span aria-hidden="true">🆘</span>
-      <span class="emg-btn-solo-top-text">SOLO</span>
-    </button>
-  </header>
+<header class="emg-header" role="banner">
+  <button class="emg-btn-back" id="btnVolver" aria-label="Volver">←</button>
+  <h1 class="emg-title">EMERGENCIA</h1>
+  <button class="emg-btn-solo-top" id="btnSoloTop" aria-label="Modo estoy solo">
+    <span>🆘</span><span>SOLO</span>
+  </button>
+</header>
 
-  <!-- ================= MAIN ================= -->
-  <main class="emg-main" role="main">
-    <p class="emg-hint">Toca una frase para mostrarla en pantalla gigante y en voz alta.</p>
+<main class="emg-main" role="main">
+  <p class="emg-hint">Toca una frase para mostrarla en pantalla gigante y en voz alta.</p>
+  <section class="emg-grid" id="gridFrases" aria-label="Frases de emergencia"></section>
+  <button class="emg-btn-solo-grande" id="btnSoloGrande">
+    🆘 ESTOY SOLO · NECESITO AYUDA
+  </button>
+</main>
 
-    <section class="emg-grid" id="gridFrases" aria-label="Frases de emergencia"></section>
+<!-- OVERLAY FRASE -->
+<div class="emg-overlay" id="overlayFrase" hidden role="dialog" aria-modal="true">
+  <div class="emg-frase-top">
+    <button class="emg-mini" id="btnCerrarFrase" aria-label="Cerrar">✕</button>
+    <button class="emg-mini" id="btnInvertir" aria-label="Invertir colores">◐</button>
+    <button class="emg-mini" id="btnRepetir" aria-label="Repetir">🔊</button>
+  </div>
+  <div class="emg-frase-centro">
+    <div class="emg-frase-icono" id="fraseIcono">🚨</div>
+    <p class="emg-frase-texto" id="fraseTexto">Necesito ayuda</p>
+  </div>
+  <div class="emg-frase-bottom">
+    <button class="emg-btn-responder" id="btnAbrirRespuesta">💬 RESPONDER</button>
+  </div>
+</div>
 
-    <button class="emg-btn-solo-grande" id="btnSoloGrande">
-      🆘 ESTOY SOLO · NECESITO AYUDA 
-    </button>
-  </main>
-
-  <!-- ================= OVERLAY FRASE ================= -->
-  <div class="emg-overlay" id="overlayFrase" hidden role="dialog" aria-modal="true">
-    <div class="emg-frase-top">
-      <button class="emg-mini" id="btnCerrarFrase" aria-label="Cerrar">✕</button>
-      <button class="emg-mini" id="btnInvertir" aria-label="Invertir colores">◐</button>
-      <button class="emg-mini" id="btnRepetir" aria-label="Repetir en voz alta">🔊</button>
-    </div>
-
-    <div class="emg-frase-centro">
-      <div class="emg-frase-icono" id="fraseIcono" aria-hidden="true">🚨</div>
-      <p class="emg-frase-texto" id="fraseTexto">Necesito ayuda </p>
-    </div>
-
-    <div class="emg-frase-bottom">
-      <button class="emg-btn-responder" id="btnAbrirRespuesta">
-        💬 RESPONDER
-      </button>
+<!-- OVERLAY RESPUESTA -->
+<div class="emg-overlay emg-overlay-resp" id="overlayRespuesta" hidden role="dialog" aria-modal="true">
+  <div class="emg-resp-header">
+    <h2>RESPONDER AL SORDO</h2>
+    <button class="emg-mini" id="btnCerrarRespuesta" aria-label="Cerrar">✕</button>
+  </div>
+  <p class="emg-resp-hint">Toca una respuesta rápida o escribe / dicta un mensaje.</p>
+  <section class="emg-resp-grid" id="gridRespuestas"></section>
+  <div class="emg-resp-texto">
+    <textarea id="inputRespuesta" class="emg-textarea" placeholder="Escribe aquí tu respuesta..." rows="3"></textarea>
+    <div class="emg-resp-acciones">
+      <button class="emg-btn-accion emg-btn-dictar" id="btnDictar">🎤 DICTAR</button>
+      <button class="emg-btn-accion emg-btn-enviar" id="btnEnviarRespuesta">MOSTRAR AL SORDO</button>
     </div>
   </div>
+</div>
 
-  <!-- ================= OVERLAY RESPUESTA (persona oyente) ================= -->
-  <div class="emg-overlay emg-overlay-resp" id="overlayRespuesta" hidden role="dialog" aria-modal="true">
-    <div class="emg-resp-header">
-      <h2>RESPONDER AL SORDO</h2>
-      <button class="emg-mini" id="btnCerrarRespuesta" aria-label="Cerrar">✕</button>
-    </div>
+<!-- OVERLAY LECTURA -->
+<div class="emg-overlay emg-overlay-lectura" id="overlayLectura" hidden role="dialog" aria-modal="true">
+  <div class="emg-lectura-marca">RESPUESTA</div>
+  <p class="emg-lectura-texto" id="lecturaTexto">…</p>
+  <button class="emg-btn-lectura-ok" id="btnCerrarLectura">ENTENDIDO</button>
+</div>
 
-    <p class="emg-resp-hint">Toca una respuesta rápida o escribe / dicta un mensaje.</p>
-
-    <section class="emg-resp-grid" id="gridRespuestas" aria-label="Respuestas rápidas"></section>
-
-    <div class="emg-resp-texto">
-      <textarea id="inputRespuesta" class="emg-textarea"
-        placeholder="Escribe aquí tu respuesta..." rows="3"></textarea>
-      <div class="emg-resp-acciones">
-        <button class="emg-btn-accion emg-btn-dictar" id="btnDictar" aria-label="Dictar respuesta">
-          🎤 DICTAR
-        </button>
-        <button class="emg-btn-accion emg-btn-enviar" id="btnEnviarRespuesta">
-          MOSTRAR AL SORDO
-        </button>
-      </div>
-    </div>
+<!-- OVERLAY MODO SOLO -->
+<div class="emg-overlay emg-overlay-solo" id="overlaySolo" hidden role="dialog" aria-modal="true">
+  <div class="emg-solo-contenido">
+    <div class="emg-solo-icono">🆘</div>
+    <p class="emg-solo-texto">NECESITO AYUDA</p>
+    <p class="emg-solo-sub">Soy sordo · Estoy solo · Por favor ayúdeme</p>
   </div>
+  <button class="emg-btn-detener" id="btnDetenerSolo">DETENER</button>
+</div>
 
-  <!-- ================= OVERLAY LECTURA (el sordo lee la respuesta) ================= -->
-  <div class="emg-overlay emg-overlay-lectura" id="overlayLectura" hidden role="dialog" aria-modal="true">
-    <div class="emg-lectura-marca">RESPUESTA</div>
-    <p class="emg-lectura-texto" id="lecturaTexto">…</p>
-    <button class="emg-btn-lectura-ok" id="btnCerrarLectura">ENTENDIDO</button>
-  </div>
+<script>
+/* =========================================================
+   PONCE · Modo Emergencia
+   Todo en un solo archivo · Sin vibración · Con sirena y pulsos
+   ========================================================= */
+(function () {
+  "use strict";
 
-  <!-- ================= OVERLAY MODO SOLO ================= -->
-  <div class="emg-overlay emg-overlay-solo" id="overlaySolo" hidden role="dialog" aria-modal="true">
-    <div class="emg-solo-contenido">
-      <div class="emg-solo-icono" aria-hidden="true">🆘</div>
-      <p class="emg-solo-texto">NECESITO AYUDA </p>
-      <p class="emg-solo-sub">Soy sordo · Estoy solo · Por favor ayúdeme</p>
-    </div>
-    <button class="emg-btn-detener" id="btnDetenerSolo">DETENER</button>
-  </div>
+  /* ---------------- DATOS ---------------- */
+  var FRASES_EMERGENCIA = [
+    { icono: "🆘", texto: "Necesito ayuda" },
+    { icono: "🚑", texto: "Llame a una ambulancia" },
+    { icono: "🚓", texto: "Llame a la policía" },
+    { icono: "🔥", texto: "Hay un incendio" },
+    { icono: "🤒", texto: "Me siento mal" },
+    { icono: "💔", texto: "Tengo mucho dolor" },
+    { icono: "😮‍💨", texto: "No puedo respirar" },
+    { icono: "🧭", texto: "Estoy perdido" },
+    { icono: "👨‍👩‍👧", texto: "Llame a mi familia" },
+    { icono: "🦽", texto: "No puedo moverme" },
+    { icono: "⚠️", texto: "Estoy en peligro" },
+    { icono: "🩺", texto: "Necesito un médico" }
+  ];
 
-  <script src="emergencia.js"></script>
+  var RESPUESTAS_RAPIDAS = [
+    "Ya llamé a una ambulancia",
+    "Estoy llamando ahora",
+    "Tranquilo, ya viene ayuda",
+    "Te voy a ayudar",
+    "¿Dónde te duele?",
+    "¿Puedes caminar?",
+    "¿Cómo te llamas?",
+    "Un momento, por favor",
+    "No te muevas",
+    "Respira despacio",
+    "Sí",
+    "No"
+  ];
+
+  /* ---------------- ESTADO ---------------- */
+  var fraseActual = "";
+  var modoInvertido = false;
+  var soloActivo = false;
+  var soloIntervalVoz = null;
+  var soloIntervalBeep = null;
+  var audioCtx = null;
+  var sirenaOsc = null;
+  var sirenaLFO = null;
+  var sirenaGain = null;
+  var vozEspanol = null;
+
+  /* ---------------- HELPERS ---------------- */
+  function $(id) { return document.getElementById(id); }
+  function log() { try { console.log.apply(console, ["[EMG]"].concat([].slice.call(arguments))); } catch (e) {} }
+
+  /* ---------------- VOZ ---------------- */
+  function cargarVoces() {
+    if (!("speechSynthesis" in window)) return;
+    try {
+      var vs = speechSynthesis.getVoices();
+      for (var i = 0; i < vs.length; i++) {
+        var v = vs[i];
+        if (v.lang && v.lang.toLowerCase().indexOf("es") === 0) { vozEspanol = v; break; }
+      }
+      log("Voces:", vs.length, "· ES:", vozEspanol ? vozEspanol.name : "ninguna");
+    } catch (e) {}
+  }
+
+  function hablar(texto, fuerte) {
+    if (!texto || !String(texto).trim()) return;
+    if (!("speechSynthesis" in window)) return;
+    try {
+      speechSynthesis.cancel();
+      var u = new SpeechSynthesisUtterance(String(texto));
+      u.lang = "es-ES";
+      u.rate = fuerte ? 0.92 : 1;
+      u.pitch = fuerte ? 1.05 : 1;
+      u.volume = 1;
+      if (vozEspanol) u.voice = vozEspanol;
+      speechSynthesis.speak(u);
+    } catch (e) {}
+  }
+
+  /* ---------------- AUDIO ---------------- */
+  function crearCtx() {
+    if (audioCtx && audioCtx.state !== "closed") return;
+    try {
+      var C = window.AudioContext || window.webkitAudioContext;
+      if (!C) return;
+      audioCtx = new C();
+      log("AudioContext creado:", audioCtx.state);
+    } catch (e) { audioCtx = null; }
+  }
+
+  function desbloquearAudio() {
+    crearCtx();
+    if (audioCtx && audioCtx.state === "suspended") {
+      audioCtx.resume().then(function () { log("AudioContext activo"); });
+    }
+  }
+
+  function pulso() {
+    if (!audioCtx || audioCtx.state !== "running") return;
+    try {
+      var osc = audioCtx.createOscillator();
+      var g = audioCtx.createGain();
+      osc.type = "square";
+      osc.frequency.value = 1100;
+      g.gain.value = 0.0001;
+      osc.connect(g).connect(audioCtx.destination);
+      var t = audioCtx.currentTime;
+      g.gain.exponentialRampToValueAtTime(0.22, t + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.22);
+      osc.start(t); osc.stop(t + 0.25);
+    } catch (e) {}
+  }
+
+  /* ---------------- RENDER ---------------- */
+  function renderFrases() {
+    var grid = $("gridFrases");
+    if (!grid) return;
+    grid.innerHTML = "";
+    FRASES_EMERGENCIA.forEach(function (f) {
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "emg-btn-frase";
+      btn.innerHTML =
+        '<span class="emg-btn-frase-icono">' + f.icono + '</span>' +
+        '<span>' + f.texto + '</span>';
+      btn.addEventListener("click", function () { abrirFrase(f); });
+      grid.appendChild(btn);
+    });
+  }
+
+  function renderRespuestas() {
+    var grid = $("gridRespuestas");
+    if (!grid) return;
+    grid.innerHTML = "";
+    RESPUESTAS_RAPIDAS.forEach(function (r) {
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "emg-btn-resp";
+      btn.textContent = r;
+      btn.addEventListener("click", function () { mostrarLectura(r); });
+      grid.appendChild(btn);
+    });
+  }
+
+  /* ---------------- ACCIONES ---------------- */
+  function abrirFrase(f) {
+    fraseActual = f.texto;
+    var iconoEl = $("fraseIcono");
+    var textoEl = $("fraseTexto");
+    var overlay = $("overlayFrase");
+    if (iconoEl) iconoEl.textContent = f.icono;
+    if (textoEl) textoEl.textContent = f.texto;
+    if (overlay) { overlay.hidden = false; overlay.classList.remove("emg-invertido"); }
+    modoInvertido = false;
+
+    desbloquearAudio();
+    pulso();
+    hablar(f.texto, true);
+  }
+
+  function cerrarFrase() {
+    var ov = $("overlayFrase");
+    if (ov) ov.hidden = true;
+    if ("speechSynthesis" in window) { try { speechSynthesis.cancel(); } catch (e) {} }
+  }
+
+  function abrirRespuesta() {
+    var ov = $("overlayRespuesta");
+    var inp = $("inputRespuesta");
+    if (ov) ov.hidden = false;
+    if (inp) { inp.value = ""; setTimeout(function () { inp.focus(); }, 80); }
+  }
+
+  function cerrarRespuesta() {
+    var ov = $("overlayRespuesta");
+    if (ov) ov.hidden = true;
+  }
+
+  function mostrarLectura(texto) {
+    if (!texto || !String(texto).trim()) return;
+    var lectura = $("lecturaTexto");
+    var oLec = $("overlayLectura");
+    var oResp = $("overlayRespuesta");
+    if (lectura) lectura.textContent = String(texto).trim();
+    if (oLec) oLec.hidden = false;
+    if (oResp) oResp.hidden = true;
+    pulso();
+  }
+
+  function cerrarLectura() {
+    var ov = $("overlayLectura");
+    if (ov) ov.hidden = true;
+  }
+
+  function iniciarDictado() {
+    var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SR) { alert("El dictado no está disponible en este navegador."); return; }
+    try {
+      var rec = new SR();
+      rec.lang = "es-ES";
+      rec.interimResults = false;
+      rec.maxAlternatives = 1;
+      rec.onresult = function (e) {
+        var inp = $("inputRespuesta");
+        if (!inp) return;
+        inp.value = (inp.value + " " + e.results[0][0].transcript).trim();
+      };
+      rec.start();
+    } catch (e) {}
+  }
+
+  /* ---------------- MODO SOLO ---------------- */
+  function activarSolo() {
+    if (soloActivo) return;
+    soloActivo = true;
+    log("Modo SOLO activado");
+
+    var ov = $("overlaySolo");
+    if (ov) ov.hidden = false;
+
+    desbloquearAudio();
+
+    try {
+      if (audioCtx) {
+        sirenaOsc = audioCtx.createOscillator();
+        sirenaGain = audioCtx.createGain();
+        sirenaLFO = audioCtx.createOscillator();
+        var lfoG = audioCtx.createGain();
+
+        sirenaOsc.type = "sawtooth";
+        sirenaOsc.frequency.value = 700;
+        lfoG.gain.value = 420;
+        sirenaLFO.frequency.value = 1.6;
+        sirenaGain.gain.value = 0.18;
+
+        sirenaLFO.connect(lfoG);
+        lfoG.connect(sirenaOsc.frequency);
+        sirenaOsc.connect(sirenaGain).connect(audioCtx.destination);
+
+        sirenaOsc.start();
+        sirenaLFO.start();
+        log("Sirena iniciada");
+      }
+    } catch (e) {}
+
+    var decir = function () { hablar("Necesito ayuda. Soy sordo. Por favor ayúdeme.", true); };
+    decir();
+    soloIntervalVoz = setInterval(decir, 6000);
+    soloIntervalBeep = setInterval(pulso, 1500);
+  }
+
+  function detenerSolo() {
+    log("Modo SOLO detenido");
+    soloActivo = false;
+
+    if (soloIntervalVoz) { clearInterval(soloIntervalVoz); soloIntervalVoz = null; }
+    if (soloIntervalBeep) { clearInterval(soloIntervalBeep); soloIntervalBeep = null; }
+
+    try {
+      if (sirenaOsc) { try { sirenaOsc.stop(); } catch (e) {} try { sirenaOsc.disconnect(); } catch (e) {} }
+      if (sirenaLFO) { try { sirenaLFO.stop(); } catch (e) {} try { sirenaLFO.disconnect(); } catch (e) {} }
+      if (sirenaGain) { try { sirenaGain.disconnect(); } catch (e) {} }
+    } catch (e) {}
+    sirenaOsc = sirenaLFO = sirenaGain = null;
+
+    if ("speechSynthesis" in window) { try { speechSynthesis.cancel(); } catch (e) {} }
+
+    var ov = $("overlaySolo");
+    if (ov) ov.hidden = true;
+  }
+
+  /* ---------------- BIND POR DELEGACIÓN ---------------- */
+  function manejarClick(e) {
+    var el = e.target;
+    while (el && el !== document) {
+      if (el.id) {
+        switch (el.id) {
+          case "btnDetenerSolo":
+            e.preventDefault(); e.stopPropagation(); detenerSolo(); return;
+          case "btnSoloTop":
+          case "btnSoloGrande":
+            e.preventDefault(); activarSolo(); return;
+          case "btnCerrarFrase":
+            e.preventDefault(); cerrarFrase(); return;
+          case "btnRepetir":
+            e.preventDefault(); if (fraseActual) hablar(fraseActual, true); return;
+          case "btnInvertir": {
+            e.preventDefault();
+            modoInvertido = !modoInvertido;
+            var ov = $("overlayFrase");
+            if (ov) ov.classList.toggle("emg-invertido", modoInvertido);
+            return;
+          }
+          case "btnAbrirRespuesta":
+            e.preventDefault(); abrirRespuesta(); return;
+          case "btnCerrarRespuesta":
+            e.preventDefault(); cerrarRespuesta(); return;
+          case "btnEnviarRespuesta": {
+            e.preventDefault();
+            var inp = $("inputRespuesta");
+            var txt = inp ? inp.value : "";
+            if (txt && txt.trim()) mostrarLectura(txt);
+            return;
+          }
+          case "btnDictar":
+            e.preventDefault(); iniciarDictado(); return;
+          case "btnCerrarLectura":
+            e.preventDefault(); cerrarLectura(); return;
+          case "btnVolver":
+            e.preventDefault();
+            if (history.length > 1) history.back();
+            else location.href = "index.html";
+            return;
+        }
+      }
+      el = el.parentNode;
+    }
+  }
+
+  /* ---------------- INIT ---------------- */
+  function init() {
+    log("Init Modo Emergencia");
+    renderFrases();
+    renderRespuestas();
+    cargarVoces();
+
+    document.addEventListener("click", manejarClick, true);
+    log("Delegación de click activada");
+
+    var unlock = function () { desbloquearAudio(); };
+    document.addEventListener("touchstart", unlock, { once: true, passive: true });
+    document.addEventListener("click", unlock, { once: true });
+
+    if ("speechSynthesis" in window) speechSynthesis.onvoiceschanged = cargarVoces;
+
+    log("Listo");
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+</script>
 </body>
 </html>
