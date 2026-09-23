@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Aprende Jugando · Lengua de Señas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="juega.css">
+</head>
+<body>
+
+<header>
+  <p class="brand">Aprende Jugando <span>🤟</span></p>
+  <p class="subtitle">Lengua de señas mediante actividades interactivas</p>
+</header>
+
+<nav class="tabs">
+  <button data-view="aprender" class="active">Aprender</button>
+  <button data-view="memorama">Memorama</button>
+  <button data-view="quiz">Quiz</button>
+</nav>
+
+<main>
+  <section id="view-aprender" class="view active">
+    <div class="card">
+      <div class="hand-wrap" id="flashHand"></div>
+      <p class="sign-label" id="flashLetter"></p>
+      <p class="sign-word" id="flashWord"></p>
+      <p class="sign-tip" id="flashTip"></p>
+      <div class="flash-controls">
+        <button id="prevBtn">◀ Anterior</button>
+        <button id="nextBtn">Siguiente ▶</button>
+      </div>
+      <div class="flash-dots" id="flashDots"></div>
+    </div>
+  </section>
+
+  <section id="view-memorama" class="view">
+    <p class="lead">Encuentra cada seña con su letra. Toca dos cartas para compararlas.</p>
+    <div class="mem-stats"><span id="memMoves">Movimientos: 0</span><span id="memPairs">Pares: 0/8</span></div>
+    <div id="memGrid"></div>
+    <button class="mem-reset" id="memReset">Volver a mezclar</button>
+  </section>
+
+  <section id="view-quiz" class="view">
+    <div class="quiz-score" id="quizScore">Puntaje: 0/0 · Mejor: 0</div>
+    <div class="card">
+      <div class="hand-wrap" id="quizHand"></div>
+      <p class="lead" style="text-align:center;">¿Qué letra es esta seña?</p>
+      <div class="quiz-options" id="quizOptions"></div>
+      <p class="quiz-feedback" id="quizFeedback"></p>
+      <button class="quiz-next" id="quizNext">Siguiente pregunta ▶</button>
+    </div>
+  </section>
+</main>
+
+<footer>Representación simplificada de manos para practicar reconocimiento — no sustituye una guía oficial de lengua de señas.</footer>
+
+<script src="juega.js"></script>
+</body>
+</html>
