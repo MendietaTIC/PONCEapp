@@ -20,6 +20,7 @@
   <button data-view="aprender" class="active">Aprender</button>
   <button data-view="memorama">Memorama</button>
   <button data-view="quiz">Quiz</button>
+  <button data-view="reto">Reto</button>
 </nav>
 
 <main>
@@ -33,7 +34,10 @@
         <button id="prevBtn">◀ Anterior</button>
         <button id="nextBtn">Siguiente ▶</button>
       </div>
-      <div class="flash-dots" id="flashDots"></div>
+      <div class="flash-progress">
+        <p class="flash-count" id="flashCount"></p>
+        <div class="flash-bar"><div class="flash-bar-fill" id="flashBarFill"></div></div>
+      </div>
     </div>
   </section>
 
@@ -52,6 +56,23 @@
       <div class="quiz-options" id="quizOptions"></div>
       <p class="quiz-feedback" id="quizFeedback"></p>
       <button class="quiz-next" id="quizNext">Siguiente pregunta ▶</button>
+    </div>
+  </section>
+  <section id="view-reto" class="view">
+    <p class="lead">Responde tantas señas como puedas antes de que se acabe el tiempo.</p>
+    <div class="card">
+      <button class="reto-start" id="retoStart">Empezar reto (45s)</button>
+      <div id="retoBoard" style="display:none;">
+        <div class="reto-row"><span class="reto-time" id="retoTime">45s</span><span id="retoScore">Aciertos: 0</span></div>
+        <div class="hand-wrap" id="retoHand"></div>
+        <p class="lead" style="text-align:center;">¿Qué letra es esta seña?</p>
+        <div class="quiz-options" id="retoOptions"></div>
+        <p class="lead" id="retoBest" style="text-align:center; margin-top:10px;"></p>
+      </div>
+      <div id="retoEnd" class="reto-end" style="display:none;">
+        <p id="retoEndText"></p>
+        <p id="retoEndBest"></p>
+      </div>
     </div>
   </section>
 </main>
