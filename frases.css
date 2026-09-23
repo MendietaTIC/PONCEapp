@@ -270,6 +270,8 @@ body.frs-body {
   animation: frsFade .18s ease;
 }
 
+.frs-overlay[hidden] { display: none; }
+
 @keyframes frsFade {
   from { opacity: 0; }
   to   { opacity: 1; }
