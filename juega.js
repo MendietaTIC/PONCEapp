@@ -1,280 +1,605 @@
-const SIGNS = [
-  {id:'A', word:'Amigo', tip:'Puño cerrado con el pulgar hacia un lado.', index:'down', middle:'down', ring:'down', pinky:'down', thumb:'out'},
-  {id:'B', word:'Bote', tip:'Mano plana, dedos juntos, pulgar cruzado al frente.', index:'up', middle:'up', ring:'up', pinky:'up', thumb:'across'},
-  {id:'C', word:'Casa', tip:'Mano curva, como sosteniendo un vaso.', closed:'C'},
-  {id:'D', word:'Dado', tip:'Índice arriba; el pulgar toca los demás dedos doblados.', index:'up', middle:'down', ring:'down', pinky:'down', thumb:'across', mark:'circleTop'},
-  {id:'E', word:'Elefante', tip:'Dedos doblados hacia la palma, tocando el pulgar.', index:'bent', middle:'bent', ring:'bent', pinky:'bent', thumb:'across'},
-  {id:'F', word:'Flor', tip:'Pulgar e índice se tocan formando un círculo.', index:'down', middle:'up', ring:'up', pinky:'up', thumb:'out', mark:'circleBase'},
-  {id:'G', word:'Gato', tip:'Índice y pulgar apuntan hacia el lado.', index:'up', middle:'down', ring:'down', pinky:'down', thumb:'out', rotate:-90},
-  {id:'H', word:'Hormiga', tip:'Índice y medio apuntan hacia el lado, juntos.', index:'up', middle:'up', ring:'down', pinky:'down', thumb:'out', rotate:-90},
-  {id:'I', word:'Isla', tip:'Solo el meñique levantado.', index:'down', middle:'down', ring:'down', pinky:'up', thumb:'down'},
-  {id:'J', word:'Jirafa', tip:'Como la I, pero dibuja una pequeña J en el aire.', index:'down', middle:'down', ring:'down', pinky:'up', thumb:'down', motion:true},
-  {id:'K', word:'Koala', tip:'Índice y medio arriba en V, pulgar entre ambos.', index:'up', middle:'up', ring:'down', pinky:'down', thumb:'between-tall', wide:true},
-  {id:'L', word:'Luna', tip:'Pulgar e índice extendidos formando una L.', index:'up', middle:'down', ring:'down', pinky:'down', thumb:'out'},
-  {id:'M', word:'Mono', tip:'Puño con el pulgar cubierto por tres dedos.', index:'down', middle:'down', ring:'down', pinky:'down', thumb:'down', dots:3},
-  {id:'N', word:'Nube', tip:'Puño con el pulgar cubierto por dos dedos.', index:'down', middle:'down', ring:'down', pinky:'down', thumb:'down', dots:2},
-  {id:'O', word:'Oso', tip:'Todos los dedos curvados formando un círculo.', closed:'O'},
-  {id:'P', word:'Pato', tip:'Como la K, pero apuntando hacia abajo.', index:'up', middle:'up', ring:'down', pinky:'down', thumb:'between-tall', wide:true, rotate:130},
-  {id:'Q', word:'Queso', tip:'Como la G, pero apuntando hacia abajo.', index:'up', middle:'down', ring:'down', pinky:'down', thumb:'out', rotate:110},
-  {id:'R', word:'Ratón', tip:'Índice y medio cruzados.', index:'up', middle:'up', ring:'down', pinky:'down', thumb:'across', crossed:true},
-  {id:'S', word:'Sol', tip:'Puño cerrado con el pulgar al frente.', index:'down', middle:'down', ring:'down', pinky:'down', thumb:'across'},
-  {id:'T', word:'Tigre', tip:'Puño con el pulgar asomando entre índice y medio.', index:'down', middle:'down', ring:'down', pinky:'down', thumb:'between-short'},
-  {id:'U', word:'Uva', tip:'Índice y medio juntos hacia arriba.', index:'up', middle:'up', ring:'down', pinky:'down', thumb:'down'},
-  {id:'V', word:'Vaca', tip:'Índice y medio separados, como una V.', index:'up', middle:'up', ring:'down', pinky:'down', thumb:'down', wide:true},
-  {id:'W', word:'Waffle', tip:'Índice, medio y anular levantados.', index:'up', middle:'up', ring:'up', pinky:'down', thumb:'out'},
-  {id:'X', word:'Xilófono', tip:'Índice doblado como un gancho.', index:'bent', middle:'down', ring:'down', pinky:'down', thumb:'out'},
-  {id:'Y', word:'Yoyo', tip:'Pulgar y meñique extendidos, resto cerrado.', index:'down', middle:'down', ring:'down', pinky:'up', thumb:'up'},
-  {id:'Z', word:'Zorro', tip:'Con el índice, dibuja una Z en el aire.', index:'up', middle:'down', ring:'down', pinky:'down', thumb:'out', motion:true}
+/* =========================================================
+   APRENDE JUGANDO · Lengua de señas
+   Alfabeto dactilológico español (A-Z + Ñ)
+   ========================================================= */
+
+/* ====== 1. DATOS DEL ALFABETO ====== */
+/* archivo = nombre del archivo en /img  →  img/a.jpg, img/ñ.jpg, etc. */
+const ALFABETO = [
+  { letra:'A', archivo:'a', emoji:'✊', desc:'Puño cerrado con el pulgar pegado al lado de los dedos (no encima).', tip:'La muñeca debe quedar recta, mirando al frente.', nivel:1 },
+  { letra:'B', archivo:'b', emoji:'✋', desc:'Mano abierta, dedos juntos y extendidos hacia arriba, pulgar doblado hacia la palma.', tip:'Mantén los cuatro dedos bien pegados.', nivel:1 },
+  { letra:'C', archivo:'c', emoji:'🤏', desc:'Mano curvada formando la forma de una "C".', tip:'Como si sostuvieras un vaso pequeño.', nivel:1 },
+  { letra:'D', archivo:'d', emoji:'👆', desc:'Índice extendido hacia arriba; los demás dedos tocan el pulgar formando un círculo.', tip:'El círculo queda debajo del índice.', nivel:2 },
+  { letra:'E', archivo:'e', emoji:'✊', desc:'Dedos doblados hacia la palma, con el pulgar por debajo.', tip:'Las puntas de los dedos tocan la palma.', nivel:2 },
+  { letra:'F', archivo:'f', emoji:'👌', desc:'Pulgar e índice se tocan formando un círculo; los otros tres dedos extendidos.', tip:'Parecido a la señal de "OK".', nivel:1 },
+  { letra:'G', archivo:'g', emoji:'👉', desc:'Índice y pulgar extendidos horizontalmente y paralelos.', tip:'La mano mira de lado.', nivel:2 },
+  { letra:'H', archivo:'h', emoji:'✌️', desc:'Índice y medio extendidos y juntos, en horizontal.', tip:'Los dedos apuntan hacia el lado.', nivel:2 },
+  { letra:'I', archivo:'i', emoji:'🤙', desc:'Meñique extendido hacia arriba, el resto en puño.', tip:'Solo se levanta el meñique.', nivel:1 },
+  { letra:'J', archivo:'j', emoji:'🤙', desc:'Meñique extendido; se traza una "J" en el aire.', tip:'Es la "I" con movimiento.', nivel:3 },
+  { letra:'K', archivo:'k', emoji:'✌️', desc:'Índice y medio extendidos en V, con el pulgar entre ellos.', tip:'El pulgar toca la base del dedo medio.', nivel:2 },
+  { letra:'L', archivo:'l', emoji:'🤟', desc:'Índice hacia arriba y pulgar hacia el lado formando una "L".', tip:'Ángulo de 90° entre ambos.', nivel:1 },
+  { letra:'M', archivo:'m', emoji:'✊', desc:'Pulgar bajo tres dedos: índice, medio y anular.', tip:'Se ve el pulgar asomando por debajo.', nivel:3 },
+  { letra:'N', archivo:'n', emoji:'✊', desc:'Pulgar bajo dos dedos: índice y medio.', tip:'Similar a la M, pero con dos dedos.', nivel:3 },
+  { letra:'Ñ', archivo:'ñ', emoji:'✊', desc:'Igual que la N, pero con un pequeño movimiento ondulado de la muñeca.', tip:'El movimiento es lo que la distingue de la N.', nivel:3 },
+  { letra:'O', archivo:'o', emoji:'👌', desc:'Todos los dedos curvados tocan el pulgar formando una "O".', tip:'Como si sostuvieras una moneda.', nivel:1 },
+  { letra:'P', archivo:'p', emoji:'👇', desc:'Como la K, pero apuntando hacia abajo.', tip:'La mano mira al suelo.', nivel:3 },
+  { letra:'Q', archivo:'q', emoji:'👇', desc:'Como la G, pero apuntando hacia abajo.', tip:'Índice y pulgar hacia abajo.', nivel:3 },
+  { letra:'R', archivo:'r', emoji:'🤞', desc:'Índice y medio cruzados.', tip:'El dedo medio pasa por delante del índice.', nivel:2 },
+  { letra:'S', archivo:'s', emoji:'✊', desc:'Puño cerrado con el pulgar por delante de los dedos.', tip:'El pulgar cruza sobre los demás.', nivel:2 },
+  { letra:'T', archivo:'t', emoji:'✊', desc:'Pulgar entre el índice y el medio, puño cerrado.', tip:'El pulgar asoma entre los dedos.', nivel:3 },
+  { letra:'U', archivo:'u', emoji:'✌️', desc:'Índice y medio juntos y extendidos hacia arriba.', tip:'Dedos pegados, no separados.', nivel:1 },
+  { letra:'V', archivo:'v', emoji:'✌️', desc:'Índice y medio extendidos y separados formando una "V".', tip:'Separa bien los dedos.', nivel:1 },
+  { letra:'W', archivo:'w', emoji:'🖖', desc:'Índice, medio y anular extendidos y separados.', tip:'Tres dedos hacia arriba.', nivel:2 },
+  { letra:'X', archivo:'x', emoji:'☝️', desc:'Índice doblado en forma de gancho.', tip:'Como una pequeña garra.', nivel:2 },
+  { letra:'Y', archivo:'y', emoji:'🤙', desc:'Pulgar y meñique extendidos.', tip:'Los otros dedos permanecen cerrados.', nivel:1 },
+  { letra:'Z', archivo:'z', emoji:'☝️', desc:'Índice extendido; se traza una "Z" en el aire.', tip:'Movimiento en zigzag.', nivel:3 }
 ];
 
-/* ---------- Generador de manos ilustradas (SVG) ---------- */
-function fingerRect(x, state){
-  if(state==='up')   return `<rect x="${x-8}" y="38" width="16" height="82" rx="8" fill="url(#fingerGrad)"/>`;
-  if(state==='bent') return `<rect x="${x-8}" y="66" width="16" height="54" rx="10" fill="url(#fingerGrad)"/>`;
-  return `<rect x="${x-8}" y="100" width="16" height="22" rx="8" fill="url(#fingerGrad)"/>`;
+const PALABRAS = ['CASA','SOL','LUNA','GATO','MESA','LIBRO','AGUA','FLOR','TREN','PAN','MAR','RANA','PATO','SILLA','NUBE','ISLA','TIGRE','CINE','MOTO','BESO'];
+
+/* ====== 2. ESTADO Y PERSISTENCIA ====== */
+const CLAVE = 'aprendeJugando_v1';
+const estado = {
+  sonido: true,
+  tema: 'claro',
+  dominadas: {},   // { A:true, ... }
+  pesos: {},       // { A: 1.5 } → repetición espaciada simple
+  mejorPuntaje: 0,
+  mejorRacha: 0
+};
+
+function cargarEstado() {
+  try {
+    const guardado = JSON.parse(localStorage.getItem(CLAVE) || '{}');
+    Object.assign(estado, guardado);
+  } catch (e) {}
 }
-function thumbShape(state){
-  switch(state){
-    case 'out':          return `<rect x="8" y="96" width="22" height="64" rx="11" fill="url(#fingerGrad)"/>`;
-    case 'up':            return `<rect x="8" y="60" width="20" height="76" rx="10" fill="url(#fingerGrad)"/>`;
-    case 'across':        return `<rect x="24" y="150" width="72" height="18" rx="9" fill="url(#fingerGrad)"/>`;
-    case 'between-tall':  return `<rect x="48" y="58" width="16" height="64" rx="8" fill="url(#fingerGrad)"/>`;
-    case 'between-short': return `<rect x="58" y="104" width="14" height="30" rx="7" fill="url(#fingerGrad)"/>`;
-    default:               return `<rect x="14" y="114" width="16" height="28" rx="8" fill="url(#fingerGrad)"/>`; // down
+function guardarEstado() {
+  try { localStorage.setItem(CLAVE, JSON.stringify(estado)); } catch (e) {}
+}
+cargarEstado();
+
+/* ====== 3. UTILIDADES ====== */
+const $  = sel => document.querySelector(sel);
+const $$ = sel => Array.from(document.querySelectorAll(sel));
+
+/* --- Audio --- */
+let audioCtx = null;
+function tono(freq, dur, tipo = 'sine', vol = 0.12) {
+  if (!estado.sonido) return;
+  try {
+    audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    const osc = audioCtx.createOscillator();
+    const g   = audioCtx.createGain();
+    osc.type = tipo;
+    osc.frequency.value = freq;
+    g.gain.setValueAtTime(vol, audioCtx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + dur);
+    osc.connect(g).connect(audioCtx.destination);
+    osc.start();
+    osc.stop(audioCtx.currentTime + dur);
+  } catch (e) {}
+}
+const sonidoAcierto = () => { tono(660, .12); setTimeout(() => tono(880, .18), 100); };
+const sonidoError   = () => { tono(200, .25, 'sawtooth', .1); };
+const sonidoClick   = () => { tono(420, .06, 'square', .06); };
+const sonidoFlip    = () => { tono(520, .08, 'triangle', .08); };
+
+/* --- Voz --- */
+function hablar(texto) {
+  if (!estado.sonido || !('speechSynthesis' in window)) return;
+  try {
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(texto);
+    u.lang = 'es-ES';
+    u.rate = 0.95;
+    speechSynthesis.speak(u);
+  } catch (e) {}
+}
+
+/* --- Confeti --- */
+function confeti() {
+  const colores = ['#6c5ce7','#00b894','#fdcb6e','#e74c3c','#a29bfe','#55efc4'];
+  for (let i = 0; i < 30; i++) {
+    const c = document.createElement('div');
+    c.className = 'confeti';
+    c.style.left = Math.random() * 100 + 'vw';
+    c.style.background = colores[Math.floor(Math.random() * colores.length)];
+    c.style.animationDelay = Math.random() * 0.4 + 's';
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 2400);
   }
 }
-function handSVG(sign){
-  const FX = {index:52, middle:74, ring:96, pinky:118};
-  if(sign.wide){ FX.index -= 12; FX.middle += 12; }
-  if(sign.crossed){ FX.index = 70; FX.middle = 80; }
 
-  let inner = `<rect x="30" y="120" width="100" height="62" rx="26" fill="url(#palmGrad)"/>`;
+/* --- Mezclar array --- */
+function mezclar(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
 
-  if(sign.closed){
-    if(sign.closed==='O'){
-      inner += `<circle cx="80" cy="150" r="32" fill="none" stroke="var(--finger)" stroke-width="10" stroke-linecap="round"/>`;
-    } else { // C
-      inner += `<path d="M108 118 A40 40 0 1 0 108 182" fill="none" stroke="var(--finger)" stroke-width="12" stroke-linecap="round"/>`;
+/* --- Render de la seña (imagen + respaldo emoji) --- */
+function renderSena(contenedor, item) {
+  contenedor.innerHTML = '';
+  const img = document.createElement('img');
+  img.src = `img/${item.archivo}.jpg`;
+  img.alt = `Seña de la letra ${item.letra}`;
+  img.loading = 'lazy';
+  img.onerror = () => {
+    img.remove();
+    const fb = document.createElement('div');
+    fb.className = 'sena-fallback';
+    fb.innerHTML = `<span class="emoji" aria-hidden="true">${item.emoji}</span><span class="letra">${item.letra}</span>`;
+    contenedor.appendChild(fb);
+  };
+  contenedor.appendChild(img);
+}
+
+/* --- Encontrar letra --- */
+const porLetra = l => ALFABETO.find(x => x.letra === l);
+
+/* ====== 4. NAVEGACIÓN ====== */
+let modoActual = 'inicio';
+function cambiarModo(modo) {
+  modoActual = modo;
+  clearInterval(retoTimer);
+  clearInterval(memoriaTimer);
+
+  $$('.vista').forEach(v => v.classList.remove('activa'));
+  const vista = $('#vista-' + modo);
+  if (vista) vista.classList.add('activa');
+
+  $$('.modos button').forEach(b => b.classList.toggle('activo', b.dataset.modo === modo));
+
+  if (modo === 'inicio')      renderInicio();
+  if (modo === 'explorador')  renderExplorador();
+  if (modo === 'reto')        iniciarReto();
+  if (modo === 'deletreo')    iniciarDeletreo();
+  if (modo === 'memoria')     iniciarMemoria();
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ====== 5. INICIO ====== */
+function renderInicio() {
+  const total = ALFABETO.filter(l => estado.dominadas[l.letra]).length;
+  $('#statDominadas').textContent = total;
+  $('#statMejor').textContent = estado.mejorPuntaje;
+  $('#statRacha').textContent = estado.mejorRacha;
+}
+
+/* ====== 6. EXPLORADOR ====== */
+let letraSel = null;
+
+function renderExplorador() {
+  const grid = $('#gridLetras');
+  grid.innerHTML = '';
+  ALFABETO.forEach(item => {
+    const b = document.createElement('button');
+    b.className = 'letra-btn';
+    b.textContent = item.letra;
+    b.setAttribute('aria-label', 'Letra ' + item.letra);
+    if (estado.dominadas[item.letra]) b.classList.add('dominada');
+    if (letraSel === item.letra) b.classList.add('activa');
+    b.onclick = () => seleccionarLetra(item.letra);
+    grid.appendChild(b);
+  });
+  if (letraSel) mostrarDetalle(letraSel);
+}
+
+function seleccionarLetra(letra) {
+  letraSel = letra;
+  sonidoClick();
+  $$('#gridLetras .letra-btn').forEach(b => b.classList.toggle('activa', b.textContent === letra));
+  mostrarDetalle(letra);
+  hablar(letra);
+}
+
+function mostrarDetalle(letra) {
+  const item = porLetra(letra);
+  if (!item) return;
+  const det = $('#detalle');
+  det.innerHTML = `
+    <div class="letra-grande">${item.letra}</div>
+    <div class="sena" id="senaDetalle"></div>
+    <p class="desc">${item.desc}</p>
+    <p class="tip">💡 ${item.tip}</p>
+    <div class="acciones-detalle">
+      <button class="btn" id="btnOir">🔊 Escuchar</button>
+      <button class="btn primario" id="btnDominada">
+        ${estado.dominadas[item.letra] ? '⭐ Dominada' : '☆ Marcar como dominada'}
+      </button>
+    </div>
+  `;
+  renderSena($('#senaDetalle'), item);
+
+  $('#btnOir').onclick = () => hablar(item.letra);
+  $('#btnDominada').onclick = () => {
+    estado.dominadas[item.letra] = !estado.dominadas[item.letra];
+    guardarEstado();
+    sonidoAcierto();
+    if (estado.dominadas[item.letra]) confeti();
+    mostrarDetalle(item.letra);
+    // actualiza la estrellita del grid
+    const btn = $$('#gridLetras .letra-btn').find(b => b.textContent === item.letra);
+    if (btn) btn.classList.toggle('dominada', !!estado.dominadas[item.letra]);
+  };
+}
+
+/* ====== 7. RETO ====== */
+const RETO_TOTAL = 10;
+let retoTimer = null, retoActual = null, retoPuntos = 0, retoVidas = 3,
+    retoStreak = 0, retoPregunta = 0, retoTiempo = 10, retoBloqueado = false;
+
+function elegirLetraPonderada() {
+  const items = ALFABETO.map(l => ({ l, w: estado.pesos[l.letra] || 1 }));
+  const total = items.reduce((s, x) => s + x.w, 0);
+  let r = Math.random() * total;
+  for (const it of items) { r -= it.w; if (r <= 0) return it.l; }
+  return items[items.length - 1].l;
+}
+
+function iniciarReto() {
+  retoPuntos = 0; retoVidas = 3; retoStreak = 0; retoPregunta = 0; retoBloqueado = false;
+  $('#retoJuego').classList.remove('oculto');
+  $('#retoFin').classList.add('oculto');
+  actualizarHUDReto();
+  siguientePreguntaReto();
+}
+
+function actualizarHUDReto() {
+  $('#retoPuntos').textContent = retoPuntos;
+  $('#retoVidas').textContent  = retoVidas;
+  $('#retoStreak').textContent = retoStreak;
+  $('#retoNum').textContent    = Math.min(retoPregunta + 1, RETO_TOTAL);
+}
+
+function siguientePreguntaReto() {
+  clearInterval(retoTimer);
+  if (retoPregunta >= RETO_TOTAL || retoVidas <= 0) return terminarReto();
+
+  retoBloqueado = false;
+  retoActual = elegirLetraPonderada();
+  actualizarHUDReto();
+
+  renderSena($('#retoSena'), retoActual);
+
+  // 3 distractores + correcta
+  const distractores = mezclar(ALFABETO.filter(l => l.letra !== retoActual.letra)).slice(0, 3);
+  const opciones = mezclar([retoActual, ...distractores]);
+
+  const cont = $('#retoOpciones');
+  cont.innerHTML = '';
+  opciones.forEach(op => {
+    const b = document.createElement('button');
+    b.className = 'opcion';
+    b.textContent = op.letra;
+    b.onclick = () => responderReto(op.letra, b);
+    cont.appendChild(b);
+  });
+
+  iniciarTimerReto();
+}
+
+function iniciarTimerReto() {
+  retoTiempo = 10;
+  const barra = $('#retoBarra');
+  barra.style.width = '100%';
+  retoTimer = setInterval(() => {
+    retoTiempo -= 0.1;
+    barra.style.width = Math.max(0, (retoTiempo / 10) * 100) + '%';
+    if (retoTiempo <= 0) {
+      clearInterval(retoTimer);
+      responderReto(null);
+    }
+  }, 100);
+}
+
+function responderReto(letraElegida, boton) {
+  if (retoBloqueado) return;
+  retoBloqueado = true;
+  clearInterval(retoTimer);
+
+  const correcta = letraElegida === retoActual.letra;
+
+  // marcar botones
+  $$('#retoOpciones .opcion').forEach(b => {
+    b.disabled = true;
+    if (b.textContent === retoActual.letra) b.classList.add('correcta');
+    else if (b === boton) b.classList.add('incorrecta');
+  });
+
+  if (correcta) {
+    retoStreak++;
+    const bonus = Math.floor(retoTiempo) + retoStreak * 2;
+    retoPuntos += 10 + bonus;
+    estado.pesos[retoActual.letra] = Math.max(0.5, (estado.pesos[retoActual.letra] || 1) * 0.7);
+    estado.dominadas[retoActual.letra] = true;
+    if (retoStreak > estado.mejorRacha) estado.mejorRacha = retoStreak;
+    sonidoAcierto();
+    if (retoStreak % 3 === 0) confeti();
+  } else {
+    retoStreak = 0;
+    retoVidas--;
+    estado.pesos[retoActual.letra] = Math.min(4, (estado.pesos[retoActual.letra] || 1) * 1.8);
+    sonidoError();
+  }
+
+  if (retoPuntos > estado.mejorPuntaje) estado.mejorPuntaje = retoPuntos;
+  guardarEstado();
+  actualizarHUDReto();
+
+  setTimeout(() => {
+    retoPregunta++;
+    siguientePreguntaReto();
+  }, 1100);
+}
+
+function terminarReto() {
+  $('#retoJuego').classList.add('oculto');
+  $('#retoFin').classList.remove('oculto');
+
+  const aciertos = Math.max(0, retoPregunta - (3 - retoVidas));
+  const precision = retoPregunta > 0 ? aciertos / retoPregunta : 0;
+
+  let estrellas = 1;
+  if (precision >= 0.6) estrellas = 2;
+  if (precision >= 0.85 && retoVidas >= 2) estrellas = 3;
+
+  $('#retoFinTitulo').textContent = retoVidas > 0 ? '¡Completado! 🎉' : 'Se acabaron las vidas';
+  $('#retoFinTexto').textContent  = `Puntaje: ${retoPuntos} · Aciertos: ${aciertos}/${retoPregunta}`;
+  $('#retoEstrellas').textContent = '⭐'.repeat(estrellas) + '☆'.repeat(3 - estrellas);
+
+  if (estrellas === 3) confeti();
+  guardarEstado();
+}
+
+/* ====== 8. DELETREO ====== */
+let delPalabra = '', delIndice = 0, delAciertos = 0, delErrores = 0,
+    delNum = 0, delLista = [], delBloqueado = false;
+
+function iniciarDeletreo() {
+  delLista = mezclar(PALABRAS).slice(0, 5);
+  delNum = 0; delAciertos = 0; delErrores = 0;
+  renderTecladoDeletreo();
+  cargarPalabraDeletreo();
+}
+
+function renderTecladoDeletreo() {
+  const cont = $('#delTeclado');
+  cont.innerHTML = '';
+  ALFABETO.forEach(item => {
+    const b = document.createElement('button');
+    b.className = 'letra-btn';
+    b.textContent = item.letra;
+    b.onclick = () => pulsarLetraDeletreo(item.letra, b);
+    cont.appendChild(b);
+  });
+}
+
+function cargarPalabraDeletreo() {
+  if (delNum >= delLista.length) return terminarDeletreo();
+  delPalabra = delLista[delNum];
+  delIndice = 0;
+  delBloqueado = false;
+
+  $('#delNum').textContent = delNum + 1;
+  $('#delAciertos').textContent = delAciertos;
+  $('#delErrores').textContent = delErrores;
+  $('#delPista').innerHTML = `Palabra: <strong>${delPalabra}</strong>`;
+  pintarCajasDeletreo();
+}
+
+function pintarCajasDeletreo() {
+  const cont = $('#delCajas');
+  cont.innerHTML = '';
+  for (let i = 0; i < delPalabra.length; i++) {
+    const d = document.createElement('div');
+    d.className = 'del-caja';
+    if (i < delIndice) { d.classList.add('ok'); d.textContent = delPalabra[i]; }
+    else if (i === delIndice) d.classList.add('actual');
+    cont.appendChild(d);
+  }
+}
+
+function pulsarLetraDeletreo(letra, boton) {
+  if (delBloqueado) return;
+
+  if (letra === delPalabra[delIndice]) {
+    sonidoClick();
+    boton.classList.add('correcta');
+    setTimeout(() => boton.classList.remove('correcta'), 300);
+    delIndice++;
+    pintarCajasDeletreo();
+
+    if (delIndice >= delPalabra.length) {
+      delBloqueado = true;
+      delAciertos++;
+      $('#delAciertos').textContent = delAciertos;
+      sonidoAcierto();
+      confeti();
+      hablar(delPalabra);
+      setTimeout(() => {
+        delNum++;
+        cargarPalabraDeletreo();
+      }, 1200);
     }
   } else {
-    ['index','middle','ring','pinky'].forEach(k=>{ inner += fingerRect(FX[k], sign[k]); });
-    inner += thumbShape(sign.thumb);
-    if(sign.mark==='circleTop') inner += `<circle cx="60" cy="58" r="15" fill="none" stroke="var(--ink-soft)" stroke-width="5"/>`;
-    if(sign.mark==='circleBase') inner += `<circle cx="56" cy="108" r="13" fill="none" stroke="var(--ink-soft)" stroke-width="5"/>`;
-    if(sign.dots){
-      for(let i=0;i<sign.dots;i++){ inner += `<circle cx="${52+i*16}" cy="130" r="5" fill="var(--ink-soft)"/>`; }
-    }
+    sonidoError();
+    delErrores++;
+    $('#delErrores').textContent = delErrores;
+    boton.classList.add('incorrecta');
+    setTimeout(() => boton.classList.remove('incorrecta'), 400);
   }
-  if(sign.motion){
-    inner += `<path d="M120 44 Q140 30 122 20" fill="none" stroke="var(--coral)" stroke-width="5" stroke-linecap="round" stroke-dasharray="2 7"/>
-               <path d="M118 16 L122 20 L126 14" fill="none" stroke="var(--coral)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>`;
-  }
-  const rot = sign.rotate || 0;
-  return `<svg viewBox="0 0 160 200" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <linearGradient id="palmGrad" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="var(--palm-light)"/><stop offset="1" stop-color="var(--palm)"/>
-      </linearGradient>
-      <linearGradient id="fingerGrad" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="var(--finger-light)"/><stop offset="1" stop-color="var(--finger)"/>
-      </linearGradient>
-    </defs>
-    <g transform="rotate(${rot} 80 110)">${inner}</g>
-  </svg>`;
 }
 
-function shuffle(arr){ for(let i=arr.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]]; } return arr; }
-
-/* ---------- Pestañas ---------- */
-const tabs = document.querySelectorAll('nav.tabs button');
-tabs.forEach(btn=>btn.addEventListener('click',()=>{
-  tabs.forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
-  document.getElementById('view-'+btn.dataset.view).classList.add('active');
-  if(btn.dataset.view!=='reto') stopReto();
-}));
-
-/* ---------- Tarjetas (Aprender) ---------- */
-let flashIdx = 0;
-function renderFlash(){
-  const s = SIGNS[flashIdx];
-  document.getElementById('flashHand').innerHTML = handSVG(s);
-  document.getElementById('flashLetter').textContent = s.id;
-  document.getElementById('flashWord').textContent = s.word;
-  document.getElementById('flashTip').textContent = s.tip;
-  document.getElementById('flashCount').textContent = 'Letra '+(flashIdx+1)+' de '+SIGNS.length;
-  document.getElementById('flashBarFill').style.width = ((flashIdx+1)/SIGNS.length*100)+'%';
+function terminarDeletreo() {
+  $('#delCajas').innerHTML = '<p style="padding:20px;font-size:1.1rem;">🎉 ¡Ronda completada!</p>';
+  $('#delPista').innerHTML = `Aciertos: <strong>${delAciertos}</strong> · Errores: <strong>${delErrores}</strong>`;
+  $('#delTeclado').innerHTML = '';
+  const btn = document.createElement('button');
+  btn.className = 'btn primario';
+  btn.textContent = 'Jugar otra vez';
+  btn.onclick = iniciarDeletreo;
+  $('#delTeclado').appendChild(btn);
 }
-document.getElementById('prevBtn').onclick = ()=>{ flashIdx = (flashIdx-1+SIGNS.length)%SIGNS.length; renderFlash(); };
-document.getElementById('nextBtn').onclick = ()=>{ flashIdx = (flashIdx+1)%SIGNS.length; renderFlash(); };
-renderFlash();
 
-/* ---------- Memorama (8 letras al azar por partida) ---------- */
-let memState = { cards:[], flipped:[], moves:0, pairs:0, lock:false, total:8 };
-function buildMemorama(){
-  const pool = shuffle([...SIGNS]).slice(0, memState.total);
-  let deck = [];
-  pool.forEach((s,i)=>{ deck.push({key:s.id,type:'hand'}); deck.push({key:s.id,type:'label'}); });
-  deck = shuffle(deck);
-  memState = { cards:deck, flipped:[], moves:0, pairs:0, lock:false, total:memState.total };
-  renderMem();
-}
-function signById(id){ return SIGNS.find(s=>s.id===id); }
-function renderMem(){
-  const grid = document.getElementById('memGrid');
-  grid.innerHTML = '';
-  memState.cards.forEach((c,idx)=>{
-    const btn = document.createElement('button');
-    btn.className = 'mem-tile';
-    const isFlipped = memState.flipped.includes(idx) || c.matched;
-    if(c.matched) btn.classList.add('matched');
-    btn.innerHTML = isFlipped ? (c.type==='hand' ? handSVG(signById(c.key)) : c.key) : '?';
-    btn.onclick = ()=>flipMem(idx);
-    grid.appendChild(btn);
+/* ====== 9. MEMORIA ====== */
+const MEM_PAREJAS = 6;
+let memoriaTimer = null, memoriaSegundos = 0, memoriaMov = 0,
+    memoriaParejas = 0, memoriaVolteadas = [], memoriaBloqueado = false;
+
+function iniciarMemoria() {
+  clearInterval(memoriaTimer);
+  memoriaSegundos = 0; memoriaMov = 0; memoriaParejas = 0;
+  memoriaVolteadas = []; memoriaBloqueado = false;
+  $('#memFin').classList.add('oculto');
+  $('#memTablero').classList.remove('oculto');
+  $('#memTiempo').textContent = '0s';
+  $('#memMov').textContent = '0';
+  $('#memParejas').textContent = '0';
+
+  const elegidas = mezclar(ALFABETO).slice(0, MEM_PAREJAS);
+  const cartas = [];
+  elegidas.forEach(item => {
+    cartas.push({ tipo: 'sena',   item });
+    cartas.push({ tipo: 'letra',  item });
   });
-  document.getElementById('memMoves').textContent = 'Movimientos: '+memState.moves;
-  document.getElementById('memPairs').textContent = 'Pares: '+memState.pairs+'/'+memState.total;
-}
-function flipMem(idx){
-  if(memState.lock) return;
-  const c = memState.cards[idx];
-  if(c.matched || memState.flipped.includes(idx)) return;
-  memState.flipped.push(idx);
-  renderMem();
-  if(memState.flipped.length===2){
-    memState.lock = true;
-    memState.moves++;
-    const [a,b] = memState.flipped;
-    const ca = memState.cards[a], cb = memState.cards[b];
-    if(ca.key===cb.key && ca.type!==cb.type){
-      ca.matched = true; cb.matched = true;
-      memState.pairs++;
-      memState.flipped = [];
-      memState.lock = false;
-      renderMem();
+  const barajadas = mezclar(cartas);
+
+  const tablero = $('#memTablero');
+  tablero.innerHTML = '';
+  barajadas.forEach((c, i) => {
+    const div = document.createElement('div');
+    div.className = 'mem-carta';
+    div.dataset.id = i;
+    div.dataset.letra = c.item.letra;
+    div.dataset.tipo = c.tipo;
+    div.innerHTML = `
+      <div class="carta-inner">
+        <div class="carta-cara carta-atras">?</div>
+        <div class="carta-cara carta-frente"></div>
+      </div>
+    `;
+    const frente = div.querySelector('.carta-frente');
+    if (c.tipo === 'letra') {
+      frente.textContent = c.item.letra;
     } else {
-      setTimeout(()=>{ memState.flipped = []; memState.lock = false; renderMem(); }, 700);
+      renderSena(frente, c.item);
     }
-  }
-}
-document.getElementById('memReset').onclick = buildMemorama;
-buildMemorama();
+    div.onclick = () => voltearCarta(div);
+    tablero.appendChild(div);
+  });
 
-/* ---------- Quiz (sin límite de tiempo) ---------- */
-let quizState = { current:null, score:0, total:0, best:0, answered:false };
-try{ quizState.best = Number(localStorage.getItem('ajq_best')||0); }catch(e){}
-function randomOptions(correctId){
-  let opts = [correctId];
-  while(opts.length<4){
-    const cand = SIGNS[Math.floor(Math.random()*SIGNS.length)].id;
-    if(!opts.includes(cand)) opts.push(cand);
-  }
-  return shuffle(opts);
+  memoriaTimer = setInterval(() => {
+    memoriaSegundos++;
+    $('#memTiempo').textContent = memoriaSegundos + 's';
+  }, 1000);
 }
-function newQuestion(){
-  const correct = SIGNS[Math.floor(Math.random()*SIGNS.length)];
-  const opts = randomOptions(correct.id);
-  quizState.current = correct;
-  quizState.answered = false;
-  document.getElementById('quizHand').innerHTML = handSVG(correct);
-  const optWrap = document.getElementById('quizOptions');
-  optWrap.innerHTML = '';
-  opts.forEach(letter=>{
-    const b = document.createElement('button');
-    b.textContent = letter;
-    b.onclick = ()=>answerQuiz(letter,b);
-    optWrap.appendChild(b);
-  });
-  document.getElementById('quizFeedback').textContent = '';
-  document.getElementById('quizNext').style.display = 'none';
-  updateQuizScore();
-}
-function answerQuiz(letter, btn){
-  if(quizState.answered) return;
-  quizState.answered = true;
-  quizState.total++;
-  const isCorrect = letter === quizState.current.id;
-  if(isCorrect){ quizState.score++; btn.classList.add('correct'); }
-  else { btn.classList.add('incorrect'); }
-  [...document.getElementById('quizOptions').children].forEach(b=>{
-    if(b.textContent===quizState.current.id) b.classList.add('correct');
-  });
-  document.getElementById('quizFeedback').textContent = isCorrect
-    ? '¡Correcto! Esa seña forma la letra '+quizState.current.id+'.'
-    : 'Casi — era la letra '+quizState.current.id+' ('+quizState.current.word+').';
-  if(quizState.score > quizState.best){
-    quizState.best = quizState.score;
-    try{ localStorage.setItem('ajq_best', String(quizState.best)); }catch(e){}
-  }
-  document.getElementById('quizNext').style.display = 'block';
-  updateQuizScore();
-}
-function updateQuizScore(){
-  document.getElementById('quizScore').textContent = 'Puntaje: '+quizState.score+'/'+quizState.total+' · Mejor: '+quizState.best;
-}
-document.getElementById('quizNext').onclick = newQuestion;
-newQuestion();
 
-/* ---------- Reto contrarreloj ---------- */
-const RETO_SECONDS = 45;
-let reto = { running:false, timeLeft:RETO_SECONDS, correct:0, timer:null, current:null, best:0 };
-try{ reto.best = Number(localStorage.getItem('ajq_reto_best')||0); }catch(e){}
-function retoUI(){
-  document.getElementById('retoTime').textContent = reto.timeLeft+'s';
-  document.getElementById('retoScore').textContent = 'Aciertos: '+reto.correct;
-  document.getElementById('retoBest').textContent = 'Mejor reto: '+reto.best;
-}
-function stopReto(){
-  if(reto.timer){ clearInterval(reto.timer); reto.timer = null; }
-  reto.running = false;
-}
-function startReto(){
-  stopReto();
-  reto.timeLeft = RETO_SECONDS; reto.correct = 0; reto.running = true;
-  document.getElementById('retoStart').style.display = 'none';
-  document.getElementById('retoBoard').style.display = 'block';
-  document.getElementById('retoEnd').style.display = 'none';
-  retoUI();
-  retoQuestion();
-  reto.timer = setInterval(()=>{
-    reto.timeLeft--;
-    retoUI();
-    if(reto.timeLeft<=0) endReto();
-  },1000);
-}
-function retoQuestion(){
-  const correct = SIGNS[Math.floor(Math.random()*SIGNS.length)];
-  const opts = randomOptions(correct.id);
-  reto.current = correct;
-  document.getElementById('retoHand').innerHTML = handSVG(correct);
-  const wrap = document.getElementById('retoOptions');
-  wrap.innerHTML = '';
-  opts.forEach(letter=>{
-    const b = document.createElement('button');
-    b.textContent = letter;
-    b.onclick = ()=>retoAnswer(letter);
-    wrap.appendChild(b);
-  });
-}
-function retoAnswer(letter){
-  if(!reto.running) return;
-  if(letter===reto.current.id) reto.correct++;
-  retoUI();
-  retoQuestion();
-}
-function endReto(){
-  stopReto();
-  if(reto.correct > reto.best){
-    reto.best = reto.correct;
-    try{ localStorage.setItem('ajq_reto_best', String(reto.best)); }catch(e){}
+function voltearCarta(div) {
+  if (memoriaBloqueado) return;
+  if (div.classList.contains('volteada')) return;
+  if (div.classList.contains('acertada')) return;
+
+  div.classList.add('volteada');
+  sonidoFlip();
+  memoriaVolteadas.push(div);
+
+  if (memoriaVolteadas.length === 2) {
+    memoriaMov++;
+    $('#memMov').textContent = memoriaMov;
+    memoriaBloqueado = true;
+    const [a, b] = memoriaVolteadas;
+    const match = a.dataset.letra === b.dataset.letra && a.dataset.tipo !== b.dataset.tipo;
+
+    setTimeout(() => {
+      if (match) {
+        a.classList.add('acertada');
+        b.classList.add('acertada');
+        memoriaParejas++;
+        $('#memParejas').textContent = memoriaParejas;
+        sonidoAcierto();
+        if (memoriaParejas === MEM_PAREJAS) terminarMemoria();
+      } else {
+        a.classList.remove('volteada');
+        b.classList.remove('volteada');
+        sonidoError();
+      }
+      memoriaVolteadas = [];
+      memoriaBloqueado = false;
+    }, match ? 450 : 800);
   }
-  document.getElementById('retoBoard').style.display = 'none';
-  document.getElementById('retoEnd').style.display = 'block';
-  document.getElementById('retoEndText').textContent = '¡Tiempo! Acertaste '+reto.correct+' señas.';
-  document.getElementById('retoEndBest').textContent = 'Mejor reto: '+reto.best;
-  document.getElementById('retoStart').style.display = 'block';
-  document.getElementById('retoStart').textContent = 'Jugar de nuevo';
 }
-document.getElementById('retoStart').onclick = startReto;
-retoUI();
+
+function terminarMemoria() {
+  clearInterval(memoriaTimer);
+  setTimeout(() => {
+    $('#memTablero').classList.add('oculto');
+    $('#memFin').classList.remove('oculto');
+    $('#memFinTexto').textContent =
+      `Terminaste en ${memoriaSegundos} segundos y ${memoriaMov} movimientos.`;
+    confeti();
+  }, 600);
+}
+
+/* ====== 10. TEMA Y SONIDO ====== */
+function aplicarTema(t) {
+  estado.tema = t;
+  document.documentElement.dataset.tema = t;
+  $('#btnTema').textContent = t === 'oscuro' ? '☀️' : '🌙';
+  guardarEstado();
+}
+
+function initTema() {
+  if (estado.tema) return aplicarTema(estado.tema);
+  const prefiereOscuro = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  aplicarTema(prefiereOscuro ? 'oscuro' : 'claro');
+}
+
+function aplicarSonido() {
+  $('#btnSonido').textContent = estado.sonido ? '🔊' : '🔇';
+  $('#btnSonido').classList.toggle('off', !estado.sonido);
+  guardarEstado();
+}
+
+/* ====== 11. EVENTOS E INIT ====== */
+document.addEventListener('DOMContentLoaded', () => {
+  initTema();
+  aplicarSonido();
+
+  // Nav superior
+  $$('.modos button').forEach(b => {
+    b.addEventListener('click', () => cambiarModo(b.dataset.modo));
+  });
+
+  // Tarjetas del inicio y botones "data-ir"
+  document.addEventListener('click', e => {
+    const ir = e.target.closest('[data-ir]');
+    if (ir) cambiarModo(ir.dataset.ir);
+  });
+
+  // Toggle tema
+  $('#btnTema').addEventListener('click', () => {
+    aplicarTema(estado.tema === 'oscuro' ? 'claro' : 'oscuro');
+  });
+
+  // Toggle sonido
+  $('#btnSonido').addEventListener('click', () => {
+    estado.sonido = !estado.sonido;
+    aplicarSonido();
+    if (estado.sonido) sonidoClick();
+  });
+
+  // Botones internos de los modos
+  $('#btnRetoOtra').addEventListener('click', iniciarReto);
+  $('#btnMemReiniciar').addEventListener('click', iniciarMemoria);
+  $('#btnMemOtra').addEventListener('click', iniciarMemoria);
+
+  // Vista inicial
+  renderInicio();
+});
