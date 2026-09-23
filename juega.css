@@ -1,0 +1,120 @@
+:root{
+  box-sizing:border-box;
+  --cream:#FBF6ED; --ink:#2B2440; --coral:#FF6F59; --teal:#1F9E86; --mustard:#F4B740; --lilac:#E7DFFB;
+  --card:#FFFFFF; --palm:#F4B740; --finger:#FF6F59; --muted:#7A7189;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --cream:#211B2E; --ink:#F4EFE3; --card:#2D2640; --muted:#B3ABC4; --lilac:#3A3252;
+  }
+}
+:root[data-theme="dark"]{
+  --cream:#211B2E; --ink:#F4EFE3; --card:#2D2640; --muted:#B3ABC4; --lilac:#3A3252;
+}
+*{box-sizing:border-box;}
+html{scroll-padding-top:env(safe-area-inset-top,0px);}
+html,body{height:100%;}
+body{
+  margin:0; background:var(--cream); color:var(--ink);
+  font-family:'Nunito',sans-serif; min-height:100%;
+  display:flex; flex-direction:column;
+}
+h1,h2,h3,.brand{font-family:'Baloo 2',sans-serif;}
+header{
+  padding:calc(env(safe-area-inset-top,0px) + clamp(14px,4vw,22px)) 16px 12px;
+  text-align:center;
+}
+.brand{font-size:clamp(1.3rem,5vw,1.8rem); font-weight:800; margin:0; letter-spacing:.2px;}
+.brand span{color:var(--coral);}
+.subtitle{margin:4px 0 0; color:var(--muted); font-size:clamp(.82rem,2.6vw,.95rem);}
+
+nav.tabs{
+  display:flex; gap:8px; justify-content:center; flex-wrap:wrap;
+  padding:0 12px 14px;
+}
+nav.tabs button{
+  font-family:'Baloo 2',sans-serif; font-weight:700; font-size:clamp(.82rem,2.6vw,.95rem);
+  border:2px solid transparent; background:var(--lilac); color:var(--ink);
+  padding:8px 16px; border-radius:999px; cursor:pointer; white-space:nowrap;
+}
+nav.tabs button.active{background:var(--coral); color:#fff;}
+
+main{
+  flex:1; width:100%; max-width:640px; margin:0 auto;
+  padding:0 clamp(12px,4vw,20px) 40px;
+}
+.view{display:none;}
+.view.active{display:block;}
+
+.card{
+  background:var(--card); border-radius:clamp(16px,4vw,22px);
+  padding:clamp(16px,4.5vw,24px);
+  box-shadow:0 10px 26px rgba(43,36,64,.10);
+}
+.hand-wrap{display:flex; justify-content:center; margin-bottom:8px;}
+.hand-wrap svg{width:min(130px,32vw); height:auto; max-height:160px;}
+
+.sign-label{text-align:center; font-family:'Baloo 2',sans-serif; font-size:clamp(1.8rem,7vw,2.4rem); font-weight:800; color:var(--coral); margin:4px 0 2px;}
+.sign-word{text-align:center; color:var(--muted); font-weight:700; margin:0 0 10px; font-size:clamp(.9rem,2.8vw,1rem);}
+.sign-tip{text-align:center; font-size:clamp(.82rem,2.6vw,.92rem); color:var(--ink); background:var(--lilac); border-radius:14px; padding:10px 14px; margin:0;}
+
+.flash-controls{display:flex; align-items:center; justify-content:space-between; margin-top:18px; gap:8px;}
+.flash-controls button{
+  background:var(--teal); color:#fff; border:none; border-radius:14px;
+  padding:12px 10px; font-family:'Baloo 2'; font-weight:700; cursor:pointer; flex:1;
+  font-size:clamp(.8rem,2.6vw,.95rem); min-width:0;
+}
+.flash-dots{display:flex; gap:6px; justify-content:center; margin-top:14px; flex-wrap:wrap;}
+.flash-dots span{width:9px; height:9px; border-radius:50%; background:var(--lilac); display:inline-block;}
+.flash-dots span.on{background:var(--coral);}
+
+p.lead{color:var(--muted); font-size:clamp(.85rem,2.6vw,.95rem); margin-top:0;}
+
+#memGrid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(56px,1fr));
+  gap:clamp(6px,1.8vw,10px);
+  margin-top:14px;
+}
+.mem-tile{
+  aspect-ratio:1/1; border-radius:14px; background:var(--lilac);
+  display:flex; align-items:center; justify-content:center; cursor:pointer;
+  font-family:'Baloo 2'; font-weight:800; font-size:clamp(1rem,4vw,1.4rem); color:var(--ink);
+  border:none; padding:4px;
+}
+.mem-tile svg{width:70%; height:70%;}
+.mem-tile.matched{background:var(--teal); color:#fff; cursor:default;}
+.mem-tile.wrong{background:var(--coral); color:#fff;}
+.mem-stats{display:flex; justify-content:space-between; margin-top:12px; font-weight:700; color:var(--muted); font-size:clamp(.78rem,2.4vw,.9rem);}
+.mem-reset{margin-top:14px; width:100%; background:var(--mustard); border:none; border-radius:14px; padding:11px; font-family:'Baloo 2'; font-weight:700; cursor:pointer; color:var(--ink);}
+
+.quiz-score{text-align:right; color:var(--muted); font-weight:700; font-size:clamp(.78rem,2.4vw,.9rem); margin-bottom:6px;}
+.quiz-options{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:16px;}
+.quiz-options button{
+  background:var(--lilac); border:none; border-radius:14px; padding:14px 6px;
+  font-family:'Baloo 2'; font-weight:800; font-size:clamp(1.05rem,4.2vw,1.3rem); cursor:pointer; color:var(--ink);
+}
+.quiz-options button.correct{background:var(--teal); color:#fff;}
+.quiz-options button.incorrect{background:var(--coral); color:#fff;}
+.quiz-feedback{text-align:center; min-height:24px; font-weight:700; margin-top:12px; font-size:clamp(.85rem,2.6vw,1rem);}
+.quiz-next{display:none; width:100%; margin-top:12px; background:var(--coral); color:#fff; border:none; border-radius:14px; padding:12px; font-family:'Baloo 2'; font-weight:700; cursor:pointer;}
+
+footer{text-align:center; color:var(--muted); font-size:.78rem; padding:0 20px calc(20px + env(safe-area-inset-bottom,0px));}
+
+/* Teléfonos muy angostos: memorama a 4 columnas fijas y menos separación */
+@media (max-width:380px){
+  #memGrid{grid-template-columns:repeat(4,1fr);}
+}
+
+/* Pantallas medianas/tablet: un poco más de aire */
+@media (min-width:640px){
+  main{padding-bottom:56px;}
+  .card{padding:32px;}
+}
+
+/* Pantallas grandes: limitar ancho para no estirar demasiado el contenido */
+@media (min-width:900px){
+  main{max-width:720px;}
+}
