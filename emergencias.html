@@ -8,9 +8,8 @@
 <title>Modo Emergencia · PONCE</title>
 
 <style>
-/* =========================================================
-   PONCE · Modo Emergencia
-   ========================================================= */
+/* 🔧 FIX: hace que [hidden] funcione aunque otras reglas usen display:flex */
+[hidden] { display: none !important; }
 
 :root {
   --emg-rojo:       #E53935;
@@ -77,7 +76,6 @@ body {
   font-size: 1.1rem;
   font-weight: 700;
   cursor: pointer;
-  transition: background .15s, transform .1s;
 }
 .emg-btn-back:active,
 .emg-btn-solo-top:active { transform: scale(.96); }
@@ -127,7 +125,6 @@ body {
   text-align: center;
   box-shadow: var(--emg-shadow);
   cursor: pointer;
-  transition: transform .08s, box-shadow .15s;
 }
 .emg-btn-frase:active {
   transform: scale(.96);
@@ -177,7 +174,6 @@ body {
   align-items: center;
   justify-content: center;
 }
-.emg-mini:active { background: rgba(255,255,255,.24); }
 
 /* ================= OVERLAY FRASE ================= */
 .emg-frase-top { display: flex; justify-content: space-between; gap: 10px; }
@@ -218,7 +214,6 @@ body {
   letter-spacing: 1px;
   cursor: pointer;
 }
-.emg-btn-responder:active { transform: scale(.98); }
 
 .emg-overlay.emg-invertido { background: #fff; }
 .emg-overlay.emg-invertido .emg-frase-texto,
@@ -267,11 +262,6 @@ body {
   font-weight: 700;
   text-align: left;
   cursor: pointer;
-  transition: background .15s, border-color .15s;
-}
-.emg-btn-resp:active {
-  background: var(--emg-verde);
-  border-color: var(--emg-verde);
 }
 .emg-resp-texto { display: flex; flex-direction: column; gap: 10px; margin-top: auto; }
 .emg-textarea {
@@ -287,7 +277,6 @@ body {
   font-family: inherit;
   outline: none;
 }
-.emg-textarea:focus { border-color: var(--emg-amarillo); }
 .emg-resp-acciones {
   display: grid;
   grid-template-columns: 1fr 1.4fr;
@@ -308,7 +297,6 @@ body {
   border: 2px solid rgba(255,255,255,.14);
 }
 .emg-btn-enviar { background: var(--emg-verde); color: #fff; }
-.emg-btn-accion:active { transform: scale(.97); }
 
 /* ================= OVERLAY LECTURA ================= */
 .emg-overlay-lectura {
@@ -401,51 +389,31 @@ body {
   letter-spacing: 2px;
   cursor: pointer;
 }
-.emg-btn-detener:active { transform: scale(.96); }
-
-@media (prefers-reduced-motion: reduce) {
-  .emg-overlay, .emg-overlay-solo, .emg-solo-icono { animation: none !important; }
-}
-
-.emg-btn-frase:focus-visible,
-.emg-btn-solo-grande:focus-visible,
-.emg-btn-responder:focus-visible,
-.emg-mini:focus-visible,
-.emg-btn-resp:focus-visible,
-.emg-btn-accion:focus-visible,
-.emg-btn-detener:focus-visible,
-.emg-btn-lectura-ok:focus-visible,
-.emg-btn-back:focus-visible,
-.emg-btn-solo-top:focus-visible {
-  outline: 3px solid var(--emg-amarillo);
-  outline-offset: 3px;
-}
 </style>
 </head>
 <body>
 
-<header class="emg-header" role="banner">
+<header class="emg-header">
   <button class="emg-btn-back" id="btnVolver" aria-label="Volver">←</button>
   <h1 class="emg-title">EMERGENCIA</h1>
-  <button class="emg-btn-solo-top" id="btnSoloTop" aria-label="Modo estoy solo">
+  <button class="emg-btn-solo-top" id="btnSoloTop">
     <span>🆘</span><span>SOLO</span>
   </button>
 </header>
 
-<main class="emg-main" role="main">
+<main class="emg-main">
   <p class="emg-hint">Toca una frase para mostrarla en pantalla gigante y en voz alta.</p>
-  <section class="emg-grid" id="gridFrases" aria-label="Frases de emergencia"></section>
+  <section class="emg-grid" id="gridFrases"></section>
   <button class="emg-btn-solo-grande" id="btnSoloGrande">
     🆘 ESTOY SOLO · NECESITO AYUDA
   </button>
 </main>
 
-<!-- OVERLAY FRASE -->
-<div class="emg-overlay" id="overlayFrase" hidden role="dialog" aria-modal="true">
+<div class="emg-overlay" id="overlayFrase" hidden>
   <div class="emg-frase-top">
-    <button class="emg-mini" id="btnCerrarFrase" aria-label="Cerrar">✕</button>
-    <button class="emg-mini" id="btnInvertir" aria-label="Invertir colores">◐</button>
-    <button class="emg-mini" id="btnRepetir" aria-label="Repetir">🔊</button>
+    <button class="emg-mini" id="btnCerrarFrase">✕</button>
+    <button class="emg-mini" id="btnInvertir">◐</button>
+    <button class="emg-mini" id="btnRepetir">🔊</button>
   </div>
   <div class="emg-frase-centro">
     <div class="emg-frase-icono" id="fraseIcono">🚨</div>
@@ -456,11 +424,10 @@ body {
   </div>
 </div>
 
-<!-- OVERLAY RESPUESTA -->
-<div class="emg-overlay emg-overlay-resp" id="overlayRespuesta" hidden role="dialog" aria-modal="true">
+<div class="emg-overlay emg-overlay-resp" id="overlayRespuesta" hidden>
   <div class="emg-resp-header">
     <h2>RESPONDER AL SORDO</h2>
-    <button class="emg-mini" id="btnCerrarRespuesta" aria-label="Cerrar">✕</button>
+    <button class="emg-mini" id="btnCerrarRespuesta">✕</button>
   </div>
   <p class="emg-resp-hint">Toca una respuesta rápida o escribe / dicta un mensaje.</p>
   <section class="emg-resp-grid" id="gridRespuestas"></section>
@@ -473,15 +440,13 @@ body {
   </div>
 </div>
 
-<!-- OVERLAY LECTURA -->
-<div class="emg-overlay emg-overlay-lectura" id="overlayLectura" hidden role="dialog" aria-modal="true">
+<div class="emg-overlay emg-overlay-lectura" id="overlayLectura" hidden>
   <div class="emg-lectura-marca">RESPUESTA</div>
   <p class="emg-lectura-texto" id="lecturaTexto">…</p>
   <button class="emg-btn-lectura-ok" id="btnCerrarLectura">ENTENDIDO</button>
 </div>
 
-<!-- OVERLAY MODO SOLO -->
-<div class="emg-overlay emg-overlay-solo" id="overlaySolo" hidden role="dialog" aria-modal="true">
+<div class="emg-overlay emg-overlay-solo" id="overlaySolo" hidden>
   <div class="emg-solo-contenido">
     <div class="emg-solo-icono">🆘</div>
     <p class="emg-solo-texto">NECESITO AYUDA</p>
@@ -491,14 +456,9 @@ body {
 </div>
 
 <script>
-/* =========================================================
-   PONCE · Modo Emergencia
-   Todo en un solo archivo · Sin vibración · Con sirena y pulsos
-   ========================================================= */
 (function () {
   "use strict";
 
-  /* ---------------- DATOS ---------------- */
   var FRASES_EMERGENCIA = [
     { icono: "🆘", texto: "Necesito ayuda" },
     { icono: "🚑", texto: "Llame a una ambulancia" },
@@ -529,7 +489,6 @@ body {
     "No"
   ];
 
-  /* ---------------- ESTADO ---------------- */
   var fraseActual = "";
   var modoInvertido = false;
   var soloActivo = false;
@@ -541,11 +500,9 @@ body {
   var sirenaGain = null;
   var vozEspanol = null;
 
-  /* ---------------- HELPERS ---------------- */
   function $(id) { return document.getElementById(id); }
   function log() { try { console.log.apply(console, ["[EMG]"].concat([].slice.call(arguments))); } catch (e) {} }
 
-  /* ---------------- VOZ ---------------- */
   function cargarVoces() {
     if (!("speechSynthesis" in window)) return;
     try {
@@ -573,7 +530,6 @@ body {
     } catch (e) {}
   }
 
-  /* ---------------- AUDIO ---------------- */
   function crearCtx() {
     if (audioCtx && audioCtx.state !== "closed") return;
     try {
@@ -607,7 +563,6 @@ body {
     } catch (e) {}
   }
 
-  /* ---------------- RENDER ---------------- */
   function renderFrases() {
     var grid = $("gridFrases");
     if (!grid) return;
@@ -638,7 +593,6 @@ body {
     });
   }
 
-  /* ---------------- ACCIONES ---------------- */
   function abrirFrase(f) {
     fraseActual = f.texto;
     var iconoEl = $("fraseIcono");
@@ -648,7 +602,6 @@ body {
     if (textoEl) textoEl.textContent = f.texto;
     if (overlay) { overlay.hidden = false; overlay.classList.remove("emg-invertido"); }
     modoInvertido = false;
-
     desbloquearAudio();
     pulso();
     hablar(f.texto, true);
@@ -705,7 +658,6 @@ body {
     } catch (e) {}
   }
 
-  /* ---------------- MODO SOLO ---------------- */
   function activarSolo() {
     if (soloActivo) return;
     soloActivo = true;
@@ -765,7 +717,6 @@ body {
     if (ov) ov.hidden = true;
   }
 
-  /* ---------------- BIND POR DELEGACIÓN ---------------- */
   function manejarClick(e) {
     var el = e.target;
     while (el && el !== document) {
@@ -780,24 +731,22 @@ body {
             e.preventDefault(); cerrarFrase(); return;
           case "btnRepetir":
             e.preventDefault(); if (fraseActual) hablar(fraseActual, true); return;
-          case "btnInvertir": {
+          case "btnInvertir":
             e.preventDefault();
             modoInvertido = !modoInvertido;
             var ov = $("overlayFrase");
             if (ov) ov.classList.toggle("emg-invertido", modoInvertido);
             return;
-          }
           case "btnAbrirRespuesta":
             e.preventDefault(); abrirRespuesta(); return;
           case "btnCerrarRespuesta":
             e.preventDefault(); cerrarRespuesta(); return;
-          case "btnEnviarRespuesta": {
+          case "btnEnviarRespuesta":
             e.preventDefault();
             var inp = $("inputRespuesta");
             var txt = inp ? inp.value : "";
             if (txt && txt.trim()) mostrarLectura(txt);
             return;
-          }
           case "btnDictar":
             e.preventDefault(); iniciarDictado(); return;
           case "btnCerrarLectura":
@@ -813,7 +762,6 @@ body {
     }
   }
 
-  /* ---------------- INIT ---------------- */
   function init() {
     log("Init Modo Emergencia");
     renderFrases();
