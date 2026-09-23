@@ -1,6 +1,7 @@
 /* =========================================================
    PONCE · Modo Emergencia
    Lógica de frases, TTS, respuestas, dictado y modo SOLO
+   Sin vibración · Con sirena y pulsos de sonido
    ========================================================= */
 
 /* ---------------- DATOS ---------------- */
@@ -39,29 +40,29 @@ const RESPUESTAS_RAPIDAS = [
 
 const $ = (id) => document.getElementById(id);
 
-const gridFrases        = $("gridFrases");
-const overlayFrase      = $("overlayFrase");
-const fraseIcono        = $("fraseIcono");
-const fraseTexto        = $("fraseTexto");
-const overlayRespuesta  = $("overlayRespuesta");
-const gridRespuestas    = $("gridRespuestas");
-const inputRespuesta    = $("inputRespuesta");
-const overlayLectura    = $("overlayLectura");
-const lecturaTexto      = $("lecturaTexto");
-const overlaySolo       = $("overlaySolo");
+const gridFrases       = $("gridFrases");
+const overlayFrase     = $("overlayFrase");
+const fraseIcono       = $("fraseIcono");
+const fraseTexto       = $("fraseTexto");
+const overlayRespuesta = $("overlayRespuesta");
+const gridRespuestas   = $("gridRespuestas");
+const inputRespuesta   = $("inputRespuesta");
+const overlayLectura   = $("overlayLectura");
+const lecturaTexto     = $("lecturaTexto");
+const overlaySolo      = $("overlaySolo");
 
 /* ---------------- ESTADO ---------------- */
 
-let fraseActual = "";
-let modoInvertido = false;
-let soloActivo = false;
+let fraseActual    = "";
+let modoInvertido  = false;
+let soloActivo     = false;
 let soloIntervalVoz = null;
-let soloIntervalVib = null;
+let soloIntervalBeep = null;
 
-let audioCtx = null;
-let sirenaOsc = null;
-let sirenaLFO = null;
-let sirenaGain = null;
+let audioCtx    = null;
+let sirenaOsc   = null;
+let sirenaLFO   = null;
+let sirenaGain  = null;
 
 /* ---------------- VOZ (TTS) ---------------- */
 
@@ -82,6 +83,7 @@ if ("speechSynthesis" in window) {
 }
 
 function hablar(texto, { fuerte = false, repetir = 1 } = {}) {
+  if (!texto || !texto.trim()) return;
   if (!("speechSynthesis" in window)) return;
   try {
     speechSynthesis.cancel();
@@ -97,19 +99,31 @@ function hablar(texto, { fuerte = false, repetir = 1 } = {}) {
   } catch (_) {}
 }
 
-/* ---------------- VIBRACIÓN ---------------- */
+/* ---------------- AUDIO: PULSO DE ATENCIÓN ---------------- */
 
-function vibrar(patron = [200]) {
-  if (navigator.vibrate) {
-    try { navigator.vibrate(patron); } catch (_) {}
-  }
+function pitidoAtencion() {
+  if (!audioCtx || audioCtx.state === "closed") return;
+  try {
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = "square";
+    osc.frequency.value = 1100;
+    gain.gain.value = 0.0001;
+    osc.connect(gain).connect(audioCtx.destination);
+    const t = audioCtx.currentTime;
+    gain.gain.setValueAtTime(0.0001, t);
+    gain.gain.exponentialRampToValueAtTime(0.22, t + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.22);
+    osc.start(t);
+    osc.stop(t + 0.25);
+  } catch (_) {}
 }
 
 /* ---------------- RENDER FRASES ---------------- */
 
 function renderFrases() {
   gridFrases.innerHTML = "";
-  FRASES_EMERGENCIA.forEach((f, i) => {
+  FRASES_EMERGENCIA.forEach((f) => {
     const btn = document.createElement("button");
     btn.className = "emg-btn-frase";
     btn.type = "button";
@@ -118,7 +132,7 @@ function renderFrases() {
       <span class="emg-btn-frase-icono" aria-hidden="true">${f.icono}</span>
       <span>${f.texto}</span>
     `;
-    btn.addEventListener("click", () => abrirFrase(f, i));
+    btn.addEventListener("click", () => abrirFrase(f));
     gridFrases.appendChild(btn);
   });
 }
@@ -139,7 +153,7 @@ function renderRespuestas() {
 
 /* ---------------- OVERLAY FRASE ---------------- */
 
-function abrirFrase(frase, idx) {
+function abrirFrase(frase) {
   fraseActual = frase.texto;
   fraseIcono.textContent = frase.icono;
   fraseTexto.textContent = frase.texto;
@@ -148,7 +162,10 @@ function abrirFrase(frase, idx) {
   modoInvertido = false;
   overlayFrase.classList.remove("emg-invertido");
 
-  vibrar([120, 60, 120]);
+  // Aseguramos que exista el AudioContext (gesto del usuario)
+  asegurarAudioCtx();
+  pitidoAtencion();
+
   hablar(frase.texto, { fuerte: true });
 }
 
@@ -170,11 +187,10 @@ function cerrarRespuesta() {
 
 function mostrarLectura(texto) {
   if (!texto || !texto.trim()) return;
-  const limpio = texto.trim();
-  lecturaTexto.textContent = limpio;
+  lecturaTexto.textContent = texto.trim();
   overlayLectura.hidden = false;
   overlayRespuesta.hidden = true;
-  vibrar([100, 50, 100]);
+  pitidoAtencion();
 }
 
 function cerrarLectura() {
@@ -202,6 +218,19 @@ function iniciarDictado() {
   try { rec.start(); } catch (_) {}
 }
 
+/* ---------------- AUDIO CONTEXT ---------------- */
+
+function asegurarAudioCtx() {
+  if (!audioCtx || audioCtx.state === "closed") {
+    try {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    } catch (_) { audioCtx = null; }
+  }
+  if (audioCtx && audioCtx.state === "suspended") {
+    audioCtx.resume().catch(() => {});
+  }
+}
+
 /* ---------------- MODO SOLO ---------------- */
 
 function activarSolo() {
@@ -209,70 +238,66 @@ function activarSolo() {
   soloActivo = true;
 
   overlaySolo.hidden = false;
-  vibrar([400, 150, 400, 150, 400]);
 
-  // Sirena con Web Audio API
+  // 1) AudioContext
+  asegurarAudioCtx();
+
+  // 2) Sirena continua (oscilador + LFO)
   try {
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if (audioCtx) {
+      sirenaOsc = audioCtx.createOscillator();
+      sirenaGain = audioCtx.createGain();
+      sirenaLFO = audioCtx.createOscillator();
+      const lfoGain = audioCtx.createGain();
 
-    sirenaOsc = audioCtx.createOscillator();
-    sirenaGain = audioCtx.createGain();
-    sirenaLFO = audioCtx.createOscillator();
-    const lfoGain = audioCtx.createGain();
+      sirenaOsc.type = "sawtooth";
+      sirenaOsc.frequency.value = 700;
+      lfoGain.gain.value = 420;
+      sirenaLFO.frequency.value = 1.6;
 
-    sirenaOsc.type = "sawtooth";
-    sirenaOsc.frequency.value = 700;
-    lfoGain.gain.value = 420;
-    sirenaLFO.frequency.value = 1.6;
+      sirenaGain.gain.value = 0.18;
 
-    sirenaGain.gain.value = 0.18;
+      sirenaLFO.connect(lfoGain);
+      lfoGain.connect(sirenaOsc.frequency);
+      sirenaOsc.connect(sirenaGain).connect(audioCtx.destination);
 
-    sirenaLFO.connect(lfoGain);
-    lfoGain.connect(sirenaOsc.frequency);
-    sirenaOsc.connect(sirenaGain).connect(audioCtx.destination);
-
-    sirenaOsc.start();
-    sirenaLFO.start();
+      sirenaOsc.start();
+      sirenaLFO.start();
+    }
   } catch (_) {}
 
-  // Voz repetida
+  // 3) Voz repetida
   const decirSolo = () => hablar("Necesito ayuda. Soy sordo. Por favor ayúdeme.", { fuerte: true });
   decirSolo();
   soloIntervalVoz = setInterval(decirSolo, 6000);
 
-  // Vibración repetida
-  soloIntervalVib = setInterval(() => vibrar([500, 200, 500, 200]), 2000);
+  // 4) Pulsos de atención cada 1.5 s (por encima de la sirena)
+  soloIntervalBeep = setInterval(pitidoAtencion, 1500);
 }
 
 function detenerSolo() {
   // 1) Marcar como inactivo
   soloActivo = false;
 
-  // 2) Cancelar intervalos ANTES de todo (clave)
-  if (soloIntervalVoz) { clearInterval(soloIntervalVoz); soloIntervalVoz = null; }
-  if (soloIntervalVib) { clearInterval(soloIntervalVib); soloIntervalVib = null; }
+  // 2) Cancelar intervalos PRIMERO (clave para que no se reactive)
+  if (soloIntervalVoz)  { clearInterval(soloIntervalVoz);  soloIntervalVoz  = null; }
+  if (soloIntervalBeep) { clearInterval(soloIntervalBeep); soloIntervalBeep = null; }
 
-  // 3) Detener sirena (Web Audio API)
+  // 3) Detener sirena y liberar nodos
   try {
-    if (sirenaOsc) { try { sirenaOsc.stop(); } catch (_) {} try { sirenaOsc.disconnect(); } catch (_) {} }
-    if (sirenaLFO) { try { sirenaLFO.stop(); } catch (_) {} try { sirenaLFO.disconnect(); } catch (_) {} }
+    if (sirenaOsc)  { try { sirenaOsc.stop(); }  catch (_) {} try { sirenaOsc.disconnect(); }  catch (_) {} }
+    if (sirenaLFO)  { try { sirenaLFO.stop(); }  catch (_) {} try { sirenaLFO.disconnect(); }  catch (_) {} }
     if (sirenaGain) { try { sirenaGain.disconnect(); } catch (_) {} }
-    if (audioCtx && audioCtx.state !== "closed") { try { audioCtx.close(); } catch (_) {} }
   } catch (_) {}
 
-  sirenaOsc = sirenaLFO = sirenaGain = audioCtx = null;
+  sirenaOsc = sirenaLFO = sirenaGain = null;
 
   // 4) Detener voz
   if ("speechSynthesis" in window) {
     try { speechSynthesis.cancel(); } catch (_) {}
   }
 
-  // 5) Detener vibración
-  if (navigator.vibrate) {
-    try { navigator.vibrate(0); } catch (_) {}
-  }
-
-  // 6) Ocultar overlay
+  // 5) Ocultar overlay
   overlaySolo.hidden = true;
 }
 
@@ -285,9 +310,15 @@ $("btnVolver").addEventListener("click", () => {
 
 $("btnSoloTop").addEventListener("click", activarSolo);
 $("btnSoloGrande").addEventListener("click", activarSolo);
-$("btnDetenerSolo").addEventListener("click", detenerSolo);
+
+$("btnDetenerSolo").addEventListener("click", (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+  detenerSolo();
+});
 
 $("btnCerrarFrase").addEventListener("click", cerrarFrase);
+$("btnOkFrase") && $("btnOkFrase").addEventListener("click", cerrarFrase);
 
 $("btnRepetir").addEventListener("click", () => {
   if (fraseActual) hablar(fraseActual, { fuerte: true });
@@ -304,10 +335,7 @@ $("btnCerrarRespuesta").addEventListener("click", cerrarRespuesta);
 $("btnEnviarRespuesta").addEventListener("click", () => {
   const texto = inputRespuesta.value;
   if (texto && texto.trim()) mostrarLectura(texto);
-  else {
-    inputRespuesta.focus();
-    vibrar([80, 40, 80]);
-  }
+  else inputRespuesta.focus();
 });
 
 $("btnDictar").addEventListener("click", iniciarDictado);
@@ -318,5 +346,9 @@ $("btnCerrarLectura").addEventListener("click", cerrarLectura);
 renderFrases();
 renderRespuestas();
 
-// Bloquear gestos de zoom accidental en overlays de emergencia
+// Desbloquea el audio en el primer toque (requisito de navegadores móviles)
+document.addEventListener("touchstart", asegurarAudioCtx, { once: true });
+document.addEventListener("click",      asegurarAudioCtx, { once: true });
+
+// Evita zoom accidental por gestos
 document.addEventListener("gesturestart", (e) => e.preventDefault());
