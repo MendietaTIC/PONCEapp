@@ -245,24 +245,35 @@ function activarSolo() {
 }
 
 function detenerSolo() {
+  // 1) Marcar como inactivo
   soloActivo = false;
-  overlaySolo.hidden = true;
 
+  // 2) Cancelar intervalos ANTES de todo (clave)
+  if (soloIntervalVoz) { clearInterval(soloIntervalVoz); soloIntervalVoz = null; }
+  if (soloIntervalVib) { clearInterval(soloIntervalVib); soloIntervalVib = null; }
+
+  // 3) Detener sirena (Web Audio API)
   try {
-    if (sirenaOsc) { sirenaOsc.stop(); sirenaOsc.disconnect(); }
-    if (sirenaLFO) { sirenaLFO.stop(); sirenaLFO.disconnect(); }
-    if (sirenaGain) { sirenaGain.disconnect(); }
-    if (audioCtx) { audioCtx.close(); }
+    if (sirenaOsc) { try { sirenaOsc.stop(); } catch (_) {} try { sirenaOsc.disconnect(); } catch (_) {} }
+    if (sirenaLFO) { try { sirenaLFO.stop(); } catch (_) {} try { sirenaLFO.disconnect(); } catch (_) {} }
+    if (sirenaGain) { try { sirenaGain.disconnect(); } catch (_) {} }
+    if (audioCtx && audioCtx.state !== "closed") { try { audioCtx.close(); } catch (_) {} }
   } catch (_) {}
 
   sirenaOsc = sirenaLFO = sirenaGain = audioCtx = null;
 
-  clearInterval(soloIntervalVoz);
-  clearInterval(soloIntervalVib);
-  soloIntervalVoz = soloIntervalVib = null;
+  // 4) Detener voz
+  if ("speechSynthesis" in window) {
+    try { speechSynthesis.cancel(); } catch (_) {}
+  }
 
-  if ("speechSynthesis" in window) speechSynthesis.cancel();
-  if (navigator.vibrate) navigator.vibrate(0);
+  // 5) Detener vibración
+  if (navigator.vibrate) {
+    try { navigator.vibrate(0); } catch (_) {}
+  }
+
+  // 6) Ocultar overlay
+  overlaySolo.hidden = true;
 }
 
 /* ---------------- EVENTOS ---------------- */
