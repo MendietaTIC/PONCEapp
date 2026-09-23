@@ -1,83 +1,143 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-tema="claro">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#6c5ce7">
 <title>Aprende Jugando · Lengua de Señas</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="juega.css">
 </head>
 <body>
 
-<header>
-  <p class="brand">Aprende Jugando <span>🤟</span></p>
-  <p class="subtitle">Lengua de señas mediante actividades interactivas</p>
+<header class="topbar">
+  <div class="brand">
+    <span class="logo" aria-hidden="true">🤟</span>
+    <div>
+      <h1>Aprende Jugando</h1>
+      <p class="subtitulo">Lengua de señas · Alfabeto dactilológico</p>
+    </div>
+  </div>
+  <div class="tools">
+    <button id="btnSonido" class="tool" title="Activar/desactivar sonido" aria-label="Sonido">🔊</button>
+    <button id="btnTema" class="tool" title="Cambiar tema" aria-label="Tema">🌙</button>
+  </div>
 </header>
 
-<nav class="tabs">
-  <button data-view="aprender" class="active">Aprender</button>
-  <button data-view="memorama">Memorama</button>
-  <button data-view="quiz">Quiz</button>
-  <button data-view="reto">Reto</button>
+<nav class="modos" role="tablist" aria-label="Modos de juego">
+  <button role="tab" data-modo="inicio" class="activo">🏠 Inicio</button>
+  <button role="tab" data-modo="explorador">📖 Alfabeto</button>
+  <button role="tab" data-modo="reto">🎯 Reto</button>
+  <button role="tab" data-modo="deletreo">✍️ Deletreo</button>
+  <button role="tab" data-modo="memoria">🧠 Memoria</button>
 </nav>
 
 <main>
-  <section id="view-aprender" class="view active">
-    <div class="card">
-      <div class="hand-wrap" id="flashHand"></div>
-      <p class="sign-label" id="flashLetter"></p>
-      <p class="sign-word" id="flashWord"></p>
-      <p class="sign-tip" id="flashTip"></p>
-      <div class="flash-controls">
-        <button id="prevBtn">◀ Anterior</button>
-        <button id="nextBtn">Siguiente ▶</button>
+
+  <!-- ============ INICIO ============ -->
+  <section id="vista-inicio" class="vista activa">
+    <div class="hero">
+      <h2>Aprende el alfabeto dactilológico</h2>
+      <p>Cuatro modos para practicar a tu ritmo. Tu progreso se guarda automáticamente.</p>
+    </div>
+    <div class="stats">
+      <div class="stat"><span id="statDominadas">0</span><small>Letras dominadas</small></div>
+      <div class="stat"><span id="statMejor">0</span><small>Mejor puntaje</small></div>
+      <div class="stat"><span id="statRacha">0</span><small>Mejor racha</small></div>
+    </div>
+    <div class="tarjetas-modo">
+      <button class="tarjeta-modo" data-ir="explorador">
+        <span class="tm-icono">📖</span><h3>Explorador</h3>
+        <p>Aprende cada letra a tu ritmo.</p>
+      </button>
+      <button class="tarjeta-modo" data-ir="reto">
+        <span class="tm-icono">🎯</span><h3>Reto</h3>
+        <p>Identifica la seña contra reloj.</p>
+      </button>
+      <button class="tarjeta-modo" data-ir="deletreo">
+        <span class="tm-icono">✍️</span><h3>Deletreo</h3>
+        <p>Forma palabras letra a letra.</p>
+      </button>
+      <button class="tarjeta-modo" data-ir="memoria">
+        <span class="tm-icono">🧠</span><h3>Memoria</h3>
+        <p>Empareja seña y letra.</p>
+      </button>
+    </div>
+  </section>
+
+  <!-- ============ EXPLORADOR ============ -->
+  <section id="vista-explorador" class="vista">
+    <div class="layout-explorador">
+      <div class="panel">
+        <h2 class="titulo-seccion">Alfabeto completo</h2>
+        <div id="gridLetras" class="grid-letras"></div>
       </div>
-      <div class="flash-progress">
-        <p class="flash-count" id="flashCount"></p>
-        <div class="flash-bar"><div class="flash-bar-fill" id="flashBarFill"></div></div>
+      <aside class="panel detalle-panel">
+        <div id="detalle" class="detalle">
+          <p class="vacio">👆 Selecciona una letra para ver su seña.</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============ RETO ============ -->
+  <section id="vista-reto" class="vista">
+    <div id="retoJuego">
+      <div class="hud">
+        <div class="hud-item">🎯 <strong id="retoPuntos">0</strong></div>
+        <div class="hud-item">❤️ <strong id="retoVidas">3</strong></div>
+        <div class="hud-item">🔥 <strong id="retoStreak">0</strong></div>
+        <div class="hud-item">Pregunta <strong id="retoNum">1</strong>/10</div>
+      </div>
+      <div class="barra-tiempo"><div id="retoBarra" class="barra-tiempo-fill"></div></div>
+      <div class="reto-pregunta">
+        <p class="etiqueta">¿Qué letra es esta seña?</p>
+        <div id="retoSena" class="sena sena-grande"></div>
+      </div>
+      <div id="retoOpciones" class="reto-opciones"></div>
+    </div>
+    <div id="retoFin" class="fin oculto">
+      <h2 id="retoFinTitulo">¡Buen trabajo!</h2>
+      <p id="retoFinTexto"></p>
+      <div id="retoEstrellas" class="estrellas"></div>
+      <div class="acciones">
+        <button class="btn primario" id="btnRetoOtra">Jugar otra vez</button>
+        <button class="btn" data-ir="inicio">Volver al inicio</button>
       </div>
     </div>
   </section>
 
-  <section id="view-memorama" class="view">
-    <p class="lead">Encuentra cada seña con su letra. Toca dos cartas para compararlas.</p>
-    <div class="mem-stats"><span id="memMoves">Movimientos: 0</span><span id="memPairs">Pares: 0/8</span></div>
-    <div id="memGrid"></div>
-    <button class="mem-reset" id="memReset">Volver a mezclar</button>
+  <!-- ============ DELETREO ============ -->
+  <section id="vista-deletreo" class="vista">
+    <div class="hud">
+      <div class="hud-item">✍️ Palabra <strong id="delNum">1</strong>/5</div>
+      <div class="hud-item">✅ <strong id="delAciertos">0</strong></div>
+      <div class="hud-item">❌ <strong id="delErrores">0</strong></div>
+    </div>
+    <div class="del-palabra">
+      <p class="etiqueta">Deletrea la palabra tocando las letras en orden</p>
+      <div id="delCajas" class="del-cajas"></div>
+      <div id="delPista" class="del-pista">Palabra: <strong>—</strong></div>
+    </div>
+    <div id="delTeclado" class="grid-letras teclado"></div>
   </section>
 
-  <section id="view-quiz" class="view">
-    <div class="quiz-score" id="quizScore">Puntaje: 0/0 · Mejor: 0</div>
-    <div class="card">
-      <div class="hand-wrap" id="quizHand"></div>
-      <p class="lead" style="text-align:center;">¿Qué letra es esta seña?</p>
-      <div class="quiz-options" id="quizOptions"></div>
-      <p class="quiz-feedback" id="quizFeedback"></p>
-      <button class="quiz-next" id="quizNext">Siguiente pregunta ▶</button>
+  <!-- ============ MEMORIA ============ -->
+  <section id="vista-memoria" class="vista">
+    <div class="hud">
+      <div class="hud-item">⏱️ <strong id="memTiempo">0s</strong></div>
+      <div class="hud-item">🔁 <strong id="memMov">0</strong> mov.</div>
+      <div class="hud-item">🎯 <strong id="memParejas">0</strong>/6</div>
+      <button class="btn mini" id="btnMemReiniciar">Reiniciar</button>
+    </div>
+    <div id="memTablero" class="mem-tablero"></div>
+    <div id="memFin" class="fin oculto">
+      <h2>¡Completado! 🎉</h2>
+      <p id="memFinTexto"></p>
+      <button class="btn primario" id="btnMemOtra">Jugar otra vez</button>
     </div>
   </section>
-  <section id="view-reto" class="view">
-    <p class="lead">Responde tantas señas como puedas antes de que se acabe el tiempo.</p>
-    <div class="card">
-      <button class="reto-start" id="retoStart">Empezar reto (45s)</button>
-      <div id="retoBoard" style="display:none;">
-        <div class="reto-row"><span class="reto-time" id="retoTime">45s</span><span id="retoScore">Aciertos: 0</span></div>
-        <div class="hand-wrap" id="retoHand"></div>
-        <p class="lead" style="text-align:center;">¿Qué letra es esta seña?</p>
-        <div class="quiz-options" id="retoOptions"></div>
-        <p class="lead" id="retoBest" style="text-align:center; margin-top:10px;"></p>
-      </div>
-      <div id="retoEnd" class="reto-end" style="display:none;">
-        <p id="retoEndText"></p>
-        <p id="retoEndBest"></p>
-      </div>
-    </div>
-  </section>
+
 </main>
-
-<footer>Representación simplificada de manos para practicar reconocimiento — no sustituye una guía oficial de lengua de señas.</footer>
 
 <script src="juega.js"></script>
 </body>
