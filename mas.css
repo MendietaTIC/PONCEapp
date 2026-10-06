@@ -14,46 +14,7 @@ body {
 }
 
 /* ===== HEADER ===== */
-/* Botón de descarga APK en el header */
-.btn-apk {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 18px;
-    padding: 12px 26px;
-    border-radius: 50px;
-    font-family: 'Baloo 2', sans-serif;
-    font-size: 1rem;
-    font-weight: 800;
-    letter-spacing: .4px;
-    text-decoration: none;
-    color: #241a3a;
-    background: linear-gradient(135deg, #8CC63F, #5aa32a);
-    box-shadow: 0 10px 24px rgba(140, 198, 63, .45),
-                inset 0 -3px 8px rgba(0, 0, 0, .15),
-                inset 0 3px 8px rgba(255, 255, 255, .4);
-    transition: transform .25s ease, box-shadow .3s ease, background .3s ease;
-}
 
-.btn-apk:hover {
-    transform: translateY(-3px) scale(1.05);
-    background: linear-gradient(135deg, #a4e04a, #6fbf33);
-    box-shadow: 0 16px 34px rgba(140, 198, 63, .7),
-                0 0 28px rgba(164, 224, 74, .65);
-}
-
-.btn-apk:active {
-    transform: translateY(-1px) scale(.97);
-}
-
-/* Responsive del botón APK */
-@media (max-width: 480px) {
-    .btn-apk {
-        font-size: .9rem;
-        padding: 10px 20px;
-        margin-top: 14px;
-    }
-}
 header {
     background: linear-gradient(135deg, #304B78, #4568A8);
     color: #fff;
