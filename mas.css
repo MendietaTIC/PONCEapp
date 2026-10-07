@@ -68,6 +68,12 @@ body {
                 inset 0 3px 8px rgba(255, 255, 255, .35);
 }
 
+/* Tamaño del SVG dentro del botón APK */
+.icon-apk svg {
+    width: 26px;
+    height: 26px;
+    display: block;
+}
 /* Botón V1 (rosa/violeta, coherente con las flechas del carrusel) */
 .icon-v1 {
     right: 18px;
