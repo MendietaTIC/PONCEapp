@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (progress >= 100) {
             clearInterval(interval); // Detiene el intervalo cuando llega al 100%
             // Redirige a la segunda página
-            window.location.href = 'second.html';
+            window.location.href = 'mas.html';
         }
     }, intervalTime);
 });
