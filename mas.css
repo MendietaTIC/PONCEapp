@@ -482,7 +482,6 @@ header p {
 }
 
 @media (max-width: 480px) {
-    /* Iconos flotantes más compactos */
     .icon-fixed {
         width: 44px;
         height: 44px;
@@ -491,6 +490,12 @@ header p {
     }
     .icon-apk { right: 66px; }
     .icon-v1  { right: 12px; }
+
+    /* Flecha un poco más pequeña en móvil */
+    .icon-apk svg {
+        width: 22px;
+        height: 22px;
+    }
 
     header {
         padding: 62px 14px 14px;
