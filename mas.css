@@ -7,67 +7,97 @@
     padding: 0;
     box-sizing: border-box;
 }
+
 body {
-    background: #f4f6fb;
+    min-height: 100vh;
     font-family: 'Segoe UI', system-ui, sans-serif;
-    color: #2d3748;
+    color: #eaf0f8;
+    /* El degradado del header ahora cubre TODA la página */
+    background: linear-gradient(160deg, #1b2c4a 0%, #304B78 45%, #4568A8 100%);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding-bottom: 40px;
+}
+
+/* ===== BOTONES FLOTANTES (APK + V1) ===== */
+.icon-fixed {
+    position: fixed;
+    top: 18px;
+    z-index: 1000;
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: #fff;
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 800;
+    font-size: 1.15rem;
+    letter-spacing: .5px;
+    line-height: 1;
+    box-shadow: 0 10px 22px rgba(0, 0, 0, .4),
+                inset 0 -3px 8px rgba(0, 0, 0, .22),
+                inset 0 3px 8px rgba(255, 255, 255, .28);
+    transition: transform .25s ease, box-shadow .3s ease, filter .3s ease;
+    cursor: pointer;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+
+.icon-fixed:hover {
+    transform: scale(1.12) translateY(-2px);
+    filter: brightness(1.1);
+}
+
+.icon-fixed:active {
+    transform: scale(.95);
+}
+
+/* Botón APK (verde, coherente con el color de las tarjetas) */
+.icon-apk {
+    right: 84px;
+    background: linear-gradient(135deg, #a4e04a, #5aa32a);
+}
+.icon-apk:hover {
+    box-shadow: 0 0 30px rgba(164, 224, 74, .85),
+                0 12px 26px rgba(0, 0, 0, .35),
+                inset 0 -3px 8px rgba(0, 0, 0, .22),
+                inset 0 3px 8px rgba(255, 255, 255, .35);
+}
+
+/* Botón V1 (rosa/violeta, coherente con las flechas del carrusel) */
+.icon-v1 {
+    right: 18px;
+    background: linear-gradient(135deg, #ff6ec4, #7873f5);
+}
+.icon-v1:hover {
+    box-shadow: 0 0 30px rgba(255, 110, 196, .85),
+                0 12px 26px rgba(0, 0, 0, .35),
+                inset 0 -3px 8px rgba(0, 0, 0, .22),
+                inset 0 3px 8px rgba(255, 255, 255, .35);
 }
 
 /* ===== HEADER ===== */
-/* Botón de descarga APK en el header */
-.btn-apk {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 18px;
-    padding: 12px 26px;
-    border-radius: 50px;
-    font-family: 'Baloo 2', sans-serif;
-    font-size: 1rem;
-    font-weight: 800;
-    letter-spacing: .4px;
-    text-decoration: none;
-    color: #241a3a;
-    background: linear-gradient(135deg, #8CC63F, #5aa32a);
-    box-shadow: 0 10px 24px rgba(140, 198, 63, .45),
-                inset 0 -3px 8px rgba(0, 0, 0, .15),
-                inset 0 3px 8px rgba(255, 255, 255, .4);
-    transition: transform .25s ease, box-shadow .3s ease, background .3s ease;
-}
-
-.btn-apk:hover {
-    transform: translateY(-3px) scale(1.05);
-    background: linear-gradient(135deg, #a4e04a, #6fbf33);
-    box-shadow: 0 16px 34px rgba(140, 198, 63, .7),
-                0 0 28px rgba(164, 224, 74, .65);
-}
-
-.btn-apk:active {
-    transform: translateY(-1px) scale(.97);
-}
-
-/* Responsive del botón APK */
-@media (max-width: 480px) {
-    .btn-apk {
-        font-size: .9rem;
-        padding: 10px 20px;
-        margin-top: 14px;
-    }
-}
 header {
-    background: linear-gradient(135deg, #304B78, #4568A8);
+    background: transparent;   /* ya no tiene fondo propio */
     color: #fff;
-    padding: 30px 20px;
+    padding: 40px 20px 20px;
     text-align: center;
-    box-shadow: 0 6px 20px rgba(48, 75, 120, .25);
 }
+
 header h1 {
     margin-bottom: 8px;
     font-size: clamp(1.4rem, 3.5vw, 2rem);
+    text-shadow: 0 4px 18px rgba(0, 0, 0, .35);
 }
+
 header p {
-    opacity: .9;
+    opacity: .92;
     font-size: .95rem;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, .3);
 }
 
 /* ===== TARJETAS PRINCIPALES ===== */
@@ -79,33 +109,40 @@ header p {
     max-width: 1100px;
     margin: 0 auto;
 }
+
 .card {
     background: #fff;
     padding: 25px;
     border-radius: 20px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, .08);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, .25);
     text-align: center;
     transition: .3s;
 }
+
 .card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 12px 25px rgba(0, 0, 0, .12);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, .3);
 }
+
 .icono {
     font-size: 60px;
     margin-bottom: 15px;
 }
+
 .importante {
     border-top: 8px solid #8CC63F;
 }
+
 .card h2 {
     margin-bottom: 10px;
     color: #304B78;
 }
+
 .card p {
     margin-bottom: 20px;
     color: #555;
 }
+
 .card .btn-card {
     display: inline-block;
     background: #8CC63F;
@@ -116,6 +153,7 @@ header p {
     font-weight: bold;
     transition: .25s;
 }
+
 .card .btn-card:hover {
     background: #76ad2f;
     transform: translateY(-2px);
@@ -126,10 +164,12 @@ header p {
     padding: 20px 15px 60px;
     text-align: center;
 }
+
 .extras > h2 {
-    color: #304B78;
+    color: #fff;
     margin-bottom: 25px;
     font-size: clamp(1.3rem, 3vw, 1.7rem);
+    text-shadow: 0 3px 12px rgba(0, 0, 0, .4);
 }
 
 /* ===== CARRUSEL ===== */
@@ -140,8 +180,10 @@ header p {
     margin: 0 auto;
     padding: 40px 20px 35px;
     border-radius: 32px;
-    background: linear-gradient(135deg, #1e1b4b 0%, #312e81 55%, #4c1d95 100%);
-    box-shadow: 0 25px 60px rgba(30, 27, 75, .35);
+    background: linear-gradient(135deg, #1a1440 0%, #2b1a6b 55%, #431b8a 100%);
+    box-shadow: 0 30px 70px rgba(0, 0, 0, .55),
+                0 0 0 1px rgba(255, 255, 255, .08),
+                inset 0 0 60px rgba(255, 255, 255, .04);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -159,24 +201,31 @@ header p {
     opacity: .45;
     pointer-events: none;
 }
+
 .carrusel-seccion::before {
-    width: 320px; height: 320px;
+    width: 320px;
+    height: 320px;
     background: #ff6ec4;
-    top: -100px; left: -100px;
+    top: -100px;
+    left: -100px;
     animation: flotar 9s ease-in-out infinite;
 }
+
 .carrusel-seccion::after {
-    width: 280px; height: 280px;
+    width: 280px;
+    height: 280px;
     background: #4facfe;
-    bottom: -100px; right: -90px;
+    bottom: -100px;
+    right: -90px;
     animation: flotar 11s ease-in-out infinite reverse;
 }
+
 @keyframes flotar {
     0%, 100% { transform: translate(0, 0) scale(1); }
     50%      { transform: translate(25px, -25px) scale(1.15); }
 }
 
-/* Título */
+/* Título del carrusel */
 .titulo-seccion {
     position: relative;
     z-index: 2;
@@ -192,6 +241,7 @@ header p {
     filter: drop-shadow(0 4px 18px rgba(255, 110, 196, .45));
     text-align: center;
 }
+
 @keyframes degradadoTexto {
     to { background-position: 300% 0; }
 }
@@ -206,6 +256,7 @@ header p {
     justify-content: center;
     gap: 10px;
 }
+
 .carrusel {
     position: relative;
     flex: 1;
@@ -258,7 +309,9 @@ header p {
 .item::after {
     content: attr(data-titulo);
     position: absolute;
-    left: 0; right: 0; bottom: 16px;
+    left: 0;
+    right: 0;
+    bottom: 16px;
     text-align: center;
     font-family: 'Baloo 2', sans-serif;
     font-size: 14px;
@@ -270,7 +323,7 @@ header p {
     pointer-events: none;
 }
 
-/* Colores de cada tarjeta (contraste alto con texto blanco) */
+/* Colores de cada tarjeta */
 .item:nth-child(1) { background: linear-gradient(160deg, #FF6B6B, #C44569); }
 .item:nth-child(2) { background: linear-gradient(160deg, #4FACFE, #2C6FBB); }
 .item:nth-child(3) { background: linear-gradient(160deg, #43E97B, #2B9E64); }
@@ -283,6 +336,7 @@ header p {
     border-color: #fff;
     animation: brilloActivo 2.6s ease-in-out infinite;
 }
+
 @keyframes brilloActivo {
     0%, 100% {
         box-shadow: 0 22px 45px rgba(0, 0, 0, .5),
@@ -317,12 +371,14 @@ header p {
                 inset 0 3px 8px rgba(255, 255, 255, .35);
     transition: transform .25s ease, box-shadow .3s ease, background .3s ease;
 }
+
 #prev:hover, #next:hover {
     transform: scale(1.12);
     background: linear-gradient(145deg, #ffe259, #ff6ec4);
     box-shadow: 0 0 30px rgba(255, 110, 196, .85),
                 0 10px 22px rgba(0, 0, 0, .3);
 }
+
 #prev:active, #next:active {
     transform: scale(.92);
 }
@@ -338,6 +394,7 @@ header p {
     background: #ffffff;
     box-shadow: 0 18px 40px rgba(0, 0, 0, .35);
 }
+
 .info-extra h3 {
     margin-bottom: 8px;
     font-family: 'Baloo 2', sans-serif;
@@ -345,6 +402,7 @@ header p {
     font-weight: 800;
     color: #304B78;
 }
+
 .info-extra p {
     margin-bottom: 18px;
     font-size: .98rem;
@@ -371,17 +429,22 @@ header p {
                 inset 0 3px 8px rgba(255, 255, 255, .6);
     transition: transform .25s ease, box-shadow .3s ease;
 }
+
 #btnExtra:hover {
     transform: translateY(-3px) scale(1.04);
     box-shadow: 0 16px 34px rgba(255, 167, 81, .7),
                 0 0 30px rgba(255, 226, 89, .6);
 }
+
 #btnExtra:active {
     transform: translateY(-1px) scale(.98);
 }
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 760px) {
+    header {
+        padding: 65px 16px 16px; /* espacio para los iconos flotantes */
+    }
     .carrusel-seccion {
         padding: 30px 14px 28px;
         border-radius: 24px;
@@ -406,6 +469,25 @@ header p {
     }
     .info-extra {
         padding: 20px 18px 24px;
+    }
+    .principal {
+        padding: 20px 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Iconos flotantes más compactos */
+    .icon-fixed {
+        width: 44px;
+        height: 44px;
+        font-size: .95rem;
+        top: 12px;
+    }
+    .icon-apk { right: 66px; }
+    .icon-v1  { right: 12px; }
+
+    header {
+        padding: 62px 14px 14px;
     }
 }
 
