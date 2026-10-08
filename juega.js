@@ -4,35 +4,37 @@
    ========================================================= */
 
 /* ====== 1. DATOS DEL ALFABETO ====== */
-/* archivo = nombre del archivo en /img  →  img/a.jpg, img/ñ.jpg, etc. */
+/* archivo = nombre del archivo local en /img  →  img/a.jpg, img/ñ.jpg, etc.
+   imagen  = URL remota opcional. Si está vacía, se usa img/${archivo}.jpg.
+   Si NINGUNA imagen carga (sin internet, 404…), se muestra el emoji. */
 const ALFABETO = [
-  { letra:'A', archivo:'a', emoji:'✊',imagen: 'https://imgur.com/H1tcFUR.png', desc:'Puño cerrado con el pulgar pegado al lado de los dedos (no encima).', tip:'La muñeca debe quedar recta, mirando al frente.', nivel:1 },
-  { letra:'B', archivo:'b', emoji:'✋', desc:'Mano abierta, dedos juntos y extendidos hacia arriba, pulgar doblado hacia la palma.', tip:'Mantén los cuatro dedos bien pegados.', nivel:1 },
-  { letra:'C', archivo:'c', emoji:'🤏', desc:'Mano curvada formando la forma de una "C".', tip:'Como si sostuvieras un vaso pequeño.', nivel:1 },
-  { letra:'D', archivo:'d', emoji:'👆', desc:'Índice extendido hacia arriba; los demás dedos tocan el pulgar formando un círculo.', tip:'El círculo queda debajo del índice.', nivel:2 },
-  { letra:'E', archivo:'e', emoji:'✊', desc:'Dedos doblados hacia la palma, con el pulgar por debajo.', tip:'Las puntas de los dedos tocan la palma.', nivel:2 },
-  { letra:'F', archivo:'f', emoji:'👌', desc:'Pulgar e índice se tocan formando un círculo; los otros tres dedos extendidos.', tip:'Parecido a la señal de "OK".', nivel:1 },
-  { letra:'G', archivo:'g', emoji:'👉', desc:'Índice y pulgar extendidos horizontalmente y paralelos.', tip:'La mano mira de lado.', nivel:2 },
-  { letra:'H', archivo:'h', emoji:'✌️', desc:'Índice y medio extendidos y juntos, en horizontal.', tip:'Los dedos apuntan hacia el lado.', nivel:2 },
-  { letra:'I', archivo:'i', emoji:'🤙', desc:'Meñique extendido hacia arriba, el resto en puño.', tip:'Solo se levanta el meñique.', nivel:1 },
-  { letra:'J', archivo:'j', emoji:'🤙', desc:'Meñique extendido; se traza una "J" en el aire.', tip:'Es la "I" con movimiento.', nivel:3 },
-  { letra:'K', archivo:'k', emoji:'✌️', desc:'Índice y medio extendidos en V, con el pulgar entre ellos.', tip:'El pulgar toca la base del dedo medio.', nivel:2 },
-  { letra:'L', archivo:'l', emoji:'🤟', desc:'Índice hacia arriba y pulgar hacia el lado formando una "L".', tip:'Ángulo de 90° entre ambos.', nivel:1 },
-  { letra:'M', archivo:'m', emoji:'✊', desc:'Pulgar bajo tres dedos: índice, medio y anular.', tip:'Se ve el pulgar asomando por debajo.', nivel:3 },
-  { letra:'N', archivo:'n', emoji:'✊', desc:'Pulgar bajo dos dedos: índice y medio.', tip:'Similar a la M, pero con dos dedos.', nivel:3 },
-  { letra:'Ñ', archivo:'ñ', emoji:'✊', desc:'Igual que la N, pero con un pequeño movimiento ondulado de la muñeca.', tip:'El movimiento es lo que la distingue de la N.', nivel:3 },
-  { letra:'O', archivo:'o', emoji:'👌', desc:'Todos los dedos curvados tocan el pulgar formando una "O".', tip:'Como si sostuvieras una moneda.', nivel:1 },
-  { letra:'P', archivo:'p', emoji:'👇', desc:'Como la K, pero apuntando hacia abajo.', tip:'La mano mira al suelo.', nivel:3 },
-  { letra:'Q', archivo:'q', emoji:'👇', desc:'Como la G, pero apuntando hacia abajo.', tip:'Índice y pulgar hacia abajo.', nivel:3 },
-  { letra:'R', archivo:'r', emoji:'🤞', desc:'Índice y medio cruzados.', tip:'El dedo medio pasa por delante del índice.', nivel:2 },
-  { letra:'S', archivo:'s', emoji:'✊', desc:'Puño cerrado con el pulgar por delante de los dedos.', tip:'El pulgar cruza sobre los demás.', nivel:2 },
-  { letra:'T', archivo:'t', emoji:'✊', desc:'Pulgar entre el índice y el medio, puño cerrado.', tip:'El pulgar asoma entre los dedos.', nivel:3 },
-  { letra:'U', archivo:'u', emoji:'✌️', desc:'Índice y medio juntos y extendidos hacia arriba.', tip:'Dedos pegados, no separados.', nivel:1 },
-  { letra:'V', archivo:'v', emoji:'✌️', desc:'Índice y medio extendidos y separados formando una "V".', tip:'Separa bien los dedos.', nivel:1 },
-  { letra:'W', archivo:'w', emoji:'🖖', desc:'Índice, medio y anular extendidos y separados.', tip:'Tres dedos hacia arriba.', nivel:2 },
-  { letra:'X', archivo:'x', emoji:'☝️', desc:'Índice doblado en forma de gancho.', tip:'Como una pequeña garra.', nivel:2 },
-  { letra:'Y', archivo:'y', emoji:'🤙', desc:'Pulgar y meñique extendidos.', tip:'Los otros dedos permanecen cerrados.', nivel:1 },
-  { letra:'Z', archivo:'z', emoji:'☝️', desc:'Índice extendido; se traza una "Z" en el aire.', tip:'Movimiento en zigzag.', nivel:3 }
+  { letra:'A', archivo:'a', emoji:'✊', imagen:'https://imgur.com/H1tcFUR.png', desc:'Puño cerrado con el pulgar pegado al lado de los dedos (no encima).', tip:'La muñeca debe quedar recta, mirando al frente.', nivel:1 },
+  { letra:'B', archivo:'b', emoji:'✋', imagen:'', desc:'Mano abierta, dedos juntos y extendidos hacia arriba, pulgar doblado hacia la palma.', tip:'Mantén los cuatro dedos bien pegados.', nivel:1 },
+  { letra:'C', archivo:'c', emoji:'🤏', imagen:'', desc:'Mano curvada formando la forma de una "C".', tip:'Como si sostuvieras un vaso pequeño.', nivel:1 },
+  { letra:'D', archivo:'d', emoji:'👆', imagen:'', desc:'Índice extendido hacia arriba; los demás dedos tocan el pulgar formando un círculo.', tip:'El círculo queda debajo del índice.', nivel:2 },
+  { letra:'E', archivo:'e', emoji:'✊', imagen:'', desc:'Dedos doblados hacia la palma, con el pulgar por debajo.', tip:'Las puntas de los dedos tocan la palma.', nivel:2 },
+  { letra:'F', archivo:'f', emoji:'👌', imagen:'', desc:'Pulgar e índice se tocan formando un círculo; los otros tres dedos extendidos.', tip:'Parecido a la señal de "OK".', nivel:1 },
+  { letra:'G', archivo:'g', emoji:'👉', imagen:'', desc:'Índice y pulgar extendidos horizontalmente y paralelos.', tip:'La mano mira de lado.', nivel:2 },
+  { letra:'H', archivo:'h', emoji:'✌️', imagen:'', desc:'Índice y medio extendidos y juntos, en horizontal.', tip:'Los dedos apuntan hacia el lado.', nivel:2 },
+  { letra:'I', archivo:'i', emoji:'🤙', imagen:'', desc:'Meñique extendido hacia arriba, el resto en puño.', tip:'Solo se levanta el meñique.', nivel:1 },
+  { letra:'J', archivo:'j', emoji:'🤙', imagen:'', desc:'Meñique extendido; se traza una "J" en el aire.', tip:'Es la "I" con movimiento.', nivel:3 },
+  { letra:'K', archivo:'k', emoji:'✌️', imagen:'', desc:'Índice y medio extendidos en V, con el pulgar entre ellos.', tip:'El pulgar toca la base del dedo medio.', nivel:2 },
+  { letra:'L', archivo:'l', emoji:'🤟', imagen:'', desc:'Índice hacia arriba y pulgar hacia el lado formando una "L".', tip:'Ángulo de 90° entre ambos.', nivel:1 },
+  { letra:'M', archivo:'m', emoji:'✊', imagen:'', desc:'Pulgar bajo tres dedos: índice, medio y anular.', tip:'Se ve el pulgar asomando por debajo.', nivel:3 },
+  { letra:'N', archivo:'n', emoji:'✊', imagen:'', desc:'Pulgar bajo dos dedos: índice y medio.', tip:'Similar a la M, pero con dos dedos.', nivel:3 },
+  { letra:'Ñ', archivo:'ñ', emoji:'✊', imagen:'', desc:'Igual que la N, pero con un pequeño movimiento ondulado de la muñeca.', tip:'El movimiento es lo que la distingue de la N.', nivel:3 },
+  { letra:'O', archivo:'o', emoji:'👌', imagen:'', desc:'Todos los dedos curvados tocan el pulgar formando una "O".', tip:'Como si sostuvieras una moneda.', nivel:1 },
+  { letra:'P', archivo:'p', emoji:'👇', imagen:'', desc:'Como la K, pero apuntando hacia abajo.', tip:'La mano mira al suelo.', nivel:3 },
+  { letra:'Q', archivo:'q', emoji:'👇', imagen:'', desc:'Como la G, pero apuntando hacia abajo.', tip:'Índice y pulgar hacia abajo.', nivel:3 },
+  { letra:'R', archivo:'r', emoji:'🤞', imagen:'', desc:'Índice y medio cruzados.', tip:'El dedo medio pasa por delante del índice.', nivel:2 },
+  { letra:'S', archivo:'s', emoji:'✊', imagen:'', desc:'Puño cerrado con el pulgar por delante de los dedos.', tip:'El pulgar cruza sobre los demás.', nivel:2 },
+  { letra:'T', archivo:'t', emoji:'✊', imagen:'', desc:'Pulgar entre el índice y el medio, puño cerrado.', tip:'El pulgar asoma entre los dedos.', nivel:3 },
+  { letra:'U', archivo:'u', emoji:'✌️', imagen:'', desc:'Índice y medio juntos y extendidos hacia arriba.', tip:'Dedos pegados, no separados.', nivel:1 },
+  { letra:'V', archivo:'v', emoji:'✌️', imagen:'', desc:'Índice y medio extendidos y separados formando una "V".', tip:'Separa bien los dedos.', nivel:1 },
+  { letra:'W', archivo:'w', emoji:'🖖', imagen:'', desc:'Índice, medio y anular extendidos y separados.', tip:'Tres dedos hacia arriba.', nivel:2 },
+  { letra:'X', archivo:'x', emoji:'☝️', imagen:'', desc:'Índice doblado en forma de gancho.', tip:'Como una pequeña garra.', nivel:2 },
+  { letra:'Y', archivo:'y', emoji:'🤙', imagen:'', desc:'Pulgar y meñique extendidos.', tip:'Los otros dedos permanecen cerrados.', nivel:1 },
+  { letra:'Z', archivo:'z', emoji:'☝️', imagen:'', desc:'Índice extendido; se traza una "Z" en el aire.', tip:'Movimiento en zigzag.', nivel:3 }
 ];
 
 const PALABRAS = ['CASA','SOL','LUNA','GATO','MESA','LIBRO','AGUA','FLOR','TREN','PAN','MAR','RANA','PATO','SILLA','NUBE','ISLA','TIGRE','CINE','MOTO','BESO'];
@@ -42,8 +44,8 @@ const CLAVE = 'aprendeJugando_v1';
 const estado = {
   sonido: true,
   tema: 'claro',
-  dominadas: {},   // { A:true, ... }
-  pesos: {},       // { A: 1.5 } → repetición espaciada simple
+  dominadas: {},
+  pesos: {},
   mejorPuntaje: 0,
   mejorRacha: 0
 };
@@ -122,20 +124,36 @@ function mezclar(arr) {
   return a;
 }
 
-/* --- Render de la seña (imagen + respaldo emoji) --- */
+/* --- Render de la seña (URL remota → archivo local → emoji) --- */
 function renderSena(contenedor, item) {
   contenedor.innerHTML = '';
+
+  // Lista de rutas a intentar, en orden de prioridad
+  const rutas = [];
+  if (item.imagen) rutas.push(item.imagen);     // 1) URL remota (si está definida)
+  rutas.push(`img/${item.archivo}.jpg`);        // 2) archivo local
+
   const img = document.createElement('img');
-  img.src = `img/${item.archivo}.jpg`;
   img.alt = `Seña de la letra ${item.letra}`;
   img.loading = 'lazy';
+
+  let intento = 0;
   img.onerror = () => {
-    img.remove();
-    const fb = document.createElement('div');
-    fb.className = 'sena-fallback';
-    fb.innerHTML = `<span class="emoji" aria-hidden="true">${item.emoji}</span><span class="letra">${item.letra}</span>`;
-    contenedor.appendChild(fb);
+    intento++;
+    if (intento < rutas.length) {
+      // Probamos la siguiente ruta
+      img.src = rutas[intento];
+    } else {
+      // Se agotaron las rutas → emoji como respaldo final
+      img.remove();
+      const fb = document.createElement('div');
+      fb.className = 'sena-fallback';
+      fb.innerHTML = `<span class="emoji" aria-hidden="true">${item.emoji}</span><span class="letra">${item.letra}</span>`;
+      contenedor.appendChild(fb);
+    }
   };
+
+  img.src = rutas[0];
   contenedor.appendChild(img);
 }
 
@@ -224,7 +242,6 @@ function mostrarDetalle(letra) {
     sonidoAcierto();
     if (estado.dominadas[item.letra]) confeti();
     mostrarDetalle(item.letra);
-    // actualiza la estrellita del grid
     const btn = $$('#gridLetras .letra-btn').find(b => b.textContent === item.letra);
     if (btn) btn.classList.toggle('dominada', !!estado.dominadas[item.letra]);
   };
@@ -268,7 +285,6 @@ function siguientePreguntaReto() {
 
   renderSena($('#retoSena'), retoActual);
 
-  // 3 distractores + correcta
   const distractores = mezclar(ALFABETO.filter(l => l.letra !== retoActual.letra)).slice(0, 3);
   const opciones = mezclar([retoActual, ...distractores]);
 
@@ -306,7 +322,6 @@ function responderReto(letraElegida, boton) {
 
   const correcta = letraElegida === retoActual.letra;
 
-  // marcar botones
   $$('#retoOpciones .opcion').forEach(b => {
     b.disabled = true;
     if (b.textContent === retoActual.letra) b.classList.add('correcta');
@@ -572,34 +587,28 @@ document.addEventListener('DOMContentLoaded', () => {
   initTema();
   aplicarSonido();
 
-  // Nav superior
   $$('.modos button').forEach(b => {
     b.addEventListener('click', () => cambiarModo(b.dataset.modo));
   });
 
-  // Tarjetas del inicio y botones "data-ir"
   document.addEventListener('click', e => {
     const ir = e.target.closest('[data-ir]');
     if (ir) cambiarModo(ir.dataset.ir);
   });
 
-  // Toggle tema
   $('#btnTema').addEventListener('click', () => {
     aplicarTema(estado.tema === 'oscuro' ? 'claro' : 'oscuro');
   });
 
-  // Toggle sonido
   $('#btnSonido').addEventListener('click', () => {
     estado.sonido = !estado.sonido;
     aplicarSonido();
     if (estado.sonido) sonidoClick();
   });
 
-  // Botones internos de los modos
   $('#btnRetoOtra').addEventListener('click', iniciarReto);
   $('#btnMemReiniciar').addEventListener('click', iniciarMemoria);
   $('#btnMemOtra').addEventListener('click', iniciarMemoria);
 
-  // Vista inicial
   renderInicio();
 });
