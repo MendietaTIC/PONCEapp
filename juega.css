@@ -244,6 +244,8 @@ main {
   line-height: 1;
   margin-bottom: 12px;
 }
+
+/* ===== SEÑA (imagen + fallback emoji) ===== */
 .sena {
   width: 100%;
   max-width: 300px;
@@ -256,16 +258,41 @@ main {
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  position: relative;
 }
-.sena img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.sena img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  animation: fadeInSena .4s ease;
+}
+@keyframes fadeInSena {
+  from { opacity: 0; transform: scale(.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
 .sena-fallback {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 6px;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  animation: fadeInSena .4s ease;
 }
-.sena-fallback .emoji { font-size: clamp(4rem, 22vw, 8rem); line-height: 1; }
-.sena-fallback .letra { font-size: 1.6rem; font-weight: 900; color: var(--primario); }
+.sena-fallback .emoji {
+  font-size: clamp(4rem, 22vw, 8rem);
+  line-height: 1;
+  filter: drop-shadow(0 4px 14px rgba(0,0,0,.18));
+}
+.sena-fallback .letra {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: var(--primario);
+  letter-spacing: 1px;
+}
 
 .detalle .desc { font-size: .92rem; margin-bottom: 8px; line-height: 1.4; }
 .detalle .tip {
@@ -447,9 +474,20 @@ main {
   font-size: 1.8rem;
   font-weight: 900;
 }
-.carta-frente { transform: rotateY(180deg); font-size: 2rem; font-weight: 800; color: var(--primario); padding: 4px; }
-.carta-frente img { width: 100%; height: 100%; object-fit: cover; }
-.carta-frente .sena-fallback .emoji { font-size: 2.4rem; }
+.carta-frente {
+  transform: rotateY(180deg);
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--primario);
+  padding: 4px;
+}
+.carta-frente img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: fadeInSena .4s ease;
+}
+.carta-frente .sena-fallback .emoji { font-size: 2.4rem; filter: none; }
 .carta-frente .sena-fallback .letra { font-size: 1rem; }
 .mem-carta.acertada { opacity: .45; pointer-events: none; }
 
