@@ -392,13 +392,251 @@ body {
 </style>
 </head>
 <body>
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f4f7fb;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    margin:0;
+}
 
+.btnTarjeta{
+    background:#2563eb;
+    color:white;
+    border:none;
+    padding:15px 25px;
+    border-radius:12px;
+    font-size:18px;
+    cursor:pointer;
+    box-shadow:0 4px 10px rgba(0,0,0,.2);
+}
+
+.popup{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.6);
+    justify-content:center;
+    align-items:center;
+    z-index:999;
+}
+
+.card{
+    background:white;
+    width:90%;
+    max-width:420px;
+    border-radius:20px;
+    padding:20px;
+    box-shadow:0 8px 25px rgba(0,0,0,.3);
+    animation:aparecer .3s ease;
+}
+
+@keyframes aparecer{
+    from{
+        transform:scale(.8);
+        opacity:0;
+    }
+    to{
+        transform:scale(1);
+        opacity:1;
+    }
+}
+
+.card h2{
+    text-align:center;
+    color:#2563eb;
+    margin-top:0;
+}
+
+.dato{
+    margin:10px 0;
+}
+
+.dato strong{
+    color:#111827;
+}
+
+input, textarea{
+    width:100%;
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:10px;
+    margin-top:5px;
+    box-sizing:border-box;
+}
+
+textarea{
+    resize:none;
+}
+
+.botones{
+    display:flex;
+    gap:10px;
+    margin-top:15px;
+}
+
+.botones button{
+    flex:1;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    color:white;
+    font-weight:bold;
+}
+
+.guardar{
+    background:#16a34a;
+}
+
+.editar{
+    background:#f59e0b;
+}
+
+.cerrar{
+    background:#dc2626;
+}
+</style>
 <header class="emg-header">
   <button class="emg-btn-back" id="btnVolver" aria-label="Volver">←</button>
   <h1 class="emg-title">EMERGENCIA</h1>
   <button class="emg-btn-solo-top" id="btnSoloTop">
     <span>🆘</span><span>SOLO</span>
   </button>
+  <button class="btnTarjeta" onclick="abrirTarjeta()">
+🆔 Mi Tarjeta de Comunicación
+</button>
+
+<div class="popup" id="popup">
+    <div class="card">
+
+        <h2>🆔 Mi Tarjeta</h2>
+
+        <div id="modoVista">
+
+            <div class="dato">
+                <strong>Nombre:</strong>
+                <span id="vNombre"></span>
+            </div>
+
+            <div class="dato">
+                <strong>Edad:</strong>
+                <span id="vEdad"></span>
+            </div>
+
+            <div class="dato">
+                <strong>Contacto de Emergencia:</strong>
+                <span id="vContacto"></span>
+            </div>
+
+            <div class="dato">
+                <strong>Necesidades Especiales:</strong>
+                <span id="vNecesidades"></span>
+            </div>
+
+        </div>
+
+        <div id="modoEditar" style="display:none;">
+
+            <input type="text" id="nombre" placeholder="Nombre">
+
+            <input type="number" id="edad" placeholder="Edad">
+
+            <input type="text" id="contacto" placeholder="Contacto de emergencia">
+
+            <textarea id="necesidades" rows="4"
+            placeholder="Necesidades especiales"></textarea>
+
+        </div>
+
+        <div class="botones">
+            <button class="editar" onclick="editarTarjeta()">✏️ Editar</button>
+            <button class="guardar" onclick="guardarTarjeta()">💾 Guardar</button>
+            <button class="cerrar" onclick="cerrarTarjeta()">❌ Cerrar</button>
+        </div>
+
+    </div>
+</div>
+
+<script>
+
+function abrirTarjeta(){
+    document.getElementById("popup").style.display="flex";
+    cargarDatos();
+}
+
+function cerrarTarjeta(){
+    document.getElementById("popup").style.display="none";
+}
+
+function cargarDatos(){
+
+    let nombre = localStorage.getItem("tc_nombre") || "No registrado";
+    let edad = localStorage.getItem("tc_edad") || "No registrada";
+    let contacto = localStorage.getItem("tc_contacto") || "No registrado";
+    let necesidades = localStorage.getItem("tc_necesidades") || "No registradas";
+
+    document.getElementById("vNombre").textContent = nombre;
+    document.getElementById("vEdad").textContent = edad;
+    document.getElementById("vContacto").textContent = contacto;
+    document.getElementById("vNecesidades").textContent = necesidades;
+
+    document.getElementById("nombre").value =
+    localStorage.getItem("tc_nombre") || "";
+
+    document.getElementById("edad").value =
+    localStorage.getItem("tc_edad") || "";
+
+    document.getElementById("contacto").value =
+    localStorage.getItem("tc_contacto") || "";
+
+    document.getElementById("necesidades").value =
+    localStorage.getItem("tc_necesidades") || "";
+}
+
+function editarTarjeta(){
+
+    document.getElementById("modoVista").style.display="none";
+    document.getElementById("modoEditar").style.display="block";
+}
+
+function guardarTarjeta(){
+
+    localStorage.setItem(
+        "tc_nombre",
+        document.getElementById("nombre").value
+    );
+
+    localStorage.setItem(
+        "tc_edad",
+        document.getElementById("edad").value
+    );
+
+    localStorage.setItem(
+        "tc_contacto",
+        document.getElementById("contacto").value
+    );
+
+    localStorage.setItem(
+        "tc_necesidades",
+        document.getElementById("necesidades").value
+    );
+
+    document.getElementById("modoVista").style.display="block";
+    document.getElementById("modoEditar").style.display="none";
+
+    cargarDatos();
+
+    alert("Tarjeta guardada correctamente");
+}
+
+window.onload = cargarDatos;
+
+</script>
+
 </header>
 
 <main class="emg-main">
