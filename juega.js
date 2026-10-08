@@ -6,7 +6,7 @@
 /* ====== 1. DATOS DEL ALFABETO ====== */
 /* archivo = nombre del archivo en /img  →  img/a.jpg, img/ñ.jpg, etc. */
 const ALFABETO = [
-  { letra:'A', archivo:'a', emoji:'✊', desc:'Puño cerrado con el pulgar pegado al lado de los dedos (no encima).', tip:'La muñeca debe quedar recta, mirando al frente.', nivel:1 },
+  { letra:'A', archivo:'a', emoji:'✊',imagen: 'https://imgur.com/H1tcFUR.png', desc:'Puño cerrado con el pulgar pegado al lado de los dedos (no encima).', tip:'La muñeca debe quedar recta, mirando al frente.', nivel:1 },
   { letra:'B', archivo:'b', emoji:'✋', desc:'Mano abierta, dedos juntos y extendidos hacia arriba, pulgar doblado hacia la palma.', tip:'Mantén los cuatro dedos bien pegados.', nivel:1 },
   { letra:'C', archivo:'c', emoji:'🤏', desc:'Mano curvada formando la forma de una "C".', tip:'Como si sostuvieras un vaso pequeño.', nivel:1 },
   { letra:'D', archivo:'d', emoji:'👆', desc:'Índice extendido hacia arriba; los demás dedos tocan el pulgar formando un círculo.', tip:'El círculo queda debajo del índice.', nivel:2 },
